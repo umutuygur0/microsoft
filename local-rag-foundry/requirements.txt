@@ -1,0 +1,8 @@
+# Ingestion + retrieval (chunker, tfidf, vector_store) need ZERO third-party
+# packages (pure Python stdlib: sqlite3, re, math, collections). The two
+# packages below are only needed for answer generation and the chat UI.
+# Verified working versions (2026-07-26): foundry-local-sdk 1.2.3, streamlit 1.60.0.
+# `openai` is pulled in transitively by foundry-local-sdk; not imported directly.
+foundry-local-sdk
+streamlit
+pytest
