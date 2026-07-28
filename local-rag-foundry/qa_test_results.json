@@ -1,0 +1,202 @@
+[
+  {
+    "n": 1,
+    "question": "How do I detect a gas leak?",
+    "answer": "- Summary: The procedure involves using a calibrated portable gas detector to find and confirm a gas leak, while safety is a non-negible.\n- Safety Warnings: Do not use any ignition source or non-intrinsically-safe equipment in a suspected leak zone. Always approach from upwind and evacuate if the reading exceeds 20% LEL.\n- Step-by-step Guidance:\n  1. Confirm the detector is calibrated and bump-tested.\n  2. Switch on the detector in clean air to establish a zero baseline.\n  3. Walk the survey line slowly, holding the sensor 5 to 10 cm from fittings, flanges, and joints.\n  4. Note any reading above 5% LEL for further investigation.\n  5. Apply leak detection fluid to suspected joints; steady bubbling confirms a leak.\n  6. Record the location, LEL reading, and time on the inspection form.\n  7. Isolate the affected section and raise a work order for repair.\n- Reference: Gas Leak Detection Procedure (Safety)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.461
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.442
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.377
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "question": "What should I do if I discover a fire on site?",
+    "answer": "- Summary: If a fire is discover on site, the priority is to activate the alarm and isolate the gas supply if safe to do so. Use the correct extinguisher type for the fuel involved and only approach small fires if isolation is achieved.\n- Safety Warnings: Never extinguish a gas fire without first stopping the gas supply; an unburned gas cloud can explode with greater force than the original fire. Do not use water on electrical fires.\n- Step-by-step Guidance:\n  1. Raise the alarm immediately.\n  2. If trained and it is safe to do so, isolate the gas supply feeding the fire.\n  3. Attack only small, incipient fires with the correct extinguisher type for the fuel involved.\n  4. Use dry powder or CO2 for gas and electrical fires; never use water on live electrics.\n  5. Evacuate upwind to the muster point if the fire cannot be controlled with immediate equipment.\n  6. Account for all personnel and report to the incident controller at the muster point.\n  7. Do not re-enter the area until it has been declared safe.\n- Reference: Standard Operations Manual OM-01, Section 9 — Fire Response.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.34
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.332
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.329
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "question": "Boru hattini hangi metal korur?",
+    "answer": "Copper/copper-sulphate reference electrode korur. This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.204
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.166
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.154
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "question": "What is a blowout preventer used for?",
+    "answer": "- Summary: A blowout preventer is a valve installed at the wellhead to prevent the escape of pressure during drilling or completion operations.\n- Safety Warnings: This information is not available in the local knowledge base.\n- Step-by-step Guidance: A blowout preventer is used to seal off pressure in the annular space between the casing and drill pipe or in an open hole when no drill pipe is present.\n- Reference: eTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.534
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.451
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.446
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "question": "confined space entry icin oksijen limitleri nedir?",
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.523
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.498
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.453
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "question": "What are the OSHA exposure limits for hydrogen sulfide?",
+    "answer": "- Summary: OSHA exposure limits for hydrogen sulfide are provided for different exposure limits and are relevant for worker safety.\n- Safety Warnings: Exposure to hydrogen sulfide can be life-threatening, and workers are at risk of unconsciousness and falls.\n\n- Step-by-step Guidance:\n1. The OSHA PEL for General Industry for hydrogen sulfide is a ceiling of 20 ppm.\n2. The NIOSH REL for hydrogen sulfide is 10 ppm for a 10-min. ceiling.\n\n- Reference:\nOSHA Fact Sheet, (October 2005) Hydrogen Sulfide (H2 S)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.722
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.673
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.664
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "question": "How often should a gas detector be calibrated?",
+    "answer": "- A gas detector should be bump-tested before each day of use.\n- A full calibration is at least every 6 months, or more frequently as per manufacturer guidance or if a bump test result is borderline.\n\nSafety Warnings:\n- A detector that fails calibration must be removed from service immediately — it must not be returned to a worker \"until we get a chance to look at it properly,\" since that worker may rely on it in the interim.\n\nThis information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.467
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.456
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.446
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "question": "What is the acceptable pressure drop during a pipeline pressure test?",
+    "answer": "Answer: The acceptable pressure drop during a pipeline pressure test is less than 0.5% of the test pressure over the hold period. If the pressure drop is more than this, it is treated as an indication of a leak requiring investigation.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.492
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.473
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.446
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "question": "What is photosynthesis?",
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.198
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.16
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.158
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "question": "What PPE is required in H2S areas?",
+    "answer": "PPE required in H2S areas, in additional to the baseline requirements, is a personal H2S monitor and an Escape breathing apparatus for anyone entering an area where H2S concentrations may exceed 10 ppm.\n\n- **PPE in H2S Areas:**\n  - Personal H2S monitor ( mandatory in all sour-gas areas)\n  - Escape breathing apparatus (to be carried by anyone entering an area where H2S concentrations may exceed 10 ppm)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.515
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.43
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.417
+      }
+    ]
+  }
+]

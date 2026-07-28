@@ -13,12 +13,16 @@ import streamlit as st
 
 from src.chat_engine import ChatEngine
 from src.chunker import document_to_chunks
+from src.document_readers import extract_text
 from src.embedder import LocalEmbedder
 from src.foundry_client import FoundryClient
 from src.security import UploadRejected, validate_upload
 from src.vector_store import VectorStore
 
 st.set_page_config(page_title="Local RAG Assistant", page_icon="🛠️", layout="wide")
+
+RESPONSE_LANGUAGES = ["Auto", "Turkish", "English"]
+_BINARY_UPLOAD_SUFFIXES = (".pdf", ".docx")
 
 
 @st.cache_resource(show_spinner=False)
@@ -51,6 +55,13 @@ def render_sources(sources: list[dict]) -> None:
             st.markdown(line)
 
 
+def read_uploaded_text(filename: str, raw_bytes: bytes) -> str:
+    """Decode markdown/text uploads directly; extract PDF/DOCX uploads via document_readers."""
+    if Path(filename).suffix.lower() in _BINARY_UPLOAD_SUFFIXES:
+        return extract_text(filename, raw_bytes)
+    return raw_bytes.decode("utf-8")
+
+
 store = get_store()
 model = get_model()
 embedder = get_embedder()
@@ -73,6 +84,19 @@ with st.sidebar:
     st.caption("Fully offline — no cloud, no API keys, no outbound network calls.")
 
     st.divider()
+    response_language = st.selectbox(
+        "Response language",
+        RESPONSE_LANGUAGES,
+        index=0,
+        help=(
+            "Retrieval works across languages regardless of this setting "
+            "(e.g. ask in Turkish about an English document). This only "
+            "controls the language the answer is written in. 'Auto' replies "
+            "in the same language as your question."
+        ),
+    )
+
+    st.divider()
     st.subheader("Knowledge base")
     docs = store.list_documents()
     st.caption(f"{len(docs)} document(s), {store.count()} chunk(s) indexed")
@@ -81,36 +105,64 @@ with st.sidebar:
 
     st.divider()
     st.subheader("Add a document")
-    uploaded = st.file_uploader("Markdown or text file", type=["md", "markdown", "txt"])
+    uploaded = st.file_uploader("Markdown, text, PDF, or Word file", type=["md", "markdown", "txt", "pdf", "docx"])
     if uploaded is not None:
-        try:
-            safe_name = validate_upload(uploaded.name, uploaded.size)
-            raw_text = uploaded.getvalue().decode("utf-8")
-            chunks = document_to_chunks(raw_text, safe_name)
-            if not chunks:
-                st.error("The file has no readable content.")
-            else:
-                embeddings = embedder.embed([c.content for c in chunks]) if embedder.ready else None
-                store.remove_document(chunks[0].doc_id)
-                store.add_chunks(chunks, embeddings=embeddings)
-                st.success(f"Indexed '{chunks[0].title}' ({len(chunks)} chunk(s)).")
-                st.rerun()
-        except UploadRejected as err:
-            st.error(str(err))
-        except UnicodeDecodeError:
-            st.error("File must be UTF-8 encoded text.")
+        # st.file_uploader keeps returning the same file on every rerun until
+        # the user removes it or picks a different one — without this guard,
+        # the st.rerun() below would re-process the same file forever.
+        upload_identity = (uploaded.name, uploaded.size)
+        if st.session_state.get("_last_processed_upload") != upload_identity:
+            try:
+                safe_name = validate_upload(uploaded.name, uploaded.size)
+                try:
+                    raw_text = read_uploaded_text(safe_name, uploaded.getvalue())
+                except UnicodeDecodeError:
+                    raw_text = ""
+
+                if not raw_text:
+                    st.error(
+                        "Could not extract any text from this file. PDFs made of "
+                        "scanned images (no text layer) are not supported."
+                    )
+                    st.session_state["_last_processed_upload"] = upload_identity
+                else:
+                    chunks = document_to_chunks(raw_text, safe_name)
+                    if not chunks:
+                        st.error("The file has no readable content.")
+                        st.session_state["_last_processed_upload"] = upload_identity
+                    else:
+                        embeddings = embedder.embed([c.content for c in chunks]) if embedder.ready else None
+                        store.remove_document(chunks[0].doc_id)
+                        store.add_chunks(chunks, embeddings=embeddings)
+                        st.session_state["_last_processed_upload"] = upload_identity
+                        st.success(f"Indexed '{chunks[0].title}' ({len(chunks)} chunk(s)).")
+                        st.rerun()
+            except UploadRejected as err:
+                st.session_state["_last_processed_upload"] = upload_identity
+                st.error(str(err))
 
 # --- Main chat area ---
 st.title("🛠️ Local Support Assistant")
-st.caption("Ask a question grounded in the documents on the left. Answers cite their sources.")
+st.caption(
+    "Ask a question grounded in the documents on the left — in any language. "
+    "Answers cite their sources."
+)
 
 for turn in st.session_state.history:
     with st.chat_message(turn["role"]):
         st.markdown(turn["content"])
         render_sources(turn.get("sources") or [])
+        if turn.get("notice"):
+            st.caption(f"⚠️ {turn['notice']}")
 
 question = st.chat_input("Describe the issue or ask a question…")
 if question:
+    # Only role/content ever reach the model as history (see build_messages) —
+    # "notice" is UI-only and must never be part of what gets sent back as
+    # conversation context, or the model starts imitating it on later turns.
+    model_history = [
+        {"role": t["role"], "content": t["content"]} for t in st.session_state.history
+    ]
     st.session_state.history.append({"role": "user", "content": question})
     with st.chat_message("user"):
         st.markdown(question)
@@ -119,15 +171,22 @@ if question:
         placeholder = st.empty()
         full_answer = ""
         sources: list[dict] = []
-        for event in engine.ask(question, st.session_state.history[:-1]):
+        notice = None
+        for event in engine.ask(question, model_history, response_language=response_language):
             if event["type"] == "sources":
                 sources = event["sources"]
             elif event["type"] == "token":
                 full_answer += event["text"]
                 placeholder.markdown(full_answer + "▌")
+            elif event["type"] == "notice":
+                notice = event["message"]
             elif event["type"] == "error":
                 full_answer = f"⚠️ {event['message']}"
         placeholder.markdown(full_answer)
         render_sources(sources)
+        if notice:
+            st.caption(f"⚠️ {notice}")
 
-    st.session_state.history.append({"role": "assistant", "content": full_answer, "sources": sources})
+    st.session_state.history.append(
+        {"role": "assistant", "content": full_answer, "sources": sources, "notice": notice}
+    )

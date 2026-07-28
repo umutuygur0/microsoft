@@ -2,6 +2,12 @@
 
 No embedding model, no third-party dependency. Good enough for a small,
 domain-specific corpus and fully transparent (every weight can be inspected).
+
+The tokenizer is Unicode-aware (not English/ASCII-only): it keeps letters from
+any script — e.g. Turkish "ç ğ ı ö ş ü" — instead of stripping them, and the
+combined English+Turkish stopword list means a query can freely mix languages
+(the embedding half of hybrid retrieval, see src/embedder.py, is what actually
+carries cross-lingual matches; this tokenizer just has to not corrupt the text).
 """
 from __future__ import annotations
 
@@ -10,7 +16,7 @@ import re
 from collections import Counter
 from typing import Dict, Iterable, List
 
-STOPWORDS = {
+ENGLISH_STOPWORDS = {
     "the", "a", "an", "and", "or", "but", "if", "then", "else", "of", "to",
     "in", "on", "at", "for", "with", "by", "from", "as", "is", "are", "was",
     "were", "be", "been", "being", "this", "that", "these", "those", "it",
@@ -18,7 +24,25 @@ STOPWORDS = {
     "they", "them", "his", "her", "do", "does", "did", "so", "not", "no",
 }
 
-_NON_WORD_RE = re.compile(r"[^a-z0-9\s]")
+TURKISH_STOPWORDS = {
+    "acaba", "ama", "ancak", "bazı", "belki", "biri", "birşey", "biz", "bu",
+    "bunu", "bunlar", "çok", "çünkü", "da", "daha", "de", "defa", "değil",
+    "diye", "eğer", "en", "gibi", "hangi", "hem", "hep", "hepsi", "her",
+    "hiç", "için", "ile", "ise", "kaç", "kez", "ki", "kim", "mı", "mi", "mu",
+    "mü", "mıdır", "midir", "nasıl", "ne", "neden", "nedir", "nerde",
+    "nerede", "nereye", "niçin", "niye", "o", "onun", "sanki", "şey", "siz",
+    "şu", "tüm", "var", "ve", "veya", "ya", "yani", "yok",
+}
+
+# One combined set rather than per-language switching: a query or document may
+# freely mix languages (code-switching), so there is no single "current
+# language" to pick a stopword list for.
+STOPWORDS = ENGLISH_STOPWORDS | TURKISH_STOPWORDS
+
+# Unicode-aware: \w keeps letters from any script (é, ç, ğ, ı, ö, ş, ü, ...)
+# instead of the old ASCII-only [a-z0-9] pattern, which silently deleted
+# non-English letters and corrupted words like "kaçağı" -> "ka a".
+_NON_WORD_RE = re.compile(r"[^\w\s]", re.UNICODE)
 
 
 def tokenize(text: str) -> List[str]:

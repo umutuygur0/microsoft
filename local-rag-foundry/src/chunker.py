@@ -9,7 +9,7 @@ import config
 
 _FRONT_MATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n?", re.DOTALL)
 _H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
-_FILE_EXT_RE = re.compile(r"\.(md|markdown|txt)$", re.IGNORECASE)
+_FILE_EXT_RE = re.compile(r"\.(md|markdown|txt|pdf|docx)$", re.IGNORECASE)
 
 
 @dataclass

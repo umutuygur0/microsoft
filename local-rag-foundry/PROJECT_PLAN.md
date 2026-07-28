@@ -124,3 +124,112 @@ Kullanıcı onayıyla, çekirdek teslimattan sonra eklendi:
 - Dosya yükleme: uzantı whitelist + boyut limiti + path traversal koruması
 - Sistem promptu: modelin bağlam dışına çıkıp uydurma yapmasını engelleyen açık kurallar
 - Sır/gizli bilgi (API anahtarı vb.) yok — proje zaten anahtarsız çalışıyor
+
+---
+
+# Faz 2 — Çok Dilli Destek + PDF/DOCX Yükleme ✅ tamamlandı
+
+Proje ilk sürümüyle push edildikten sonra, kullanıcı isteğiyle eklenen ikinci faz.
+Hedef: **eski sistemi bozmadan**, diller-arası arama ve daha zengin doküman
+formatı desteği eklemek.
+
+**Sonuç:** Tüm maddeler uygulandı ve gerçek modelle uçtan uca doğrulandı (bkz.
+`TEST_REPORT.md`). Test paketi 36 → **49 teste** çıktı. Uygulama sırasında iki
+gerçek hata daha bulunup düzeltildi: (1) `st.file_uploader` her rerun'da aynı
+dosyayı döndürdüğü için, önceki `st.rerun()` çağrısı sonsuz döngüye giriyordu
+— `session_state` ile işlenen dosya takip edilerek çözüldü; (2) küçük modelin
+(phi-3.5-mini) bağlamın sonuna gömülü tek bir dil talimatını yeterince
+önemsemediği görüldü — talimat hem sistem promptuna hem soruya en yakın
+noktaya iki kez yerleştirilerek güvenilirliği artırıldı.
+
+## Araştırma Bulguları
+
+Karar vermeden önce, mevcut embedding modelimizin (`qwen3-embedding-0.6b`,
+Foundry Local üzerinden) gerçekten diller arası anlamsal hizalama yapıp
+yapmadığı canlı olarak test edildi (referans: "How do I detect a gas leak
+near a pipeline?"):
+
+| Karşılaştırılan metin | Cosine benzerlik | Yorum |
+|---|---|---|
+| Türkçe çevirisi ("Bir boru hattında gaz kaçağını nasıl tespit ederim?") | **0.616** | Yüksek — aynı anlam, farklı dil |
+| Türkçe + İngilizce karışık sorgu ("Gas leak durumunda pipeline yakınında ne yapmalıyım?") | **0.686** | En yüksek — code-switching sorun yaratmıyor, ortak kelimeler skoru güçlendiriyor |
+| Alakasız Türkçe cümle ("Yarın hava nasıl olacak, yağmur yağacak mı?") | 0.311 | Belirgin şekilde düşük — ayrım net |
+| Aynı dil, gerçek doküman parçası | 0.840 | Beklenen üst sınır (referans) |
+
+**Sonuç:** Qwen3-Embedding çok dilli bir model; ek bir çeviri adımına veya
+ayrı bir çok-dilli kütüphaneye gerek yok. Mevcut hibrit retrieval mimarimiz
+(TF-IDF + embedding, bkz. Aşama 5) **zaten** diller-arası ve karışık-dilli
+sorguları anlamlı şekilde ayırt edebiliyor — çünkü TF-IDF kelime örtüşmesi
+bulamadığında (örn. Türkçe soru + İngilizce doküman) skor otomatik olarak
+embedding tarafına kayıyor. Eklenmesi gereken şey yeni bir "çok dilli motor"
+değil, mevcut motorun önündeki engelleri kaldırmak ve bunu kullanıcıya
+arayüzden sunmak.
+
+## Kapsam ve Mimari Kararlar
+
+| Konu | Karar | Gerekçe |
+|---|---|---|
+| Diller-arası arama | Ek kütüphane/çeviri **yok** — mevcut embedding hibrit skoruna güveniliyor | Araştırma bunu doğruladı; basitlik + tamamen yerel kalır |
+| TF-IDF tokenizer | Unicode-güvenli hale getiriliyor (şu an ç/ğ/ı/ö/ş/ü gibi karakterleri siliyor — **gerçek bir hata**) | Türkçe metinlerde TF-IDF yarısı şu an bozuk çalışıyor; embedding'in üstüne binen TF-IDF katkısı da düzelmeli |
+| Stopword listesi | İngilizce listeye Türkçe stopword'ler eklenecek (birleşik liste, dil algılama yok) | Karışık-dilli sorgularda "hangi dil" kararı vermeye gerek kalmaz, ikisi de doğru filtrelenir |
+| Dil seçici (UI) | Sidebar'da "Response language" seçici: Auto / Türkçe / English | Kullanıcının "üstten dil seçme" isteğini karşılar; pratikte en anlamlı kaldıraç **yanıt dili**dir (girdi dili zaten LLM tarafından otomatik anlaşılıyor, retrieval zaten dil-bağımsız) |
+| Karışık-dilli sorgu (code-switching) | Ekstra kod gerekmiyor — Unicode tokenizer + çok dilli embedding zaten bunu doğru işliyor (araştırma tablosundaki 0.686 skoru kanıtı) | Over-engineering'den kaçınılıyor |
+| PDF yükleme | `pypdf` (saf Python, yerel, ücretsiz) ile metin çıkarımı | Taranmış (OCR gerektiren) PDF'ler kapsam dışı — metin katmanı olmayan PDF'lerde "metin bulunamadı" uyarısı verilecek |
+| DOCX yükleme | `python-docx` (yerel, ücretsiz) ile paragraf metni çıkarımı | Basit, yaygın, tablo/görsel çıkarımı kapsam dışı (sadece düz metin) |
+
+## Dosya Bazında Değişiklik Planı
+
+```
+config.py                    # ALLOWED_UPLOAD_EXTENSIONS'a .pdf/.docx eklenir
+requirements.txt             # pypdf, python-docx eklenir
+src/
+├── tfidf.py                  # _NON_WORD_RE Unicode-güvenli yapılır; TURKISH_STOPWORDS eklenip STOPWORDS ile birleştirilir
+├── chunker.py                  # _FILE_EXT_RE'ye .pdf/.docx eklenir (doc_id türetimi için)
+├── document_readers.py          # YENİ: extract_pdf_text(), extract_docx_text(), extract_text_for_upload() dispatcher
+├── ingest.py                     # DOC_EXTENSIONS genişler; ingest_file() dosya uzantısına göre doğru extractor'ı çağırır
+├── prompts.py                     # build_messages()'a opsiyonel response_language parametresi; sistem promptuna dil talimatı eklenir
+└── chat_engine.py                  # ask()'a opsiyonel response_language parametresi eklenir, prompts.build_messages'a iletilir
+app/
+└── streamlit_app.py            # sidebar'da dil seçici (st.selectbox); file_uploader'a pdf/docx eklenir; upload handler'da document_readers dispatcher kullanılır
+tests/
+├── test_tfidf.py                # Unicode tokenizer testleri (Türkçe karakterler korunuyor mu)
+├── test_document_readers.py      # YENİ: pypdf/python-docx ile testte üretilen küçük dosyaları round-trip okuma testi
+└── test_vector_store.py          # (opsiyonel) diller-arası hibrit arama senaryosu testi
+README.md                    # çok dilli destek + PDF/DOCX + bilinen sınırlamalar (taranmış PDF, OCR yok) güncellenir
+```
+
+## Geriye Dönük Uyumluluk (eski sistem bozulmayacak)
+
+- Tokenizer değişikliği sadece regex'i genişletiyor (daraltmıyor) — mevcut İngilizce testler etkilenmeyecek, sadece Türkçe karakterler artık silinmeyecek.
+- `response_language` parametresi **opsiyonel** (varsayılan `None`/"Auto") — mevcut `ChatEngine.ask()` çağrıları (testler dahil) değişiklik yapmadan çalışmaya devam eder.
+- PDF/DOCX desteği mevcut `.md`/`.txt` akışına **ek** bir dal; markdown/metin yükleme davranışı değişmiyor.
+- Mevcut `data/knowledge.db` şeması değişmiyor (embedding kolonu zaten Faz 1'de eklendi); yeniden migration gerekmiyor.
+
+## Kapsam Dışı (bu fazda yapılmayacak)
+- OCR (taranmış/görsel PDF'lerden metin çıkarımı) — ayrı bir vision modeli gerektirir, kapsam dışı
+- Otomatik dil algılama ile dinamik hibrit ağırlık değişimi (`HYBRID_*_WEIGHT`) — sabit ağırlıklar zaten işe yarıyor, gereksiz karmaşıklık
+- Doküman bazında "bu chunk şu dilde" etiketleme/filtreleme — istenirse ayrı bir istek olarak ele alınabilir
+
+---
+
+## Sonradan Eklenen Not — Sohbet Modeli Değişikliği
+
+Faz 2 testleri sırasında `phi-3.5-mini`'nin çok dilli/RAG yükü altında ciddi
+ve tekrarlanabilir bir "repetition collapse" arızası olduğu bulundu. Kapsamlı
+prompt/parametre mühendisliği (iki aşamalı üretim, sıcak yeniden deneme,
+ceza ayarları, genişletilmiş tekrar algılama, geri-dönüş mekanizmaları) kök
+nedeni çözemedi — sadece hasarı sınırladı. Model `qwen2.5-7b`'ye değiştirildi
+ve sorun tamamen ortadan kalktı. Tüm detaylar ve karşılaştırma verileri
+`TEST_REPORT.md`'de (madde 13).
+
+---
+
+## Proje Kapanışı
+
+Proje, `goal_ documents/`'teki iki kaynak dökümanın (Microsoft blog yazısı +
+Summer School müfredatı) gereksinimlerini karşılayacak şekilde tamamlandı.
+Kapsamlı bir test-değerlendir-düzelt döngüsünden geçti (bkz. `TEST_REPORT.md`
+madde 3-5) ve kalan bilinen sınırlamalar saklanmadan belgelendi. Projenin
+son, kapanış hâli için bkz. **`FINAL_REPORT.md`** — iki kaynak dökümanla
+madde madde karşılaştırma, tüm mühendislik kararlarının kronolojisi ve
+dürüst bir sınırlamalar listesi içeriyor.

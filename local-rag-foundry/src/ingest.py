@@ -6,9 +6,11 @@ from typing import List, Tuple
 
 import config
 from src.chunker import document_to_chunks
+from src.document_readers import extract_text
 from src.vector_store import VectorStore
 
-DOC_EXTENSIONS = (".md", ".markdown", ".txt")
+DOC_EXTENSIONS = (".md", ".markdown", ".txt", ".pdf", ".docx")
+_BINARY_EXTENSIONS = (".pdf", ".docx")
 
 
 def discover_documents(docs_dir: Path = config.DOCS_DIR) -> List[Path]:
@@ -17,13 +19,19 @@ def discover_documents(docs_dir: Path = config.DOCS_DIR) -> List[Path]:
     return sorted(p for p in docs_dir.iterdir() if p.suffix.lower() in DOC_EXTENSIONS)
 
 
+def _read_raw_text(path: Path) -> str:
+    if path.suffix.lower() in _BINARY_EXTENSIONS:
+        return extract_text(path.name, path)
+    return path.read_text(encoding="utf-8")
+
+
 def ingest_file(store: VectorStore, path: Path, embedder=None) -> Tuple[str, int, str]:
     """Chunk and (re-)index a single file. Returns (file_name, chunk_count, title).
 
     ``embedder`` is optional (see ``src/embedder.py``); when it is ready,
     each chunk also gets a stored embedding for hybrid retrieval.
     """
-    raw = path.read_text(encoding="utf-8")
+    raw = _read_raw_text(path)
     chunks = document_to_chunks(raw, path.name)
     if not chunks:
         return path.name, 0, ""
