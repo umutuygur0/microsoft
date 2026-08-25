@@ -3,6 +3,24 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import config
+
+# Qwen3-family models default to an internal <think>...</think> reasoning
+# trace before their real answer. That trace was observed (with qwen3-8b,
+# see TEST_REPORT.md) to itself collapse into repetition, exceeding even the
+# sentence-level repetition guard. Qwen3's chat template recognises a
+# literal "/no_think" directive in the conversation to skip the trace
+# entirely. Gated to Qwen3-family models specifically (rather than always
+# appended) so it has no effect — and can't confuse — a different
+# configured model such as qwen2.5-7b.
+_SUPPRESS_THINKING_SUFFIX = " /no_think"
+
+
+def _maybe_suppress_thinking(text: str) -> str:
+    if config.MODEL_ALIAS.lower().startswith("qwen3"):
+        return text + _SUPPRESS_THINKING_SUFFIX
+    return text
+
 SYSTEM_PROMPT = """You are a local, offline support assistant that answers strictly from the \
 provided context documents.
 
@@ -29,17 +47,19 @@ Behaviour rules:
   language it is written in. Always write your answer in English here,
   regardless of the question's language — a separate translation step (not
   you) handles converting it to the user's language afterwards.
-- For the "Reference" line, cite the document title exactly as given in the
-  "[Source N] <title>" label above each excerpt. Do not construct a citation
-  from text inside the excerpt body (e.g. a "Source Standard" line within the
-  document) — that inline text may not describe itself the same way the
-  excerpt is labelled here.
+- Do not cite or name your sources yourself, in any form, anywhere in the
+  answer — no "Reference" line, no inline mention of an excerpt number or
+  document title, nothing. Source attribution is handled separately, outside
+  your answer, from the actual retrieval metadata — not from anything you
+  write. Repeated live testing found this model cannot be trusted to name
+  its source correctly (it invents titles, cites the wrong excerpt, or
+  echoes internal labels verbatim) even when explicitly instructed on
+  exactly how to do it, so it is no longer asked to try at all.
 
 Response format (use these headings when applicable):
 - Summary (1-2 lines)
 - Safety Warnings (only if relevant)
-- Step-by-step Guidance
-- Reference (document title)"""
+- Step-by-step Guidance"""
 
 NO_CONTEXT_REPLY = "This information is not available in the local knowledge base."
 
@@ -53,14 +73,22 @@ TRANSLATION_SYSTEM_PROMPT = (
 
 
 def build_context_block(chunks: List[dict]) -> str:
+    """Render retrieved chunks as plain excerpts for the model to read.
+
+    Deliberately avoids a "[Source N]"-style bracketed label: live testing
+    (see TEST_REPORT.md) found the model would echo that exact bracketed
+    pattern verbatim into its own answer despite explicit instructions not
+    to, presumably because it visually resembles a citation marker worth
+    reproducing. This wording still gives the model everything it needs to
+    ground its answer, without a token pattern for it to copy — see
+    ``SYSTEM_PROMPT``: the model is no longer asked to cite anything itself,
+    so it doesn't need a citation label to imitate at all.
+    """
     if not chunks:
         return "No relevant documents were found in the local knowledge base."
     parts = []
-    for i, chunk in enumerate(chunks, start=1):
-        relevance = round(chunk["score"] * 100)
-        parts.append(
-            f"[Source {i}] {chunk['title']} ({chunk['category']}, relevance {relevance}%)\n{chunk['content']}"
-        )
+    for chunk in chunks:
+        parts.append(f"Excerpt from \"{chunk['title']}\" ({chunk['category']}):\n{chunk['content']}")
     return "\n\n---\n\n".join(parts)
 
 
@@ -84,7 +112,9 @@ def build_messages(question: str, chunks: List[dict], history: Optional[List[dic
             messages.append({"role": turn["role"], "content": str(turn["content"])})
     messages.append({
         "role": "user",
-        "content": f"Context documents:\n\n{context}\n\n---\n\nQuestion: {question}\n\nAnswer using ONLY the context above.",
+        "content": _maybe_suppress_thinking(
+            f"Context documents:\n\n{context}\n\n---\n\nQuestion: {question}\n\nAnswer using ONLY the context above."
+        ),
     })
     return messages
 
@@ -98,5 +128,7 @@ def build_translation_messages(text: str, target_language: str) -> List[dict]:
     """
     return [
         {"role": "system", "content": TRANSLATION_SYSTEM_PROMPT},
-        {"role": "user", "content": f"Translate the following text to {target_language}:\n\n{text}"},
+        {"role": "user", "content": _maybe_suppress_thinking(
+            f"Translate the following text to {target_language}:\n\n{text}"
+        )},
     ]

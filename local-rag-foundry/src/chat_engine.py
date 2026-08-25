@@ -61,6 +61,58 @@ def _looks_turkish(text: str) -> bool:
 _MIN_USABLE_DRAFT_CHARS = 150
 
 
+_THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
+_UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
+
+
+def _strip_thinking_block(text: str) -> str:
+    """Remove a Qwen3-style ``<think>...</think>`` reasoning trace.
+
+    The Foundry Local SDK has no API-level switch for Qwen3's default
+    internal reasoning trace (see config.THINKING_MODEL_MAX_TOKENS's
+    docstring), so the "/no_think" prompt suffix is the only accessible
+    control -- and it is not always honoured. This is the safety net: even
+    when a trace is produced anyway, it must never reach the user or get
+    fed back into conversation history as if it were the answer. An
+    *unclosed* trace (the model was still "thinking" when max_tokens cut it
+    off, which is exactly how a plain question was once observed to return
+    a completely empty answer) is also stripped, since there is no way to
+    tell where thinking would have ended and the real answer begun.
+    """
+    without_closed = _THINK_BLOCK_RE.sub("", text)
+    return _UNCLOSED_THINK_RE.sub("", without_closed).strip()
+
+
+def _build_reference_footer(sources: List[dict]) -> str:
+    """Deterministically build a "Reference: ..." footer from the actual
+    retrieved chunk metadata -- never from anything the model writes.
+
+    Repeated live testing (see TEST_REPORT.md) found this model cannot be
+    trusted to cite its own source correctly even with explicit, detailed
+    instructions on exactly how (it invented titles, cited the wrong
+    excerpt, or echoed internal "[Source N]"-style labels verbatim). Since
+    the actual retrieved chunks and their titles are already known with
+    certainty *before* generation even starts, there is no need to ask the
+    model to reproduce that information at all -- source attribution is
+    reconstructed here, after the fact, from data the model never touched.
+    """
+    seen: List[str] = []
+    for s in sources:
+        title = s.get("title")
+        if title and title not in seen:
+            seen.append(title)
+    return ("\n\nReference: " + "; ".join(seen)) if seen else ""
+
+
+def _with_reference_footer(text: str, sources: List[dict]) -> str:
+    """Append the deterministic reference footer to ``text``, unless ``text``
+    is exactly the refusal sentence -- a clean "not found" answer should not
+    claim a source was used."""
+    if not text.strip() or text.strip() == NO_CONTEXT_REPLY:
+        return text
+    return text + _build_reference_footer(sources)
+
+
 def _strip_echoed_instruction(text: str, target_language: str) -> str:
     """Strip a literal echo of the translation instruction from the model's reply.
 
@@ -81,10 +133,11 @@ def _strip_echoed_instruction(text: str, target_language: str) -> str:
 
 
 class ChatEngine:
-    def __init__(self, store, model, embedder=None):
+    def __init__(self, store, model, embedder=None, reranker=None):
         self.store = store
         self.model = model
         self.embedder = embedder
+        self.reranker = reranker
 
     def ask(
         self,
@@ -102,7 +155,16 @@ class ChatEngine:
             vectors = self.embedder.embed([q])
             query_embedding = vectors[0] if vectors else None
 
-        sources = self.store.search(q, config.TOP_K, query_embedding=query_embedding)
+        # With a ready reranker, pull a wider candidate pool from hybrid
+        # search and let the cross-encoder narrow it down to TOP_K by
+        # actually reading (query, chunk) together -- more accurate than the
+        # hybrid score alone, at the cost of one extra local model pass per
+        # candidate. Without one, hybrid search's own top-K is used as-is.
+        reranking = self.reranker is not None and self.reranker.ready
+        candidate_k = config.RERANK_CANDIDATE_K if reranking else config.TOP_K
+        sources = self.store.search(q, candidate_k, query_embedding=query_embedding)
+        if reranking:
+            sources = self.reranker.rerank(q, sources, config.TOP_K)
         yield {"type": "sources", "sources": [self._view(s) for s in sources]}
 
         if not sources:
@@ -149,6 +211,7 @@ class ChatEngine:
             yield {"type": "error", "message": str(err)}
             return
         draft_truncated = getattr(self.model, "last_response_truncated", False)
+        drafted = _strip_thinking_block(drafted)
         drafted_clean = drafted.strip()
         draft_unusable = draft_truncated and len(drafted_clean) < _MIN_USABLE_DRAFT_CHARS
 
@@ -156,7 +219,7 @@ class ChatEngine:
             # Nothing to translate, or nothing usable was produced — show the
             # grounded draft as-is.
             if drafted:
-                yield {"type": "token", "text": drafted}
+                yield {"type": "token", "text": _with_reference_footer(drafted, sources)}
             if draft_truncated:
                 yield {"type": "notice", "message": _REPETITION_NOTICE}
             yield {"type": "done"}
@@ -190,6 +253,7 @@ class ChatEngine:
             return
 
         translation_truncated = getattr(self.model, "last_response_truncated", False)
+        translated = _strip_thinking_block(translated)
         translated = _strip_echoed_instruction(translated, target_language)
         translation_clean = translated.strip()
         translation_unusable = (
@@ -200,7 +264,7 @@ class ChatEngine:
         if translation_unusable:
             # Translation was not reliable — fall back to the original,
             # already-correct answer rather than showing garbled text.
-            yield {"type": "token", "text": drafted_clean}
+            yield {"type": "token", "text": _with_reference_footer(drafted_clean, sources)}
             yield {
                 "type": "notice",
                 "message": (
@@ -211,7 +275,12 @@ class ChatEngine:
             yield {"type": "done"}
             return
 
-        yield {"type": "token", "text": translated}
+        # The reference footer is appended in English regardless of
+        # ``target_language`` -- it's the actual stored document title, a
+        # proper noun, not something to run through the translation pass
+        # (which would risk mangling it, as seen live with e.g. "Cathodic
+        # Protection Survey" -> a garbled Turkish paraphrase).
+        yield {"type": "token", "text": _with_reference_footer(translated, sources)}
         if translation_truncated:
             yield {"type": "notice", "message": _REPETITION_NOTICE}
         yield {"type": "done"}
@@ -227,6 +296,8 @@ class ChatEngine:
             "content": chunk["content"],
         }
         if chunk.get("semantic_score") is not None:
-            view["tfidf_score"] = chunk.get("tfidf_score")
+            view["bm25_score"] = chunk.get("bm25_score")
             view["semantic_score"] = chunk.get("semantic_score")
+        if chunk.get("rerank_score") is not None:
+            view["rerank_score"] = round(chunk["rerank_score"], 4)
         return view

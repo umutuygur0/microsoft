@@ -1,0 +1,202 @@
+[
+  {
+    "n": 1,
+    "question": "How do I detect a gas leak?",
+    "answer": "# Gas Leak Detection Procedure\n\n## Summary\nThis procedure describes how to detect and confirm a natural gas leak using a calibrated portable gas detector.\n\n## Safety Warnings\n- Natural gas is highly flammable. Do NOT use any ignition source, mobile phone, or non-intrinsically-safe equipment within a suspected leak zone — a single spark is enough to ignite an accumulated gas cloud.\n- Always approach a suspected leak from upwind, so that any gas present is carried away from the surveyor rather than toward them.\n\n## Step-by- Step Guidance\n1. Confirm the detector is calibrated and has been bump-tested before entering the site — an uncalibrated detector produces a reading, but not a trustworthy one.\n2. Switch on the detector in clean air away from the survey area to establish a reliable zero baseline.\n3. Walk the survey line slowly, holding the sensor 5 to 10 cm from fittings, flanges, and joints — these mechanical connections are by far the most common leak points, far more so than the pipe body itself.\n4. Note any reading above 5% LEL as a potential leak location requiring closer investigation, even though it is below the evacuation threshold.\n5. If the reading exceeds 20% of the Lower Explosive Limit (LEL), evacuate the area immediately and establish a 50 metre exclusion zone before any further action is taken.\n6. Record the location, LEL reading, and time on the inspection form, since this record feeds directly into the work order and any trend analysis of recurring leak points.\n7. Isolate the affected section and raise a work order for repair — a confirmed leak is not something to monitor and revisit later; it is isolated as soon as it is safe to do so.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.522
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.475
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4586
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "question": "What should I do if I discover a fire on site?",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.4291
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.414
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.4055
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "question": "Boru hattini hangi metal korur?",
+    "answer": "This question is not answered in the provided context.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.2012
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.1972
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.1849
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "question": "What is a blowout preventer used for?",
+    "answer": "A blowout preventer (BOP) is used to prevent a blowout by shut off the well hole and prevent the escape of underground fluids. BOPs are designed to form a seal in the annular space between the drill pipe and the wellbore. BOPs are used to control the pressures encountered during a kick.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.5154
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4703
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4599
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "question": "confined space entry icin oksijen limitleri nedir?",
+    "answer": "- Oksijen: 19,5% to 23,5%. 19,5% altında, atmosphere Oksijen-deficient; 23,5% altında, atmosphere Oksijen-enriched and significantly increases fire risk.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.5298
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.5276
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.459
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "question": "What are the OSHA exposure limits for hydrogen sulfide?",
+    "answer": "OSHA exposure limits for hydrogen sulfide are as following:\n\n- General Industry Ceiling Limit: 20 ppm\n- General Industry Peak Limit: 50 ppm (up to 10 minutes if no other exposure during shift).",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.6903
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.6626
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.6626
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "question": "How often should a gas detector be calibrated?",
+    "answer": "## Summary\nA gas detector should be calibrated at least every 6 months, or more frequently per manufacturer guidance or if a bump test result is borderline.\n\n## Step-by-step Guidance\n1. **Calibration Frequency:** A gas detector should be calibrated at least every 6 months.\n2. **Bump Test:** Before each day of use, a bump test should be carried out to check the detector's response.\n3. **Calibration Procedure:** A full calibration should be carried out using certified calibration gas, and the detector should be calibrated in a well-ventilated area away from ignition sources.\n4. **Calibration Record:** The calibration date, the calibration gas lot number, and the result should be accurately and clearly written in the equipment register.\n5. **Calibration due sticker:** A calibration due sticker should be clearly and accurately written on the physical unit of the detector, and the equipment register should be clearly and accurately written with the next due date so that anyone checking the device out can clearly and accurately check the next due date.\n\n## Reference\n[Source 4] Gas Detector Calibration (Maintenance, relevance 48%)\n- **Bump test:** before each day of use — this is a quick check, not a full calibration, and should never be skipped even when time is tight.\n\n- **Full calibration:** at least every 6 months, or more frequently per manufacturer guidance or if a bump test result is borderline.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5307
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.4972
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.4855
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "question": "What is the acceptable pressure drop during a pipeline pressure test?",
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5221
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5131
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5106
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "question": "What is photosynthesis?",
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.2285
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.2157
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.2127
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "question": "What PPE is required in H2S areas?",
+    "answer": "## Summary\n\nPersonal protective equipment (PPE) required in Hydrogen Sulphide (H2S) areas is detailed in the context documents.\n\n## Safety Warnings\n\n- H2S is toxic and can be fatal within minutes at high concentrations.\n- Do not rely on smell as an indicator of safety; H2S deadens the sense of smell at dangerous levels.\n\n## Step-by--step Guidance\n\n1. **H2S Monitoring Areas: All areas where H2S may be present. This is not a specific area but rather any area where H2S may be present. This is not a specific area but rather any area",
+    "notice": "Response stopped early — the model started repeating itself.",
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5651
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5137
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4737
+      }
+    ]
+  }
+]

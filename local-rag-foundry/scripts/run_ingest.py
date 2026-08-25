@@ -12,7 +12,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import config
-from src.embedder import LocalEmbedder
 from src.ingest import ingest_all
 
 
@@ -26,7 +25,12 @@ def main() -> None:
 
     embedder = None
     if not no_embed:
-        embedder = LocalEmbedder()
+        if config.LLM_PROVIDER == "ollama":
+            from src.ollama_embedder import OllamaEmbedder
+            embedder = OllamaEmbedder()
+        else:
+            from src.embedder import LocalEmbedder
+            embedder = LocalEmbedder()
         print("Loading embedding model for hybrid retrieval (skip with --no-embed)...")
         embedder.init()
         print(f"  {embedder.message}")

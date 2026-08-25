@@ -1,3 +1,4 @@
+import config
 from src.chat_engine import ChatEngine, _strip_echoed_instruction
 from src.chunker import Chunk
 from src.vector_store import VectorStore
@@ -130,12 +131,113 @@ def test_ask_streams_sources_then_tokens_then_done():
     assert "calibrated detector" in tokens
 
 
+class _FakeReadyReranker:
+    """Deliberately reorders to something hybrid search would never produce
+    on its own, so a passing test proves the reranker's order was actually
+    used rather than the hybrid order slipping through unchanged."""
+    ready = True
+
+    def __init__(self):
+        self.calls = []
+
+    def rerank(self, query, candidates, top_k):
+        self.calls.append((query, [c["doc_id"] for c in candidates], top_k))
+        reordered = sorted(candidates, key=lambda c: c["doc_id"])  # arbitrary but deterministic
+        for c in reordered:
+            c["rerank_score"] = 1.0
+        return reordered[:top_k]
+
+
+def test_ask_uses_reranker_output_order_when_reranker_is_ready():
+    reranker = _FakeReadyReranker()
+    engine = ChatEngine(make_store(), _FakeReadyModel(), reranker=reranker)
+    events = list(engine.ask("gas leak valve ppe"))
+
+    assert len(reranker.calls) == 1
+    _, candidate_doc_ids, top_k = reranker.calls[0]
+    assert top_k == config.TOP_K
+    # hybrid search was asked for the wider reranking candidate pool, not TOP_K
+    assert len(candidate_doc_ids) <= config.RERANK_CANDIDATE_K
+
+    sources_event = next(e for e in events if e["type"] == "sources")
+    result_doc_ids = [s["doc_id"] for s in sources_event["sources"]]
+    assert result_doc_ids == sorted(result_doc_ids)  # matches the reranker's (fake) ordering
+    assert all(s["rerank_score"] == 1.0 for s in sources_event["sources"])
+
+
+def test_ask_ignores_reranker_when_not_ready():
+    class _NotReadyReranker:
+        ready = False
+
+        def rerank(self, *args, **kwargs):  # pragma: no cover - must never be called
+            raise AssertionError("rerank should not be called when not ready")
+
+    engine = ChatEngine(make_store(), _FakeReadyModel(), reranker=_NotReadyReranker())
+    events = list(engine.ask("How do I detect a gas leak?"))
+    sources_event = next(e for e in events if e["type"] == "sources")
+    assert "rerank_score" not in sources_event["sources"][0]
+
+
+class _ThinkingModel:
+    """Simulates a Qwen3-style model that emits a <think> reasoning trace
+    before its real answer."""
+    ready = True
+    message = "ready"
+    last_response_truncated = False
+
+    def stream_chat(self, messages):
+        yield "<think>Let me work through the retrieved context step by step...</think>"
+        yield "Detect a gas leak with a calibrated detector."
+
+
+def test_ask_strips_a_thinking_block_from_the_grounding_draft():
+    engine = ChatEngine(make_store(), _ThinkingModel())
+    events = list(engine.ask("How do I detect a gas leak?"))
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == "Detect a gas leak with a calibrated detector.\n\nReference: Gas Leak Detection"
+    assert "<think>" not in tokens
+
+
 def test_ask_falls_back_to_passage_when_model_not_ready():
     engine = ChatEngine(make_store(), _FakeUnavailableModel())
     events = list(engine.ask("How do I detect a gas leak?"))
     tokens = "".join(e["text"] for e in events if e["type"] == "token")
     assert "not ready" in tokens
     assert "Gas Leak Detection" in tokens
+
+
+def test_ask_appends_a_deterministic_reference_footer_from_retrieval_metadata():
+    # The model is never asked to cite its own source (see SYSTEM_PROMPT) --
+    # repeated live testing found it could not be trusted to do so
+    # correctly even with explicit instructions. The footer is built purely
+    # from the actual retrieved chunk's title, which the fake model below
+    # never even sees.
+    engine = ChatEngine(make_store(), _FakeReadyModel())
+    events = list(engine.ask("How do I detect a gas leak?"))
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens.endswith("\n\nReference: Gas Leak Detection")
+
+
+def test_ask_does_not_append_a_reference_footer_to_a_clean_refusal():
+    # A model that refuses even though sources *were* retrieved and passed
+    # to it (it just judged none of them relevant) must not have a
+    # "Reference:" footer attached -- that would claim a source was used
+    # when the answer says otherwise.
+    from src.prompts import NO_CONTEXT_REPLY
+
+    class _RefusingModel:
+        ready = True
+        message = "ready"
+        last_response_truncated = False
+
+        def stream_chat(self, messages):
+            yield NO_CONTEXT_REPLY
+
+    engine = ChatEngine(make_store(), _RefusingModel())
+    events = list(engine.ask("How do I detect a gas leak?"))
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == NO_CONTEXT_REPLY
+    assert "Reference:" not in tokens
 
 
 def test_ask_no_matching_context_returns_fallback_message():
@@ -171,7 +273,7 @@ def test_ask_with_forced_language_runs_a_separate_translation_pass():
     assert "Detect a gas leak with a calibrated detector." in translation_user
 
     tokens = "".join(e["text"] for e in events if e["type"] == "token")
-    assert tokens == "Kalibreli bir detektörle..."
+    assert tokens == "Kalibreli bir detektörle...\n\nReference: Gas Leak Detection"
 
 
 def test_ask_without_response_language_only_runs_the_grounding_pass():
@@ -218,8 +320,33 @@ def test_ask_still_translates_a_long_draft_that_was_truncated_late():
 
     assert len(model.calls) == 2  # translation pass DID run
     tokens = "".join(e["text"] for e in events if e["type"] == "token")
-    assert tokens == "Özet: Gaz kaçağını tespit etmek için..."
+    assert tokens == "Özet: Gaz kaçağını tespit etmek için...\n\nReference: Gas Leak Detection"
     assert not any(e["type"] == "notice" for e in events)  # final result was clean
+
+
+def test_strip_thinking_block_removes_a_closed_think_block():
+    from src.chat_engine import _strip_thinking_block
+
+    text = "<think>Let me reason about this step by step...</think>The oxygen limit is 19.5% to 23.5%."
+    assert _strip_thinking_block(text) == "The oxygen limit is 19.5% to 23.5%."
+
+
+def test_strip_thinking_block_removes_an_unclosed_think_block():
+    # Regression test: max_tokens cutting the model off mid-"thought" (before
+    # the closing tag, and before any real answer) was observed live to
+    # produce a completely empty final answer -- there is no way to tell
+    # where thinking would have ended, so the whole unclosed block is dropped.
+    from src.chat_engine import _strip_thinking_block
+
+    text = "<think>Let me consider the context carefully, first I should look at..."
+    assert _strip_thinking_block(text) == ""
+
+
+def test_strip_thinking_block_leaves_normal_text_unchanged():
+    from src.chat_engine import _strip_thinking_block
+
+    text = "Summary: Use PPE at all times."
+    assert _strip_thinking_block(text) == text
 
 
 def test_strip_echoed_instruction_removes_the_literal_prompt():
@@ -268,7 +395,7 @@ def test_ask_falls_back_to_original_when_translation_pass_collapses():
     events = list(engine.ask("How do I detect a gas leak?", response_language="Turkish"))
 
     tokens = "".join(e["text"] for e in events if e["type"] == "token")
-    assert tokens == draft  # fell back to the original, reliable answer
+    assert tokens == draft + "\n\nReference: Gas Leak Detection"  # fell back to the original, reliable answer
     notice = next(e for e in events if e["type"] == "notice")
     assert "translate" in notice["message"].lower()
     assert "Turkish" in notice["message"]

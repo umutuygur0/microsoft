@@ -1,7 +1,11 @@
-"""Pure-Python TF-IDF utilities: tokenizing, term frequency, IDF, cosine similarity.
+"""Pure-Python tokenizing/term-frequency utilities, plus dense cosine
+similarity for embeddings.
 
-No embedding model, no third-party dependency. Good enough for a small,
-domain-specific corpus and fully transparent (every weight can be inspected).
+No third-party dependency for tokenizing. Sparse-vector scoring (originally
+TF-IDF + cosine similarity here) has moved to src/bm25.py's Okapi BM25 --
+see that module's docstring for why. This module keeps only what BM25 and
+the embedding half of hybrid retrieval still need: tokenizing, raw term
+frequency, and dense (embedding) cosine similarity.
 
 The tokenizer is Unicode-aware (not English/ASCII-only): it keeps letters from
 any script — e.g. Turkish "ç ğ ı ö ş ü" — instead of stripping them, and the
@@ -14,7 +18,7 @@ from __future__ import annotations
 import math
 import re
 from collections import Counter
-from typing import Dict, Iterable, List
+from typing import List
 
 ENGLISH_STOPWORDS = {
     "the", "a", "an", "and", "or", "but", "if", "then", "else", "of", "to",
@@ -56,34 +60,6 @@ def tokenize(text: str) -> List[str]:
 def term_frequency(text: str) -> Counter:
     """Raw term-frequency counter for a piece of text."""
     return Counter(tokenize(text))
-
-
-def compute_idf(tf_maps: Iterable[Counter]) -> Dict[str, float]:
-    """idf(t) = ln(1 + N / df(t)) across a corpus of term-frequency counters."""
-    tf_maps = list(tf_maps)
-    doc_freq: Counter = Counter()
-    for tf in tf_maps:
-        doc_freq.update(tf.keys())
-    n_docs = len(tf_maps) or 1
-    return {term: math.log(1 + n_docs / freq) for term, freq in doc_freq.items()}
-
-
-def tfidf_vector(tf: Counter, idf: Dict[str, float]) -> Dict[str, float]:
-    """Weight a term-frequency counter by IDF. Unseen terms default to idf=1."""
-    return {term: freq * idf.get(term, 1.0) for term, freq in tf.items()}
-
-
-def cosine_similarity(a: Dict[str, float], b: Dict[str, float]) -> float:
-    """Cosine similarity between two sparse vectors represented as dicts."""
-    if not a or not b:
-        return 0.0
-    small, large = (a, b) if len(a) <= len(b) else (b, a)
-    dot = sum(weight * large.get(term, 0.0) for term, weight in small.items())
-    if dot == 0:
-        return 0.0
-    mag_a = math.sqrt(sum(w * w for w in a.values()))
-    mag_b = math.sqrt(sum(w * w for w in b.values()))
-    return dot / (mag_a * mag_b)
 
 
 def dense_cosine_similarity(a: List[float], b: List[float]) -> float:

@@ -1,14 +1,18 @@
-"""SQLite-backed store for document chunks with hybrid TF-IDF + semantic retrieval.
+"""SQLite-backed store for document chunks with hybrid BM25 + semantic retrieval.
 
 Each chunk is persisted with its raw term-frequency map (JSON) and, optionally,
 a dense embedding vector (JSON list of floats). At query time an in-memory
-cache builds an inverted index and per-chunk TF-IDF vectors.
+cache builds an inverted index and BM25 statistics (per-chunk length, corpus
+average length, IDF) from those stored term-frequency maps directly — no
+extra column or re-ingestion needed when the scoring formula changes.
 
-Retrieval is TF-IDF by default. When a caller also supplies a query embedding
-(see ``src/embedder.py``) *and* the store has embeddings on file, the two
-scores are blended (``config.HYBRID_TFIDF_WEIGHT`` / ``HYBRID_EMBEDDING_WEIGHT``)
-so that semantically related chunks can surface even without keyword overlap.
-Without a query embedding, behaviour is identical to pure TF-IDF.
+Retrieval is BM25 by default (replaces the original plain TF-IDF + cosine
+similarity — see src/bm25.py's docstring for why). When a caller also
+supplies a query embedding (see ``src/embedder.py``) *and* the store has
+embeddings on file, the two scores are blended (``config.HYBRID_BM25_WEIGHT``
+/ ``HYBRID_EMBEDDING_WEIGHT``) so that semantically related chunks can
+surface even without keyword overlap. Without a query embedding, behaviour
+is identical to pure BM25.
 """
 from __future__ import annotations
 
@@ -19,7 +23,8 @@ from collections import Counter
 from typing import Dict, List, Optional
 
 import config
-from src.tfidf import compute_idf, cosine_similarity, dense_cosine_similarity, term_frequency, tfidf_vector
+from src.bm25 import bm25_score, compute_bm25_idf
+from src.tfidf import dense_cosine_similarity, term_frequency
 from src.chunker import Chunk
 
 
@@ -113,7 +118,7 @@ class VectorStore:
         return [dict(r) for r in rows]
 
     def _ensure_cache_locked(self) -> dict:
-        """Build the in-memory TF-IDF (+ embedding) cache. Caller must hold ``self._lock``."""
+        """Build the in-memory BM25 (+ embedding) cache. Caller must hold ``self._lock``."""
         if self._cache is not None:
             return self._cache
 
@@ -122,7 +127,9 @@ class VectorStore:
         ).fetchall()
 
         tf_maps = [Counter(json.loads(r["tf"])) for r in rows]
-        idf = compute_idf(tf_maps)
+        idf = compute_bm25_idf(tf_maps)
+        doc_lens = [sum(tf.values()) for tf in tf_maps]
+        avg_doc_len = (sum(doc_lens) / len(doc_lens)) if doc_lens else 0.0
 
         inverted: Dict[str, set] = {}
         records = []
@@ -139,11 +146,18 @@ class VectorStore:
                 "category": row["category"],
                 "chunk_index": row["chunk_index"],
                 "content": row["content"],
-                "vector": tfidf_vector(tf, idf),
+                "tf": tf,
+                "doc_len": doc_lens[i],
                 "embedding": embedding,
             })
 
-        self._cache = {"records": records, "inverted": inverted, "idf": idf, "has_embeddings": has_embeddings}
+        self._cache = {
+            "records": records,
+            "inverted": inverted,
+            "idf": idf,
+            "avg_doc_len": avg_doc_len,
+            "has_embeddings": has_embeddings,
+        }
         return self._cache
 
     def search(
@@ -152,8 +166,8 @@ class VectorStore:
         top_k: int = config.TOP_K,
         query_embedding: Optional[List[float]] = None,
     ) -> List[dict]:
-        """Rank chunks by TF-IDF similarity, blended with semantic similarity
-        when ``query_embedding`` is given and the store has embeddings on file.
+        """Rank chunks by BM25, blended with semantic similarity when
+        ``query_embedding`` is given and the store has embeddings on file.
         """
         query_tf = term_frequency(query)
         if not query_tf and query_embedding is None:
@@ -164,40 +178,69 @@ class VectorStore:
             records = cache["records"]
             if not records:
                 return []
-            query_vec = tfidf_vector(query_tf, cache["idf"]) if query_tf else {}
 
-            tfidf_candidates: set = set()
+            bm25_candidates: set = set()
             for term in query_tf:
-                tfidf_candidates.update(cache["inverted"].get(term, ()))
+                bm25_candidates.update(cache["inverted"].get(term, ()))
 
             # Semantic similarity isn't limited to keyword-overlap candidates —
             # that's the whole point of adding it — so when a query embedding
             # is available, every chunk with a stored embedding is considered.
             use_hybrid = query_embedding is not None and cache["has_embeddings"]
-            candidate_indices = tfidf_candidates | (set(range(len(records))) if use_hybrid else set())
+            candidate_indices = bm25_candidates | (set(range(len(records))) if use_hybrid else set())
+
+            # BM25 is unbounded (unlike cosine similarity's [0, 1] range), so
+            # blending it with semantic score requires normalizing it first —
+            # min-max against the max BM25 score *within this candidate set*
+            # (a per-query normalization, not a stored/global one).
+            raw_bm25: Dict[int, float] = {}
+            if query_tf:
+                for idx in candidate_indices:
+                    record = records[idx]
+                    raw_bm25[idx] = bm25_score(
+                        query_tf.keys(), record["tf"], record["doc_len"], cache["avg_doc_len"], cache["idf"]
+                    )
+            max_bm25 = max(raw_bm25.values(), default=0.0)
 
             scored = []
             for idx in candidate_indices:
                 record = records[idx]
-                tfidf_score = cosine_similarity(query_vec, record["vector"]) if query_vec else 0.0
+                bm25_norm = (raw_bm25.get(idx, 0.0) / max_bm25) if max_bm25 > 0 else 0.0
 
-                if use_hybrid and record["embedding"] is not None:
-                    semantic_score = max(0.0, dense_cosine_similarity(query_embedding, record["embedding"]))
+                if use_hybrid:
+                    # A candidate missing its own embedding (e.g. a chunk added
+                    # while the embedder was briefly unavailable) must not be
+                    # scored on bm25_score alone at full weight — that would
+                    # unfairly outrank chunks that *do* have an embedding and
+                    # are correctly discounted to their blended share. Treat a
+                    # missing embedding as a semantic score of 0 for scoring
+                    # purposes, while still reporting it as None (not 0.0) so
+                    # the caller can tell "not embedded" apart from "embedded
+                    # but no match".
+                    has_embedding = record["embedding"] is not None
+                    semantic_score = (
+                        max(0.0, dense_cosine_similarity(query_embedding, record["embedding"]))
+                        if has_embedding else 0.0
+                    )
                     final_score = (
-                        config.HYBRID_TFIDF_WEIGHT * tfidf_score
+                        config.HYBRID_BM25_WEIGHT * bm25_norm
                         + config.HYBRID_EMBEDDING_WEIGHT * semantic_score
                     )
-                    extra = {"tfidf_score": round(tfidf_score, 4), "semantic_score": round(semantic_score, 4)}
+                    extra = {
+                        "bm25_score": round(bm25_norm, 4),
+                        "semantic_score": round(semantic_score, 4) if has_embedding else None,
+                    }
                 else:
-                    final_score = tfidf_score
-                    extra = {"tfidf_score": round(tfidf_score, 4), "semantic_score": None}
+                    final_score = bm25_norm
+                    extra = {"bm25_score": round(bm25_norm, 4), "semantic_score": None}
 
                 if final_score > 0:
                     scored.append({**record, "score": final_score, **extra})
 
         scored.sort(key=lambda r: r["score"], reverse=True)
         for r in scored:
-            r.pop("vector", None)
+            r.pop("tf", None)
+            r.pop("doc_len", None)
             r.pop("embedding", None)
         return scored[:top_k]
 

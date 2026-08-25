@@ -1,5 +1,6 @@
 import pytest
 
+import config
 from src.chunker import Chunk
 from src.vector_store import VectorStore
 
@@ -55,9 +56,9 @@ def test_list_documents_groups_by_doc_id(store):
     assert all(d["chunks"] == 1 for d in docs)
 
 
-# --- Hybrid (TF-IDF + semantic) retrieval ---
+# --- Hybrid (BM25 + semantic) retrieval ---
 
-def test_pure_tfidf_search_ignores_embeddings_when_no_query_embedding(store):
+def test_pure_bm25_search_ignores_embeddings_when_no_query_embedding(store):
     # sample_chunks() has no embeddings at all; behaviour must be unchanged.
     results = store.search("how do I detect a gas leak")
     assert results[0]["doc_id"] == "leak"
@@ -73,7 +74,7 @@ def test_hybrid_search_finds_semantic_match_with_no_keyword_overlap():
     # "a" is embedded close to the query embedding, "b" is orthogonal.
     store.add_chunks(chunks, embeddings=[[1.0, 0.0], [0.0, 1.0]])
 
-    # No shared keywords at all -> pure TF-IDF finds nothing.
+    # No shared keywords at all -> pure BM25 finds nothing.
     assert store.search("qqq www") == []
 
     # With a query embedding aligned to "a", hybrid search finds it anyway.
@@ -93,10 +94,38 @@ def test_hybrid_search_blends_scores_when_both_signals_present():
     store.add_chunks(chunks, embeddings=[[1.0, 0.0]])
 
     results = store.search("how do I detect a gas leak", query_embedding=[1.0, 0.0])
-    assert results[0]["tfidf_score"] > 0
+    assert results[0]["bm25_score"] > 0
     assert results[0]["semantic_score"] == pytest.approx(1.0)
     # blended score sits between the two weighted components, not just one of them
     assert 0 < results[0]["score"] <= 1.0
+    store.close()
+
+
+def test_hybrid_search_discounts_a_candidate_missing_its_own_embedding():
+    # Regression test: a chunk added while the embedder was unavailable (so
+    # it has no stored embedding) must not be scored on bm25_score alone at
+    # full weight in hybrid mode -- that would unfairly outrank a chunk that
+    # *does* have an embedding and is correctly discounted to its blended
+    # share. Both chunks share identical text, so any score difference here
+    # is purely from how the missing embedding is handled.
+    store = VectorStore(":memory:")
+    chunks = [
+        Chunk("embedded", "Embedded Doc", "General", 0, "detect a gas leak near the flange"),
+        Chunk("bare", "Unembedded Doc", "General", 0, "detect a gas leak near the flange"),
+    ]
+    store.add_chunks(chunks, embeddings=[[1.0, 0.0], None])
+
+    results = store.search("detect a gas leak", query_embedding=[1.0, 0.0])
+    by_doc = {r["doc_id"]: r for r in results}
+
+    assert by_doc["bare"]["semantic_score"] is None
+    # Same bm25_score for both (identical text) -> the embedded chunk's
+    # blended score and the bare chunk's bm25-only-but-discounted score
+    # must use the same weight, so they end up equal rather than the bare
+    # chunk winning on an un-discounted bm25_score.
+    assert by_doc["embedded"]["bm25_score"] == by_doc["bare"]["bm25_score"]
+    expected_bare_score = config.HYBRID_BM25_WEIGHT * by_doc["bare"]["bm25_score"]
+    assert by_doc["bare"]["score"] == pytest.approx(expected_bare_score, abs=1e-3)
     store.close()
 
 

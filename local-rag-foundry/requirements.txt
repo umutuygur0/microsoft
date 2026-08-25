@@ -9,3 +9,9 @@ streamlit
 pypdf
 python-docx
 pytest
+# Cross-encoder reranking pass over hybrid-search candidates (src/reranker.py).
+# Multilingual (mMARCO-trained, includes Turkish) so it can rerank both
+# English and Turkish queries against the (always-English) document corpus.
+# Runs via PyTorch, entirely on-device -- not part of Foundry Local, but
+# still a fully local/offline model, same as the rest of this project.
+sentence-transformers

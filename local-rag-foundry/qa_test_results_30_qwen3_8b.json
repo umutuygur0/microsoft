@@ -1,0 +1,662 @@
+[
+  {
+    "n": 1,
+    "difficulty": "easy",
+    "question": "How do I detect a gas leak?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.522
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4586
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.3524
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "difficulty": "easy",
+    "question": "What is the bump test frequency for a gas detector?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6095
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.4822
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5301
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "difficulty": "easy",
+    "question": "What is the acceptable pressure drop during a pipeline pressure test?",
+    "expected_source": "Pipeline Pressure Testing",
+    "answer": "- **Acceptable pressure drop:** less than 0.5% of test pressure over the hold period — anything beyond this is treated as an indication of a leak requiring investigation, not measurement noise.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5221
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5106
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.3863
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "difficulty": "easy",
+    "question": "What PPE is required in H2S areas?",
+    "expected_source": "Personal Protective Equipment Requirements",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5651
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4737
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5137
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "difficulty": "easy",
+    "question": "How often should a gas detector be calibrated?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.4831
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5307
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3645
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "difficulty": "easy",
+    "question": "What should I do if I discover a fire on site?",
+    "expected_source": "Fire Response",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.4291
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.414
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.4055
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "difficulty": "easy",
+    "question": "What is the actuator air pressure range for a pneumatic valve?",
+    "expected_source": "Valve Inspection and Maintenance",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.5806
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.4967
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3152
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "difficulty": "easy",
+    "question": "How long must the fire watch continue after hot work is finished?",
+    "expected_source": "Hot Work Permit",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5326
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5175
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.4904
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "difficulty": "easy",
+    "question": "What are the H2S alarm set points?",
+    "expected_source": "Hydrogen Sulphide (H2S) Monitoring",
+    "answer": "**Reference:** Source 1, Source 2, Source 4\n\n**H2S Alarm Set Points:**\n\n- **Low alarm: 5 ppm.** This threshold is set well below any acute health effect, giving time to investigate and correct the source before exposure becomes hazardous.\n\n- **High alarm: 10 ppm.** At this level, immediate evacuation is required; this is not a threshold for cautious continuation of work.\n\n- **Immediately Dangerous to Life or Health (IDLH): 100 ppm.** At or above this concentration, unprotected exposure can cause rapid loss of consciousness and death; this level must never be approached without breathing apparatus.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.544
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5255
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.477
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "difficulty": "easy",
+    "question": "What is a blowout preventer used for?",
+    "expected_source": "eTool: Well Control - Blowout Preventers (OSHA)",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4599
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4446
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3928
+      }
+    ]
+  },
+  {
+    "n": 11,
+    "difficulty": "medium",
+    "question": "Gaz kacagi nasil tespit edilir?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.2274
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.1913
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.2005
+      }
+    ]
+  },
+  {
+    "n": 12,
+    "difficulty": "medium",
+    "question": "What oxygen percentage range is safe before entering an enclosed space?",
+    "expected_source": "Confined Space Entry",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.4964
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.4071
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.348
+      }
+    ]
+  },
+  {
+    "n": 13,
+    "difficulty": "medium",
+    "question": "Yangin sondurucu secimi nasil yapilir?",
+    "expected_source": "Fire Response",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.1065
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.1123
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.1062
+      }
+    ]
+  },
+  {
+    "n": 14,
+    "difficulty": "medium",
+    "question": "What noise level triggers a hearing conservation program?",
+    "expected_source": "Occupational Noise Exposure - Overview (OSHA)",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.5911
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.6367
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.555
+      }
+    ]
+  },
+  {
+    "n": 15,
+    "difficulty": "medium",
+    "question": "Why does cold-soaked steel behave differently under an impact load?",
+    "expected_source": "Cold Weather Operations",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.3228
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.2979
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.2429
+      }
+    ]
+  },
+  {
+    "n": 16,
+    "difficulty": "medium",
+    "question": "What forms of stored energy must be released during equipment isolation?",
+    "expected_source": "Lockout / Tagout (LOTO)",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.5827
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.4969
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.4836
+      }
+    ]
+  },
+  {
+    "n": 17,
+    "difficulty": "medium",
+    "question": "Bir boru hatti temizleme pigi nasil firlatilir?",
+    "expected_source": "Pipeline Pig Launching",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.1657
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.1487
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.1491
+      }
+    ]
+  },
+  {
+    "n": 18,
+    "difficulty": "medium",
+    "question": "What is the minimum trench protection method required to prevent a cave-in?",
+    "expected_source": "Trenching and Excavation - Overview (OSHA)",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.5512
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.3255
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.3066
+      }
+    ]
+  },
+  {
+    "n": 19,
+    "difficulty": "medium",
+    "question": "confined space icin oksijen limitleri nedir?",
+    "expected_source": "Confined Space Entry",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.5145
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.4551
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.3789
+      }
+    ]
+  },
+  {
+    "n": 20,
+    "difficulty": "medium",
+    "question": "What should be done if a flare pilot light goes out?",
+    "expected_source": "Flare System Operation",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Flare System Operation",
+        "score": 0.535
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.5488
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.4633
+      }
+    ]
+  },
+  {
+    "n": 21,
+    "difficulty": "hard",
+    "question": "Boru hattini hangi metal korur?",
+    "expected_source": "Cathodic Protection Survey",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.1972
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.2012
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.1733
+      }
+    ]
+  },
+  {
+    "n": 22,
+    "difficulty": "hard",
+    "question": "vana pozisyon gostergesi neden onemli?",
+    "expected_source": "Valve Inspection and Maintenance",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2938
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.18
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.182
+      }
+    ]
+  },
+  {
+    "n": 23,
+    "difficulty": "hard",
+    "question": "Why does a fire watch need to continue even after welding has stopped?",
+    "expected_source": "Hot Work Permit",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.547
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.4003
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.4522
+      }
+    ]
+  },
+  {
+    "n": 24,
+    "difficulty": "hard",
+    "question": "kompresorde titresim artisi neyi gosterebilir?",
+    "expected_source": "Gas Compressor Maintenance",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.1352
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.1541
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.1431
+      }
+    ]
+  },
+  {
+    "n": 25,
+    "difficulty": "hard",
+    "question": "What instrument protects a well from an uncontrolled release at the surface?",
+    "expected_source": "Wellhead Inspection",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.3463
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.3741
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.3463
+      }
+    ]
+  },
+  {
+    "n": 26,
+    "difficulty": "hard",
+    "question": "hangi durumlarda ESD sistemi devreye alinir?",
+    "expected_source": "Emergency Shutdown Procedure",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.4155
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3135
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.2375
+      }
+    ]
+  },
+  {
+    "n": 27,
+    "difficulty": "hard",
+    "question": "What is required before a facility can legally store oil under EPA rules?",
+    "expected_source": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.3912
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.3707
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.3053
+      }
+    ]
+  },
+  {
+    "n": 28,
+    "difficulty": "hard",
+    "question": "kaynak isinden sonra yangin gozcusu ne kadar sure beklemeli?",
+    "expected_source": "Hot Work Permit",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.2656
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.2908
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.231
+      }
+    ]
+  },
+  {
+    "n": 29,
+    "difficulty": "hard",
+    "question": "Why can rust hide underneath pipe lagging?",
+    "expected_source": "Corrosion Inspection",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.304
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.2921
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.2489
+      }
+    ]
+  },
+  {
+    "n": 30,
+    "difficulty": "hard",
+    "question": "bogucu gaza maruz kalan birini kurtarmak neden tehlikeli?",
+    "expected_source": "First Aid for Gas Exposure",
+    "answer": "",
+    "notice": null,
+    "sources": [
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.2663
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.2437
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.2228
+      }
+    ]
+  }
+]

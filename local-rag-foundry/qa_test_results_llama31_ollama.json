@@ -1,0 +1,202 @@
+[
+  {
+    "n": 1,
+    "question": "How do I detect a gas leak?",
+    "answer": "**Summary**\n\nTo detect a natural gas leak, use calibrated portable combustible detectors and follow specific procedures outlined below to ensure safety while producing trustworthy results that can be acted upon confidently in field surveys.\n\n- Approach suspected leaks from upwind.\n  - Use equipment checked within last 24 hours (calibrated detector) or bump-tested before each survey for accuracy. \n    Hold the sensor close enough, but not too tight against fittings and flanges to detect a leak reliably; readings above certain thresholds are noted as potential locations requiring closer investigation.\n\n**Safety Warnings**\n\n- Natural gas is highly flamable: do NOT use ignition sources within suspected leaks.\n  - Evacuate areas with LEL reading exceeding **20%**, establishing an exclusion zone before further action.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5935
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5504
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4974
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "question": "What should I do if I discover a fire on site?",
+    "answer": "Summary\nRaise an alarm and evacuate upwind with all personnel before attempting first-response action for gas fires or when it's not safe due to uncontrolled flames, as per [Source 3] Fire Response (Safety).\n\n Safety Warnings \nPersonal safety takes priority over property at every stage of the response.\n\nStep-by-step Guidance\n\n1. Raise an alarm immediately on discovering a fire.\n2. If trained and if possible without putting yourself in danger:\n   - Isolate gas supply feeding to prevent unburned gases from spreading, as per [Source 3].\n   \nIf not safe due to flames or other reasons:\n\n- Evacuate upwind with all personnel towards the muster point.\n\nStep-by-step Guidance (continued)\n\n1. Account for everyone and report your presence at incident control once you've reached safety.\n2. Do NOT re-enter until formally declared as such by authorities, [Source 3].\n\nReference \n[Source 5] Hot Work Permit",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.4656
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.4643
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.4574
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "question": "Boru hattini hangi metal korur?",
+    "answer": "Özet\nMagnezimum ya da cıngozu kadar daha reaktif bir metalden genellikle boruların yakınında ve elektriksellen ona bağlı olan anodun seçilmesi demirin korunmasını sağlar.\n\nGüvenlik Uyarısı \n- CP test istasyonları yakınlarında bulunan güç hatlarının veya diğer tesisatların olşturduğu AC voltajı ile temas edilmemelidir. Her zaman izolatörler ve eldivenler takılı olarak çalışılmalıdır.\n \n\nAdım Adım Kılavuz\n1) Boruların yakınında daha reaktif bir metal olan magnezyum ya da cingoz gibi anodlar yerleştirilmeli,\n2) Anodorun boruya elektriksellen bağlantısı sağlanmalı.\n\nReferans \nKatotik Koruma Araştırması (Bakım, önemi %30'dir.)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.3025
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.2998
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.2897
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "question": "What is a blowout preventer used for?",
+    "answer": "Summary\nThe primary function of a Blow Out Preventers (BOP) system, also known as an accumulator , provides energy to operate BOPS and control valves.\n\nSafety Warnings \n- Pressure testing must be done after installation.\n \n\nStep-by-step Guidance:\n1: The blowout preventer is used for shutting off the well hole in case there's a kick or loss of circulation during drilling operations. This prevents underground fluids from escaping, thus preventing potential accidents such as fires and explosions.\n\n2 : It also helps to control pressures encountered when closing BOPs by circulating mud through chokes on choke manifolds.\n\n\nReference \neTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.5494
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.5425
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.5146
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "question": "confined space entry icin oksijen limitleri nedir?",
+    "answer": "Özet \nKapalı bir alanda oksijen seviyeleri %19,5 ile% 23,5 arasında olmalıdır.\n\nGüvenlik Uyarıları  \nPotansiyel olarak tehlikeli atmosferde çalışma sırasında sürekli şekilde gaz ve oda konsantrasyonlarının izlenmesi zorunludur.\n\n\nAdım Adım Kılavuz (Kaynak belge [Kaynak Belgesi: 4] Kapalı Alan Girişinden)\n1. Bölgenin isolationı.\n2-3 :Girme öncesinde güvenlik için üst, orta ve alt seviyelerde atmosferik testlerin tamamlanması.\n\n\nReferans\nSınırlı Altlar - Genel Bakış",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.5566
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.5565
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.4928
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "question": "What are the OSHA exposure limits for hydrogen sulfide?",
+    "answer": "Summary\nThe Occupational Health and Safety Administration (OSHA) has established various permissible exposure levels, ceiling limit values, peak level restrictions to ensure worker safety when handling or being exposed to Hydrogen Sulfide.\n\nSafety Warnings \nHandling of H2S can cause life-threatening situations if not properly managed. Exposure limits must be strictly adhered too for safe working conditions.\n\n\nStep-by-step Guidance\n1) Check the NIOSH REL (10-min ceiling): 10 ppm.\n   - This is a recommended exposure limit, but it's essential to follow OSHA guidelines as well.\n\n2)\n- General Industry Ceiling Limit: \n    * For short-term exposures up-to ten minutes without other hydrogen sulfide contact during that shift :50ppm\n3) Check the PELs (Permissible Exposure Limits):\n   - 20 ppm for general industry.\n4. Construction and Shipyard limits:\n     a.) The permissible exposure limit is set at: \n        * For construction workers, an eight-hour time-weighted average of ten parts per million.\n\n5)\n- IDLH levels are also critical to note as they indicate the concentration that can cause immediate danger for life or health.\n   - NIOSH has established 100 ppm (parts-per-million) immediately dangerous-to-life-and-health level.\n\n\n\nReference\nHydrogen Sulfide Hazards",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.6274
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.6111
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.5888
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "question": "How often should a gas detector be calibrated?",
+    "answer": "Summary\nA gas detector's accuracy can drift over time due to various factors and regular calibration exists as part of maintaining its trustworthiness in detecting gases accurately.\n \nSafety Warnings (none)\n\nStep-by-step Guidance:\n1) Check your local regulations for specific requirements on how often a full or partial recalibration should be performed.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5419
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5166
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.51
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "question": "What is the acceptable pressure drop during a pipeline pressure test?",
+    "answer": "Summary\nThe accepted standard for an \"acceptable\" result in this case means that any significant change from expected readings should be treated as indicative of potential issues with pipe integrity, rather than measurement noise.\n\nSafety Warnings \nDepressurise slowly at all times to avoid damaging seals or shocking the material. A rapid release can injure personnel nearby and damage equipment.\n\n\nStep-by-step Guidance\n1) Check for any significant pressure drop during testing.\n2a: If a 0.5% (or greater, depending on context of question - see below*) change from expected readings is observed over test period:\n   * This indicates potential issues with pipe integrity that require investigation.\n\n*Note about acceptable threshold value in the provided text:\n\n- **Acceptable pressure drop:** less than \"a certain percentage\" (<0.5%) (Source 1)\n \nThe exact wording of this section does not specify what is meant by 'certain'. However, it can be inferred from context that a specific figure was intended to replace '<', but the value itself has been omitted.\n\nReference\nPipeline Pressure Testing",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.527
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5213
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.4689
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "question": "What is photosynthesis?",
+    "answer": "This information is not available in the local knowledge base.\n\nHowever, I noticed that none of your provided sources are related to biology or environmental science topics such as \"photosynthesis\". If you provide more relevant documents from a different source (e.g., [Source 6] Environmental Protection - Overview), perhaps we can find an answer.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.2698
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.2637
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.2615
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "question": "What PPE is required in H2S areas?",
+    "answer": "Summary\nA personal H2S monitor must be carried by anyone entering a sour-gas area, and escape breathing apparatus should also always accompany individuals into these zones to provide an immediate means of self-rescue.\n\nSafety Warnings \n- Prolonged exposure in high-Hydrogen Sulphide areas can cause cumulative irreversible hearing damage even without any single dramatic incident.\nH2S is toxic; it's fatal within minutes at dangerous concentrations, and there isn't much margin between \"detectable\" levels (which may be accompanied by a smell)  — which are still hazardous.\n\nStep-by-step Guidance\n1. Enter the sour-gas area with your personal H2S monitor on.\n   - This is mandatory in all such areas regardless of task routine or complexity, as per [Source N] Personal Protective Equipment Requirements and also stated under \"H2S Areas\" within another document (see below).\n   \nStep-by-step Guidance\n1. Always carry an escape breathing apparatus when entering any area where H.S concentrations may exceed 10 ppm.\n   - This is to provide immediate self-rescue in case of emergency, as per [Source N] Personal Protective Equipment Requirements and also stated under \"H2S Areas\" within another document (see below).\n\nReference\n[Personal protective equipment requirements are documented across multiple sources above.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5225
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.491
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4683
+      }
+    ]
+  }
+]

@@ -123,10 +123,13 @@ class FoundryClient:
 
             from foundry_local_sdk.openai import ChatClientSettings
 
+            is_thinking_model = config.MODEL_ALIAS.lower().startswith("qwen3")
+            max_tokens = config.THINKING_MODEL_MAX_TOKENS if is_thinking_model else config.MAX_TOKENS
+
             self._chat_client = model.get_chat_client()
             self._chat_client.settings = ChatClientSettings(
                 temperature=config.TEMPERATURE,
-                max_tokens=config.MAX_TOKENS,
+                max_tokens=max_tokens,
                 frequency_penalty=config.FREQUENCY_PENALTY,
                 presence_penalty=config.PRESENCE_PENALTY,
             )

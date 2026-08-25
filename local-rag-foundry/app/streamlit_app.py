@@ -11,11 +11,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
 
+import config
 from src.chat_engine import ChatEngine
 from src.chunker import document_to_chunks
 from src.document_readers import extract_text
-from src.embedder import LocalEmbedder
-from src.foundry_client import FoundryClient
+from src.reranker import CrossEncoderReranker
 from src.security import UploadRejected, validate_upload
 from src.vector_store import VectorStore
 
@@ -31,17 +31,34 @@ def get_store() -> VectorStore:
 
 
 @st.cache_resource(show_spinner="Loading local model…")
-def get_model() -> FoundryClient:
-    client = FoundryClient()
+def get_model():
+    if config.LLM_PROVIDER == "ollama":
+        from src.ollama_client import OllamaClient
+        client = OllamaClient()
+    else:
+        from src.foundry_client import FoundryClient
+        client = FoundryClient()
     client.init()
     return client
 
 
 @st.cache_resource(show_spinner="Loading embedding model…")
-def get_embedder() -> LocalEmbedder:
-    embedder = LocalEmbedder()
+def get_embedder():
+    if config.LLM_PROVIDER == "ollama":
+        from src.ollama_embedder import OllamaEmbedder
+        embedder = OllamaEmbedder()
+    else:
+        from src.embedder import LocalEmbedder
+        embedder = LocalEmbedder()
     embedder.init()
     return embedder
+
+
+@st.cache_resource(show_spinner="Loading reranker model…")
+def get_reranker() -> CrossEncoderReranker:
+    reranker = CrossEncoderReranker()
+    reranker.init()
+    return reranker
 
 
 def render_sources(sources: list[dict]) -> None:
@@ -51,7 +68,9 @@ def render_sources(sources: list[dict]) -> None:
         for s in sources:
             line = f"- **{s['title']}** ({s['category']}) — relevance {round(s['score'] * 100)}%"
             if s.get("semantic_score") is not None:
-                line += f"  _(TF-IDF {round(s['tfidf_score'] * 100)}%, semantic {round(s['semantic_score'] * 100)}%)_"
+                line += f"  _(BM25 {round(s['bm25_score'] * 100)}%, semantic {round(s['semantic_score'] * 100)}%)_"
+            if s.get("rerank_score") is not None:
+                line += f"  _(reranked {round(s['rerank_score'], 2)})_"
             st.markdown(line)
 
 
@@ -65,7 +84,8 @@ def read_uploaded_text(filename: str, raw_bytes: bytes) -> str:
 store = get_store()
 model = get_model()
 embedder = get_embedder()
-engine = ChatEngine(store, model, embedder=embedder)
+reranker = get_reranker()
+engine = ChatEngine(store, model, embedder=embedder, reranker=reranker)
 
 if "history" not in st.session_state:
     st.session_state.history = []  # [{"role": "user"|"assistant", "content": str, "sources": [...]}]
@@ -81,6 +101,10 @@ with st.sidebar:
         st.caption(f"🔎 Hybrid retrieval (TF-IDF + semantic) · {embedder.model_id}")
     else:
         st.caption("🔎 TF-IDF retrieval only (semantic embeddings unavailable)")
+    if reranker.ready:
+        st.caption(f"🎯 Cross-encoder reranking active · {config.RERANKER_MODEL}")
+    else:
+        st.caption("🎯 Reranking unavailable — using hybrid order as-is")
     st.caption("Fully offline — no cloud, no API keys, no outbound network calls.")
 
     st.divider()

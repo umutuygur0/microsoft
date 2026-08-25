@@ -258,6 +258,501 @@ satır) denendi, ikisi de aynı temel kapasiteye çarptı, bu nedenle projenin
 şu anki kapsamında (harici çeviri kütüphanesi/modeli eklemeden) daha fazla
 prompt mühendisliğiyle zorlanmadı.
 
+## 6. Chunking & Vektörleme Tam Denetimi (kullanıcı talebiyle)
+
+> Kullanıcı, "chunking ve vektörleme işlemlerinin doğru yapılıp yapılmadığını
+> tam olarak kontrol etmemi" istedi. `src/chunker.py`, `src/ingest.py`,
+> `src/embedder.py`, `src/vector_store.py` satır satır incelendi, canlı
+> veritabanı (`data/knowledge.db`, 189 chunk) sorgulanarak gerçek veri
+> üzerinde doğrulandı. Dört gerçek bulgu çıktı, hepsi düzeltildi:
+
+1. **Hibrit skorlamada tutarsızlık** (`src/vector_store.py::search`) —
+   hibrit modda embedding'i olmayan bir chunk, tam ağırlıklı (1.0×) TF-IDF
+   skoru alıyordu; embedding'i olan chunk'lar ise 0.5× ağırlıkla
+   kısıtlanıyordu. Canlı veritabanında (tüm 189 chunk embedding'liydi)
+   tetiklenmiyordu ama embedder geçici olarak kapalıyken eklenen yeni bir
+   doküman bu tutarsızlığı canlıya taşıyabilirdi. → Embedding'i olmayan
+   chunk artık semantic_score=0 kabul edilip aynı ağırlıklı formülle
+   skorlanıyor (görüntüde hâlâ `None` olarak ayrı işaretleniyor). Regresyon
+   testi eklendi.
+2. **Chunk'lama paragraf/başlık yapısını düzleştiriyordu** (`chunk_text`) —
+   `text.split()` + `" ".join()` tüm satır sonlarını tek boşluğa
+   indirgiyordu, yani `## Source Standard\nOperations Manual OM-01...`
+   chunk içeriğinde `"## Source Standard Operations Manual OM-01..."` olarak
+   TEK SATIRDA depolanıyordu. Bu, daha önce QA testinde bulunan uydurma
+   "Standard Operations Manual" referans hatasının kök nedenlerinden biri
+   olarak değerlendirildi. → Chunk'lama artık başlıkları ve madde
+   işaretli/numaralı liste öğelerini birer atomik blok olarak koruyor,
+   bloklar arasına boş satır bırakıyor; bir blok `CHUNK_SIZE`'dan büyükse
+   eski kelime-bazlı kesme mekanizmasına geri düşüyor.
+3. **(2 numaralı düzeltme sırasında bulunan yeni hata) Çok satırlı liste
+   öğeleri cümle ortasında bölünüyordu** — ilk uygulamada regex tabanlı blok
+   ayırıcı, sarmalanmış (soft-wrap) bir madde işaretli öğenin sadece ilk
+   fiziksel satırını yakalıyor, devam satırlarını ayrı bir "paragraf" bloğu
+   olarak yetim bırakıyordu (örn. "- Never extinguish... can also be" / ayrı
+   blok: "isolated; an unburned gas cloud..."). → Satır-bazlı bir durum
+   makinesine geçildi: bir liste öğesi, sonraki boş satır/yeni
+   madde/başlığa kadar tüm devam satırlarını kendi bloğuna topluyor.
+4. **Ham referans dokümanlarında site-navigasyonu artığı çok küçük
+   chunk'lar** — 8 adet 1-7 kelimelik "chunk" bulundu (örn. `"Overview"`,
+   `"Workers' Rights"`, `"Well Control – Blowout Preventers"`) — OSHA
+   sayfalarından kazınırken temizlenmemiş kenar-menü metni. Bunlar sadece
+   gürültü değildi: **"Boru hattini hangi metal korur?" sorgusunda**
+   `"Well Control – Blowout Preventers"` (4 kelime) chunk'ı skor 0.182 ile
+   gerçek "Cathodic Protection Survey" chunk'larını (0.169/0.165) **geride
+   bırakıyordu** — kısa/genel metinler embedding uzayında bazen yapay olarak
+   yüksek benzerlik skoru alabiliyor. → `document_to_chunks`'a
+   `_MIN_CHUNK_WORDS=8` eşiği eklendi (bir dokümanın TEK chunk'ıysa asla
+   silinmiyor). Yeniden indeksleme: 256 → **248 chunk**, 8 chunk temizlendi.
+
+**Doğrulama:** Tüm düzeltmelerden sonra corpus yeniden indekslendi
+(40 doküman, 248 chunk, tamamının embedding'i var). Aynı "Boru hattini
+hangi metal korur?" sorgusu tekrar çalıştırıldı: junk chunk artık top-5'te
+değil; "Cathodic Protection Survey" chunk 0 ve 1 ilk iki sırada (0.169,
+0.165) ve chunk 1 artık `## How the System Works` başlığını VE
+"magnesium/zinc" cümlesini aynı, düzgün ayrılmış chunk içinde barındırıyor
+— `TOP_K=5` ile bu bilginin modele gitmesi artık çok daha güvenilir
+(canlı modelle yeniden test edilmedi, sadece retrieval katmanı doğrulandı).
+79/79 pytest yeşil (4 yeni regresyon testi dahil).
+
+## 7. Chunking Düzeltmesinin Tek Başına Etkisi — v6 (değişkeni izole eden test)
+
+> Madde 6'daki chunking düzeltmelerinden sonra, **model değişkenini sabit
+> tutarak** (hâlâ kanıtlanmış `qwen2.5-7b` ile) aynı 10 soru tekrar
+> çalıştırıldı — amaç, Q3/Q5'teki iyileşmenin chunking'den mi yoksa olası bir
+> model değişiminden mi geldiğini karıştırmadan görmek. Ham çıktılar
+> `qa_test_results_v6.json`'da.
+
+| # | v4 (eski chunking) | v6 (yeni chunking, aynı model) | Değişim |
+|---|---|---|---|
+| Q3 | "Bu information local knowledge base'de available değil." | **Birebir aynı metin** | ❌ Değişiklik yok |
+| Q5 | Doğru rakam (19.5%-23.5%) ama karışık-dilli çeviri | Doğru rakam, hâlâ karışık-dilli çeviri (farklı ama eşit derecede bozuk cümleler) | ⚖️ Aynı seviyede — ne iyileşti ne kötüleşti |
+| Q1,2,4,6,7,8,9,10 | Doğru | Doğru | Değişiklik yok (zaten iyiydi) |
+
+**Dürüst sonuç: chunking düzeltmeleri Q3'ü çözmedi.** Retrieval katmanında
+doğrulandığı gibi (madde 6) doğru chunk (`## How the System Works`,
+magnesium/zinc içeren) artık top-2'de ve modele gidiyor — ama model yine de
+bu bilgiyi çıkaramayıp reddediyor. Bu, retrieval/chunking'in ötesinde,
+`qwen2.5-7b`'nin bu spesifik soruyu (birbirine yakın iki farklı "metal"
+kavramını ayırt etme) işleme kapasitesiyle ilgili gerçek bir sınır olduğunu
+doğruluyor. Chunking düzeltmeleri madde 6'da belirtilen kendi hedeflerinde
+(skor tutarlılığı, başlık ayrımı, junk chunk temizliği) başarılıydı ama bu
+belirli üretim-katmanı hatasını çözmedi — bu ayrımı net tutmak için burada
+ayrıca belirtiliyor.
+
+## 8. 30 Soruluk Retrieval-Only Denetim (kullanıcı talebiyle, sadece retrieval)
+
+> Kullanıcı özellikle **LLM üretimini değil, sadece retrieval'i** test etmek
+> istedi: "doğru chunk'lar geliyor mu" sorusuna kesin bir cevap için, tek-
+> amaçlı (bileşik olmayan — "agentic katmanımız yok" uyarısıyla) 30 soru
+> yazıldı: 10 kolay, 10 orta, 10 zor. Her soru, hedef doküman önce tam
+> okunarak, doğru cevabın nerede olduğu bilinerek yazıldı. `VectorStore.search()`
+> doğrudan çağrıldı (LLM yok), beklenen dokümanın ilk 5 sonuçta olup olmadığı
+> kontrol edildi. Ham sonuçlar `retrieval_audit_results.json`'da.
+
+**İlk sonuç (mevcut `0.5/0.5` ağırlıkla): 28/30** — kolay 10/10, orta 8/10,
+zor 10/10.
+
+### Bulunan 2 gerçek sorun
+
+1. **"confined space" (entry kelimesi olmadan) sorgusu yanlış dokümanı
+   öne çıkarıyordu.** "confined space icin oksijen limitleri nedir?" sorusu,
+   gerçek sayısal cevabı (19.5%–23.5%) içeren kendi "Confined Space Entry"
+   dokümanımız yerine, ID/gezinme menüsü tekrarları yüzünden anahtar-kelime
+   yoğunluğu yapay olarak yüksek olan ama **gerçek cevabı hiç içermeyen**
+   ham "Confined Spaces - Overview (OSHA)" sayfasını üstte gösteriyordu.
+   İncelemede: doğru chunk'ın semantik skoru (0.616) aday havuzundaki EN
+   YÜKSEK skordu — sorun TF-IDF'in ona verdiği düşük ağırlıktı (0.156),
+   0.5/0.5 harmanın bunu yeterince telafi etmemesiydi.
+   → **Düzeltme:** `HYBRID_TFIDF_WEIGHT`/`HYBRID_EMBEDDING_WEIGHT`
+   `0.5/0.5` → `0.35/0.65`. Aynı 30 soruda hiçbir gerilemeye yol açmadan
+   (kolay/zor hâlâ 10/10) orta kategoriyi 8/10 → 9/10 yaptı.
+2. **Türkçe embedding kalitesi, aksan işaretlerine ve kullanılan kelimeye
+   göre büyük ölçüde değişiyor.** "Yangin sondurucu secimi nasil yapilir?"
+   (aksansız) sorusu, doğru chunk ile sadece **0.202** benzerlik skoru
+   veriyor. Aynı soru düzgün aksanlarla ("Yangın söndürücü seçimi nasıl
+   yapılır?") **0.397**'ye çıkıyor — neredeyse iki katı — ama İngilizce
+   eşdeğeri ("How do I select the correct fire extinguisher?") hâlâ
+   **0.725** ile çok daha güçlü. Bu, embedding modelinin (`qwen3-embedding-0.6b`)
+   diller-arası hizalamasının kelime bazında tutarsız olduğunu gösteriyor —
+   "gaz kaçağı" gibi bazı terimler için daha önce (bkz. Faz 2 araştırması)
+   0.6-0.8 arası güçlü skorlar ölçülmüştü, ama "yangın söndürücü" gibi daha
+   nadir terimler için çok daha zayıf. **Bu, chunking/kod tarafında
+   düzeltilebilecek bir şey değil** — embedding modelinin kendi çok-dilli
+   eğitim kapsamının bir sınırı; olduğu gibi belgeleniyor.
+
+**Son sonuç (0.35/0.65 ağırlıkla, canlı config): 29/30** — kolay 10/10, orta
+9/10, zor 10/10. Kalan tek miss, yukarıdaki 2. madde (Türkçe embedding
+sınırı). 79/79 pytest hâlâ yeşil.
+
+## 9. Cross-Encoder Reranker Eklendi
+
+Kullanıcı isteğiyle, hibrit (TF-IDF+embedding) retrieval'in üstüne gerçek bir
+cross-encoder reranking aşaması eklendi — bi-encoder (embedding) sorgu ve
+chunk'ı **ayrı ayrı** kodlayıp kosinüs benzerliğine bakarken, cross-encoder
+ikisini **birlikte** tek girdi olarak modele verip doğrudan bir alaka skoru
+üretiyor — daha yavaş (chunk başına bir model çağrısı) ama daha isabetli.
+
+- **Model:** `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (çok dilli, Türkçe
+  dahil mMARCO üzerinde eğitilmiş), `sentence-transformers` üzerinden.
+- **Mimari:** `src/reranker.py::CrossEncoderReranker` — hibrit arama önce
+  `RERANK_CANDIDATE_K=15` aday getiriyor, reranker bunları `TOP_K=5`'e
+  indiriyor. Kütüphane/model yoksa `ready=False`'a düşüp hibrit sıralamayı
+  olduğu gibi kullanıyor (zarif bozulma, projenin tüm diğer opsiyonel
+  bileşenleriyle aynı desen).
+- **Kurulum sırasında bulunan (ve kendi kendine çözülen) engel:** İlk pip
+  kurulumu `.venv/Scripts/pip` izin hatasıyla sessizce başarısız oldu
+  (arka plan `tail` boru hattı bunu gizledi — gerçek hata fark edilmeden
+  "tamamlandı" raporlandı, bir dahaki sefere çıktı içeriğini mutlaka
+  doğrulamak gerekiyor). `python -m pip install` ile düzeltildi. Ardından
+  gerçek bir Windows engeli çıktı: `scipy.linalg._decomp_interpolative`
+  DLL'i **Windows Uygulama Denetimi (Application Control/Smart App
+  Control)** tarafından bloke edildi — yeni indirilen, henüz "itibar"
+  kazanmamış bir ikili dosya olduğu için. Hiçbir ayar değiştirilmeden,
+  bir süre sonra (Windows'un bulut itibar kontrolü arka planda dosyayı
+  onayladıktan sonra) kendiliğinden çözüldü — kullanıcı aynı sorunu başka
+  bir projede farklı bir scipy sürümüyle yaşamamıştı, bu da ilk-dokunuş
+  itibar kontrolü teorisini doğruladı.
+- **EN/TR doğrulama:** "How do I detect a gas leak?" → doğru pasaj **4.87**
+  skorla açık ara önde (yanlış adaylar -3.27/-4.34); Türkçe eşdeğeri
+  ("Gaz kacagini nasil tespit ederim?") → doğru pasaj yine 1. sırada ama
+  mutlak skor çok daha düşük (-1.53 vs -4.02/-5.41) — göreceli sıralama
+  doğru, çok-dilli mutlak güven embedding'de gördüğümüz gibi yine düşük.
+
+### 30 Soruluk Retrieval Denetimi — Reranker'lı Sonuç
+
+Aynı 30 soru (madde 8), reranker devredeyken tekrar çalıştırıldı:
+
+| | Reranker'sız (0.35/0.65 hibrit) | Reranker'lı |
+|---|---|---|
+| Kolay | 10/10 | 10/10 |
+| Orta | 9/10 | 9/10 |
+| Zor | 10/10 | 10/10 |
+| **Toplam** | **29/30** | **29/30** |
+
+**İsabet sayısı aynı kaldı ama sıralama kalitesi belirgin şekilde arttı:**
+reranker'sız sürümde birden fazla soru doğru dokümanı rank 2/4/5/6'da
+buluyordu; reranker'lı sürümde bunların neredeyse tamamı **rank 1**'e
+yükseldi (sadece 2 soru rank 2'de kaldı). Kalan tek miss — "Yangin
+sondurucu secimi nasil yapilir?" — hem bi-encoder'da hem cross-encoder'da
+aynı nedenle başarısız: bu spesifik Türkçe terimin ("söndürücü") kendisi
+için çok-dilli hizalama zayıf, sorun retrieval mimarisinde değil, modelin
+kelime dağarcığı kapsamında. **Dürüst değerlendirme: reranker isabet
+sayısını değiştirmedi ama sıralama güvenilirliğini gerçek anlamda artırdı**
+— tam iyileştirme değil ama net bir kazanç.
+
+## 10. qwen3-4b — 10 Soruluk Canlı Test (düzeltmelerle)
+
+Kullanıcı isteğiyle `qwen2.5-7b` → `qwen3-4b` denendi (daha hafif kaynak
+kullanımı hedefiyle). İki gerçek düzeltme uygulandıktan sonra tam 10 soru
+test edildi:
+1. `config.THINKING_MODEL_MAX_TOKENS=3000` (Qwen3 ailesi için, 800'den
+   yükseltildi) — Qwen3'ün varsayılan `<think>...</think>` iç akıl yürütme
+   izi CEVAPLA AYNI token bütçesini paylaşıyor; SDK'da bunu API seviyesinde
+   kapatacak bir `enable_thinking` parametresi yok (`ChatClientSettings`
+   incelendi: sadece temperature/max_tokens/penalty/top_p/top_k/
+   response_format/tool_choice destekleniyor) — tek erişilebilir yol metin
+   içi `"/no_think"` talimatı (zaten vardı) + daha büyük bütçe.
+2. `src/chat_engine.py::_strip_thinking_block()` — kapanmış VEYA
+   `max_tokens` yüzünden yarıda kalmış açık `<think>` bloklarını nihai
+   cevaptan temizliyor.
+
+**Sonuç: 3 tam doğru, 2 kısmi, 5 gerçek başarısızlık — `qwen2.5-7b`'den daha
+güvenilir değil, hatta yeni bir gerileme var.**
+
+| # | Soru | Sonuç |
+|---|---|---|
+| 1 | Gas leak detection | ✅ Mükemmel, düzgün format |
+| 2 | Fire on site | ❌ **Tamamen boş cevap** — düzeltmelere rağmen hâlâ oluyor (deterministik değil) |
+| 3 | Boru hattı metali (TR) | ❌ Talep edilen tam ret cümlesini kullanmıyor, doğru bilgiyi (magnesium/zinc) yine çıkaramıyor |
+| 4 | Blowout preventer | ✅ Doğru içerik |
+| 5 | Confined space O2 (TR) | ⚠️ Rakamlar doğru, çeviri karışık-dilli |
+| 6 | H2S OSHA limitleri | ✅ Doğru ama NIOSH rakamı eksik |
+| 7 | Gas detector calibration | ⚠️ İçerik doğru ama iç kaynak etiketini ("[Source 4]") cevaba sızdırmış + tekrarlı cümleler |
+| 8 | Pipeline pressure test | ❌ **Yeni gerileme** — doğru chunk ilk sırada bulunmasına rağmen "bilgi mevcut değil" diyor; bu soru `qwen2.5-7b` ile HER turda sorunsuz doğru cevaplanmıştı |
+| 9 | Photosynthesis (kontrol) | ✅ Doğru reddetti |
+| 10 | H2S PPE | ❌ Tekrar-döngüsüne girdi (koruma yakaladı) |
+
+Ham çıktılar `qa_test_results_qwen3_4b.json`'da.
+
+### Kanıt kontrolü: hata gerçekten modelde mi?
+
+Kullanıcının haklı bir şüphesi vardı: "hata modelde mi emin değilim, önce
+chunk'ları kontrol et." qwen3-4b'nin başarısız olduğu 5 sorunun (2, 3, 7, 8,
+10) **gerçekte modele giden top-5 chunk'ları birebir okundu**. Sonuç: **beşinde
+de doğru chunk ilk sırada, temiz, tam, tek anlamlı** (örn. Q8 için "Pipeline
+Pressure Testing" chunk'ında "**Acceptable pressure drop: less than 0.5%**"
+kalın yazıyla net şekilde yazıyor; Q3 için magnesium/zinc cümlesi birebir
+orada). Hiçbir chunk'ta kopukluk, karışık başlık, ya da retrieval hatası
+yok. **Kesin sonuç: bu beş başarısızlığın tamamı model-tarafı bir üretim
+sorunu, veri/chunking/retrieval sorunu değil.**
+
+## 11. qwen3-8b — 30 Soruluk Test (kesin sonuç)
+
+Kullanıcı isteğiyle `qwen3-8b` denendi — `THINKING_MODEL_MAX_TOKENS=3000` ve
+`_strip_thinking_block()` gibi mitigasyonlar "qwen3" ön ekine göre otomatik
+devreye girdiği için qwen3-4b için yapılan düzeltmeler buraya da miras
+kaldı. Retrieval-only denetimdeki aynı 30 soru (10 kolay/10 orta/10 zor) bu
+kez **tam üretim** (ChatEngine, reranker dahil) ile çalıştırıldı.
+
+**Sonuç: 30 sorudan 28'i tamamen BOŞ cevap döndürdü** — sadece 2 soru
+(Q3, Q9) bir şey üretti. Retrieval her seferinde doğru dokümanı buluyordu
+(sources alanı neredeyse hep doğruydu), üretim tarafı tamamen çöktü.
+
+**Kök neden doğrulaması:** Ham model çağrısı (`FoundryClient.stream_chat`,
+hiçbir post-processing olmadan) "How do I detect a gas leak?" için tam
+olarak şunu döndürdü: `'<think>\n\n'` — **9 karakter**. `last_response_truncated=False`,
+yani 3000 tokenlık bütçe hiç tükenmedi — model thinking etiketini açar
+açmaz, hiçbir şey üretmeden duruyor. **Bu, token bütçesi veya prompt
+mühendisliğiyle çözülebilecek bir şey değil** — Foundry Local'in
+`qwen3-8b-generic-cpu` paketlemesinde temel bir sorun olduğunu gösteriyor.
+
+### Üç Model — Nihai Karşılaştırma
+
+| Model | Sonuç |
+|---|---|
+| **qwen2.5-7b** | Güvenilir — onlarca test turunda hiç tekrar-döngüsü/boş cevap yok. Bilinen sınırlar: çeviri akıcılığı, nadir dar-kapsamlı çıkarım hataları (örn. cathodic protection "hangi metal") |
+| **qwen3-4b** | 30 sorunun 10'unda (tam üretim testinde) 3 doğru, 2 kısmi, 5 gerçek hata (boş cevap, yanlış ret cümlesi, tekrar-döngüsü, kaynak-etiketi sızıntısı) — veri kontrol edildi, hepsi model-tarafı |
+| **qwen3-8b** | 30 sorunun 28'i tamamen boş — kök neden doğrulandı: model `<think>` etiketini açıp hiçbir şey üretmeden duruyor |
+
+**Karar: `qwen2.5-7b`'ye geri dönüldü** (`config.py`). Üç modelin kapsamlı,
+kanıta dayalı karşılaştırması sonucunda `qwen2.5-7b` bu proje için hâlâ en
+güvenilir seçenek.
+
+### Thinking Modunu Gerçekten Kapatma Girişimi (iki teknik denendi, ikisi de başarısız)
+
+Kullanıcı, başka bir projesinde Ollama'nın `ollama.chat(..., think=False)`
+şeklinde native bir thinking-kapatma parametresi desteklediğini gösterdi —
+bu, Qwen3 modellerinin genel olarak API seviyesinde bir kapatma anahtarını
+desteklediğini kanıtlıyordu. Foundry Local'in bunu gizli/dokümante
+edilmemiş şekilde destekleyip desteklemediği iki farklı teknikle test edildi:
+
+1. **Boş `<think></think>` ile "assistant" mesajı prefill'i** — mesaj
+   dizisinin sonuna zaten kapanmış boş bir thinking bloğu içeren bir
+   "assistant" turu eklenip modelin doğrudan cevaba devam etmesi
+   sağlanmaya çalışıldı (topluluk arasında bilinen bir teknik).
+   **Sonuç: Foundry Local'in native motoru bunu hiç desteklemiyor** —
+   `FoundryLocalException: Operation was cancelled` hatasıyla tamamen
+   reddetti.
+2. **`chat_template_kwargs: {"enable_thinking": false}` enjeksiyonu** —
+   SDK'nın `ChatClientSettings`'i bu alanı desteklemese de, isteğin son
+   JSON'a dönüştüğü `CompletionCreateParamsStreaming`'in bir `TypedDict`
+   olduğu (yani runtime'da SIFIR doğrulama yaptığı, fazladan alanların
+   sansürsüz JSON'a sızdığı) doğrulanıp bu alan doğrudan enjekte edildi.
+   **Sonuç: native motor bu alanı sessizce YOK SAYDI** — enjeksiyonlu ve
+   enjeksiyonsuz çıktı birebir aynıydı (aynı uzunluk, aynı ilk 500 karakter).
+
+**Kesin sonuç: Foundry Local'in bu ONNX tabanlı ("generic-cpu") Qwen3
+motorunda thinking modunu API seviyesinde kapatacak HİÇBİR erişilebilir
+yol yok** — ne resmi SDK alanı, ne prefill hilesi, ne de vLLM/SGLang tarzı
+`chat_template_kwargs` enjeksiyonu işe yarıyor. Tek erişilebilir savunma
+hattı hâlâ metin-içi `"/no_think"` talimatı + token bütçesi artırma +
+çıktıdan `<think>` bloğu temizleme (zaten uygulı) — ve bunlar yeterli
+güvenilirliği sağlamadı (bkz. madde 10-11). Bu araştırma hattı artık
+tükenmiş sayılabilir; `qwen2.5-7b` kararı bu ek kanıtla daha da güçleniyor.
+
+## 12. Mimari Değişiklik: Foundry Local → Ollama (llama3.1:8b + bge-m3)
+
+Madde 10-11'deki üç Qwen3 modelinin de thinking modunu Foundry Local'de
+**API seviyesinde kapatacak hiçbir yol bulunamadı** (ne resmi bir alan, ne
+prefill hilesi — hata verdi, ne `chat_template_kwargs` enjeksiyonu — sessizce
+yok sayıldı). Kullanıcı, başka bir projesinde Ollama'nın bunu native
+`think=False` parametresiyle desteklediğini gösterdi. Bunun üzerine proje
+**tamamen Ollama'ya geçirildi**:
+
+- **Chat modeli:** `llama3.1:8b` (Ollama) — Foundry Local kataloğunda
+  Llama ailesi hiç yok (muhtemelen Meta lisans kısıtlaması), bu yüzden
+  Ollama şart oldu.
+- **Embedding modeli:** `bge-m3` (Ollama) — Meta resmi bir "Llama embedding"
+  yayınlamıyor; çok-dilli (Türkçe dahil) güçlü bir alternatif seçildi.
+- **Yeni kod:** `src/ollama_client.py` (`OllamaClient`) ve
+  `src/ollama_embedder.py` (`OllamaEmbedder`) — `FoundryClient`/`LocalEmbedder`
+  ile birebir aynı arayüz (`ready`/`message`/`init()`/`stream_chat()`/`embed()`),
+  bu yüzden `ChatEngine` hiç değişmeden çalışıyor. Tekrar-döngüsü koruması
+  (`_is_runaway_repetition` vb.) `foundry_client.py`'den olduğu gibi
+  yeniden kullanıldı, kopyalanmadı.
+- **Sağlayıcı seçimi:** `config.LLM_PROVIDER` ("foundry" veya "ollama",
+  varsayılan artık "ollama") — `app/streamlit_app.py` ve
+  `scripts/run_ingest.py` buna göre doğru istemciyi seçiyor.
+- **Disk temizliği:** Kullanıcı isteğiyle, artık kullanılmayan 5 Foundry
+  Local modeli (`qwen2.5-7b`, `phi-3.5-mini`, `qwen3-4b`, `qwen3-8b`,
+  `qwen3-embedding-0.6b`) `remove_from_cache()` ile silindi — proje-özel
+  önbellek (`~/.local-rag-foundry/cache/models`) **18GB → 84KB**'a düştü.
+  Bu önbellek sadece bu projeye ait olduğu için başka hiçbir projeyi
+  etkilemedi.
+- Corpus yeniden indekslendi: 248 chunk, `bge-m3` ile. 89/89 pytest yeşil.
+
+### 10 Soruluk Sonuç — llama3.1:8b + bge-m3
+
+| # | Soru | Sonuç |
+|---|---|---|
+| 1 | Gas leak detection | ✅ Doğru, temiz |
+| 2 | Fire on site | ⚠️ İçerik doğru ama Referans yanlış ("Hot Work Permit" yazıyor, doğrusu "Fire Response") |
+| 3 | **Boru hattini hangi metal korur? (TR)** | ✅ **DOĞRU — "Magnezyum ya da çinko"** — bu oturumda bu soruyu doğru cevaplayan İLK model (qwen2.5-7b, qwen3-4b, qwen3-8b hepsi başarısız olmuştu). Akıcı, gerçek Türkçe (Qwen'lerin karışık-dilli çevirisinden çok daha iyi) |
+| 4 | Blowout preventer | ✅ Doğru, doğru referans |
+| 5 | Confined space O2 (TR) | ✅ Doğru rakamlar (%19,5-%23,5), akıcı Türkçe |
+| 6 | H2S OSHA limitleri | ✅ Çok kapsamlı ve doğru — qwen2.5-7b'den bile daha eksiksiz (tüm rakamlar var) |
+| 7 | Gas detector calibration | ❌ **Gerçek eksiklik** — doğru chunk bulunmasına rağmen asıl cevabı (6 ayda bir/günlük bump test) vermiyor, "yerel düzenlemelerinize bakın" gibi genel bir cevap veriyor |
+| 8 | Pipeline pressure drop | ⚠️ Doğru rakam (0.5%) kendi alıntısında var ama kendiyle çelişen kafa karıştırıcı bir yorum ekliyor ("değerin ne olduğu belirtilmemiş" diyor, oysa aynı cümlede yazıyor) |
+| 9 | Photosynthesis (kontrol) | ✅ Doğru reddetti ama gereksiz ek yorum ekledi (talimata tam uymuyor ama halüsinasyon da yok) |
+| 10 | H2S PPE | ⚠️ İçerik doğru ama "[Source N]" placeholder'ı doldurulmadan cevaba sızmış, başlık tekrarı var |
+
+**Değerlendirme: 5/10 tam temiz doğru, 1/10 gerçek eksiklik, 4/10 doğru
+içerik ama referans/format sorunlu.** Yeni, tekrarlayan bir sorun tespit
+edildi: **model bazen `[Source N]` etiketini ya yanlış dokümanla eşleştiriyor
+ya da doldurulmamış placeholder olarak bırakıyor** — bu, prompt'ta ek bir
+netleştirmeyle muhtemelen düzeltilebilir (henüz denenmedi).
+
+### Dört Modelin Nihai Karşılaştırması
+
+| Model | Motor | Sonuç |
+|---|---|---|
+| qwen2.5-7b | Foundry Local | Güvenilir, temiz format — ama cathodic protection sorusunu HİÇ çözemedi |
+| qwen3-4b | Foundry Local | 3/10 doğru, çoklu gerçek hata |
+| qwen3-8b | Foundry Local | 28/30 tamamen boş — temel paketleme arızası |
+| **llama3.1:8b** | **Ollama** | **5/10 tam temiz, ilk kez cathodic protection'ı doğru çözdü, Türkçe çevirisi en akıcısı — ama yeni bir referans/citation tutarsızlığı var** |
+
+**Sonuç: llama3.1:8b + bge-m3 (Ollama), önceki üç modelden daha iyi bir
+temel gösteriyor** — özellikle Türkçe akıcılık ve daha önce çözülemeyen
+cathodic-protection sorusunda. Referans-etiketi tutarsızlığı yeni ve gerçek
+bir sorun, ama diğer üç modelin döngü/boş-cevap/format-yoksayma
+sorunlarından daha hafif ve muhtemelen prompt düzeltmesiyle iyileştirilebilir.
+
+## 13. BM25'e Geçiş + Referans Düzeltmesi Girişimi + 30 Soruluk Tam Üretim Testi
+
+Kullanıcı isteğiyle üç değişiklik yapıldı, sonra aynı 30 soru (madde 8'deki
+retrieval denetimiyle aynı liste) bu kez **tam üretim** (ChatEngine,
+llama3.1:8b + bge-m3 + reranker) ile test edildi.
+
+### Değişiklik 1: TF-IDF → BM25
+
+`src/bm25.py` eklendi (Okapi BM25, saf Python, yeniden indeksleme
+gerektirmiyor — mevcut `tf` sütunundan hesaplanıyor). `src/vector_store.py`
+TF-IDF+cosine yerine BM25 kullanacak şekilde güncellendi; BM25 skoru
+sınırsız olduğu için (cosine gibi [0,1] değil) aday kümesi içinde
+min-max normalize ediliyor. `config.HYBRID_TFIDF_WEIGHT` →
+`HYBRID_BM25_WEIGHT` olarak yeniden adlandırıldı (0.35/0.65 aynen taşındı,
+yeniden doğrulanmadı). `src/tfidf.py`'deki artık kullanılmayan
+`compute_idf`/`tfidf_vector`/`cosine_similarity` (sparse) silindi — 92/92
+pytest yeşil (7 yeni BM25 testi eklendi, 4 eski TF-IDF-cosine testi
+kaldırıldı, net +3).
+
+**Retrieval-only doğrulama (30 soru, BM25+bge-m3+reranker): 28/30** — önceki
+29/30'dan (TF-IDF+qwen3-embedding-0.6b) hafif düşüş. Aynı "Yangin sondurucu
+secimi nasil yapilir?" miss'i devam ediyor (embedding modeli değişse de bu
+terimin çok-dilli hizalaması hâlâ zayıf); yeni bir miss de çıktı ("kaynak
+isinden sonra yangin gozcusu ne kadar sure beklemeli?" — bge-m3 ile alakasız
+dokümanlar geliyor, qwen3-embedding-0.6b ile doğru bulunuyordu). Bu,
+embedding modeli değişikliğinin (Ollama'ya geçişin bir parçası) küçük ama
+gerçek bir yan etkisi — daha fazla ayarlama yapılmadı.
+
+### Değişiklik 2: Referans/Kaynak-Etiketi Düzeltmesi — BAŞARISIZ
+
+Önceki 10 soruluk testte bulunan sorunları (yanlış kaynak adı, doldurulmamış
+"[Source N]" placeholder'ı) düzeltmek için `SYSTEM_PROMPT`'a şu kurallar
+eklendi: asla "[Source" metnini birebir yazma, kaynak sadece son "Reference"
+satırında, cevabı yazdıktan sonra hangi excerpt'i gerçekten kullandığını
+tekrar kontrol et, gövde metninden ("Source Standard" gibi) alıntı yapma.
+
+**30 soruluk testte bu kural büyük ölçüde göz ardı edildi:**
+- **Literal `[Source N]` / `[Kaynak N]` köşeli parantez kullanımı hâlâ
+  sık** (Q3, Q10, Q11, Q12, Q14 — talimat açıkça yasaklamasına rağmen).
+- **Gövde metninden/bölüm başlığından kaynak uydurma devam ediyor** — Q8
+  Referans olarak "Field Safety Manual" yazdı (dokümanın kendi "Source
+  Standard" satırından, tam olarak yasaklanan davranış); Q18 "Trenching
+  Safety Initiative" (bir alt-başlık) yazdı, doğrusu "Trenching and
+  Excavation - Overview (OSHA)" olmalıydı; Q23 doğrudan bir bölüm başlığını
+  ("Why The Fire Watch Continues After Work Stops") kaynak olarak verdi.
+- **Yanlış doküman adı** — Q4 "Hydrogen Sulphide (H2S) Monitoring" dedi,
+  beklenen "Personal Protective Equipment Requirements" idi (içerik iki
+  dokümanda da örtüştüğü için kısmen mazur görülebilir, ama yine de yanlış).
+
+**Sonuç: prompt-seviyesi talimat bu modelde güvenilir çalışmıyor.** Daha
+sağlam bir çözüm (denenmedi, gelecek iş): Ollama'nın yapılandırılmış çıktı
+(`format` parametresi ile JSON şeması) desteğini kullanıp "Reference"
+alanını modele serbest metin yerine, bağlamda gerçekten verilen başlıklardan
+oluşan sabit bir listeden **seçtirmek** — bu, modelin uydurma/yanlış
+alıntı yapma ihtimalini yapısal olarak ortadan kaldırır.
+
+### 30 Soruluk Tam Üretim Testi — Genel Bulgular
+
+Kaynak/referans sorunlarının ötesinde, bu daha büyük örneklemde **iki yeni
+sorun kategorisi** ortaya çıktı (10 soruluk testte görülmemişti):
+
+1. **Sessiz yarıda kesilme (repetition-guard'ın yakalamadığı bir tür).**
+   Q1, Q6, Q15, Q30 "Reference" bölümünü hiç yazmadan bitti; Q24 numaralı
+   liste öğelerini boş bırakıp ("2)\n3)") durdu. Bunların hiçbirinde
+   `notice` alanı dolu değildi (tekrar-döngüsü değil, sadece erken durma) —
+   mevcut güvenlik ağımız bu tür sessiz eksik-cevapları yakalamıyor.
+2. **Türkçe çeviri artık sadece akıcılık değil, gerçek anlam hatası da
+   üretebiliyor.** Q11'de "gaz kaçağı" (leak) yanlışlıkla "gaz patlaması"
+   (explosion) olarak çevrildi VE yanlış doküman adıyla ("Gaz Patlama Tespit
+   Prosedürü" — böyle bir doküman yok) birleşince tamamen anlamsız bir
+   cevap ortaya çıktı. Q19'da doğru rakamlar (%19,5-%23,5) önce doğru
+   verilip birkaç cümle sonra yanlış (%19-%23) olarak kendiyle çelişecek
+   şekilde tekrarlandı.
+3. **Kötü retrieval, kötü üretime dönüşebiliyor.** Q13 ("Yangin sondurucu"),
+   retrieval yanlış dokümanları bulunca model tamamen alakasız bir konuya
+   (katodik koruma metal seçimi) sıçrayıp tutarsız bir cevap üretti — iyi
+   haber: Q28'de aynı tür bir retrieval-miss'te model dürüstçe "bu bilgi
+   bulunamıyor" dedi, halüsinasyon yapmadı; yani davranış tutarsız/model
+   içi rastgele.
+
+**Genel doğruluk (referans/format kusurlarını saymadan, sadece asıl
+içerik):** ~24/30 makul/doğru, ~4-5/30 gerçekten sorunlu (Q11, Q13, Q19,
+Q24, kısmen Q28). Ama **referans satırı sorunsuz olan cevap sayısı sadece
+~6/30** — bu, kullanıcının özellikle çözülmesini istediği sorunun BAŞARISIZ
+olduğu anlamına geliyor ve dürüstçe böyle raporlanıyor.
+
+## 14. Referans Sorunu — Mimari Çözüm (prompt yerine kod)
+
+Madde 13'teki prompt-seviyesi düzeltme (kurallar ekleyerek modeli doğru
+alıntı yapmaya ikna etmeye çalışmak) başarısız olmuştu. Kullanıcı daha
+sağlam bir yaklaşım önerdi: **modelden hiç kaynak yazmasını istememek**,
+bunun yerine kaynağı retrieval'in zaten sahip olduğu doğru metadata'dan
+(her chunk zaten `doc_id`/`title`/`category` taşıyor, bu her doküman
+yüklendiğinde otomatik ekleniyor — `chunker.document_to_chunks`) **kod
+tarafında** deterministik olarak oluşturmak.
+
+Üç değişiklik:
+1. `SYSTEM_PROMPT`'tan tüm "Citation rules" bloğu ve "Reference" satırı
+   talebi kaldırıldı — model artık kaynak göstermeye hiç çalışmıyor.
+2. `build_context_block()`'taki `"[Source N] <title>"` köşeli parantez
+   etiketi tamamen kaldırıldı (`"Excerpt from \"<title>\" (<category>):"`
+   ile değiştirildi) — modelin taklit ettiği tam da bu görsel-alıntı-benzeri
+   köşeli parantez deseniydi.
+3. `src/chat_engine.py::_build_reference_footer()` / `_with_reference_footer()`
+   eklendi: `ask()`'ın üç yield noktasında da (çeviri yok/çeviri başarısız/
+   çeviri başarılı), modelin ürettiği metne, **retrieval'den gelen gerçek
+   `sources` listesinden** oluşturulan `"\n\nReference: title1; title2"`
+   satırı kod tarafından ekleniyor — modelin yazdığı hiçbir şeye
+   dayanmıyor. Temiz bir ret cevabına (`NO_CONTEXT_REPLY` ile birebir eşit)
+   footer eklenmiyor.
+
+**Doğrulama (3 soru, gerçek model):**
+- Üçünde de `"[Source"` / `"[Kaynak"` sızıntısı **yok** (önceden sürekli
+  oluyordu).
+- "How long must the fire watch continue..." sorusunda Reference artık
+  doğru: `"Hot Work Permit; Fire Response"` (önceden "Field Safety Manual"
+  gövde metnini ya da bir alt-başlığı kaynak gösteriyordu).
+- "Yangin sondurucu secimi nasil yapilir?" sorusunda model artık cathodic
+  protection'a kaydığını fark edip konuyla "ilgim yok" diyerek dürüstçe
+  reddetti — önceki tamamen tutarsız/alakasız halüsinasyon yerine (kaynak
+  konusuyla uğraşmak zorunda kalmayınca modelin dikkati daha iyi
+  odaklanmış görünüyor, kesin nedensellik iddia edilmiyor).
+
+**Kalan küçük, bilinen sınır:** Ret cümlesi tam olarak İngilizce
+`NO_CONTEXT_REPLY` ile eşleşmediğinde (örn. çeviri sonrası Türkçe bir ret,
+ya da yukarıdaki gibi modelin kendi ürettiği bir ret cümlesi) footer yine
+de ekleniyor — bu, "ret cevabına kaynak gösterme" kuralının sadece tam
+eşleşen durumları yakaladığı anlamına geliyor. Küçük bir kozmetik
+tutarsızlık, yanlış bilgi değil (o kaynaklar gerçekten kontrol edildi,
+sadece yetersiz bulundu). 94/94 pytest yeşil.
+
+**Sonuç: referans sorunu artık prompt mühendisliğiyle değil, mimari olarak
+çözüldü** — modelin bunu doğru yapmasına güvenmek yerine, zaten var olan
+doğru veriden kod tarafında inşa ediliyor.
+
 ### Bilinen Kalite Sınırı (hata değil)
 
 `qwen2.5-7b` + zenginleştirilmiş corpus ile tekrar döngüsü/kelime-serpiştirme
@@ -267,3 +762,60 @@ tutarsız: bazen gramer kusurlu, bazen model talimatı görmezden gelip
 hiçbiri artık sonsuz döngüye dönüşmüyor. "Auto" modu da bazen Türkçe soruya
 İngilizce yanıt verebiliyor (dil eşleştirme talimatı %100 güvenilir değil).
 Detaylar için README "Known limitations" bölümüne bakın.
+
+## 15. Kapsamlı 98 Soruluk Canlı Test (Ollama + BM25 + Reranker + Deterministik Referans)
+
+`_run_qa_100.py` ile üretilen, üretim yığınının (llama3.1:8b + bge-m3 +
+BM25/dense hibrit + cross-encoder reranker + deterministik referans footer)
+üzerinden geçen 98 soruluk uçtan uca canlı test. Sorular 40 kaynak
+dokümanın tamamını (daha önce hiç test edilmemiş 17 OSHA/EPA referans
+dokümanı dahil) kapsayacak şekilde, kolay/orta/zor zorlukta ve
+İngilizce/Türkçe/karışık-dilde tasarlandı; 3 tanesi bilgi tabanında
+karşılığı olmayan negatif kontrol sorusu. Ham sonuçlar
+`qa_test_results_100.json`'da, tam soru-cevap-kaynak dökümü ve analiz
+[şeffaflık raporunda](https://claude.ai/code/artifact/c744796f-2da7-4cc9-aecb-254c12f65f63) mevcut.
+
+**Sonuç dağılımı:** 78/98 doğru (%80), 13/98 kısmi/belirsiz (%13),
+2/98 dürüst "bulunamadı" (bilinen kapsam boşlukları, halüsinasyon yok),
+5/98 gerçek hata (%5). Dil dağılımı: 61 EN / 33 TR / 4 karışık. Toplam
+çalışma süresi model+reranker yükleme dahil ~4 dk 48 sn (~2.6 sn/soru) —
+bu makinede Ollama'nın GPU hızlandırmalı çalıştığını doğruluyor.
+
+**Bulunan 5 gerçek hata:**
+1. **Çapraz-dil retrieval hatası (tekrarlanabilir):** "How long must the
+   fire watch continue after hot work is finished?" İngilizce doğru
+   cevaplanırken ("Hot Work Permit", 30 dakika), Türkçe paraphrase'i
+   ("kaynak isinden sonra yangin gozcusu ne kadar sure beklemeli?")
+   ilgili dokümanı retrieval'a hiç sokamadı — sonuç tamamen alakasız
+   5 kaynaktan oluşan bir "bulunamadı" cevabıydı.
+2. **PPE sorusu için tam retrieval kopması:** "Yuksekte calisirken hangi
+   KKD gereklidir?" sorusu PPE/Fall Protection yerine Wellhead Inspection,
+   ESD ve Cathodic Protection dokümanlarını getirdi; cevap da buna bağlı
+   olarak tamamen konu dışı.
+3. **OSHA standart numarası halüsinasyonu:** Hazardous Energy Control
+   sorusunda model "1910.Subpart.S" diye bir standart numarası uydurdu;
+   gerçek referans 29 CFR 1910.147.
+4. **Negatif kontrol sızıntısı:** "Yapay zeka nedir?" sorusu önce doğru
+   şekilde reddedildi, ama aynı cevabın devamında alakasız gürültü
+   chunk'larından uydurma bir "kulak anatomisi" paragrafı üretildi —
+   diğer iki negatif kontrol (fotosentez, Fransa'nın başkenti) temiz
+   şekilde reddedildi.
+5. **Konu dışı cevap:** Pig launcher'daki mekanik kilidin önemini soran
+   soruya, retrieval doğru dokümanı getirmesine rağmen cevap LOTO/motor
+   elektrik beslemesi gibi alakasız bir konuya kaydı.
+
+**2 dürüst boşluk (hata değil):** "Yangin sondurucu secimi nasil yapilir?"
+(Fire Response dokümanı bu konuyu içermiyor — önceki test turlarında da
+görülen, kalıcı bir korpus boşluğu) ve OSHA Oil & Gas eTool'un genel
+odağını soran soru (kaynak doküman büyük ölçüde ince bir gezinme sayfası).
+Her ikisinde de model halüsinasyon yapmak yerine dürüstçe reddetti.
+
+**Genel değerlendirme:** %80 net doğruluk ve halüsinasyonların büyük
+çoğunluğunun (referans footer sayesinde) yanlış kaynak göstermek yerine
+yanlış *içerik* üretmekle sınırlı kalması, mimari değişikliklerin
+(BM25, reranker, deterministik referans, Ollama geçişi) birlikte gerçek
+bir kalite artışı sağladığını gösteriyor. Kalan hataların ortak teması
+net: (a) Türkçe sorularda embedding-tabanlı retrieval hâlâ İngilizce
+kadar güvenilir değil, (b) model bilmediği spesifik sayısal/kod
+referanslarını (standart numaraları gibi) uydurmaya bazen İngilizce'de
+de meyilli.
