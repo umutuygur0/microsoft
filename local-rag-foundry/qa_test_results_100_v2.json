@@ -1,0 +1,3040 @@
+[
+  {
+    "n": 1,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "How do I detect a gas leak?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "**Summary**\n\nTo detect a natural gas leak, use a calibrated portable combustible gas detector to scan fittings and flanges for readings over 5% LEL.\n\n**Safety Warnings**\n \n- Do NOT approach suspected leaks from downwind.\n  \nNatural Gas is highly flamable; do not ignite any sources near the survey area.\n\nReference: Gas Leak Detection Procedure; Wellhead Inspection; Hydrogen Sulphide (H2S) Monitoring",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.8537
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6184
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.5238
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6631
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5711
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Gaz kacagi nasil tespit edilir?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "Özet:\nGaz lekeli portatif gaz detektörü kullanarak boru hattı veya wellhead tesisinde tespit edilebilir.\nEmniyet Uyarısı:\n\n* Doğru çalışması için en az bir kere her 24 saatte kontrol edilmelidir.\n\nAdım Adım Kılavuz: \n\n1- Detektöre temiz hava içinde açılır ve sıfır referansı alınir. \n2 - Tesisin etrafında yavaşça gezilir, detektör sensörünün fittings , flanges and joints ile temas ettirilmesi gerekir.\n3 – 5% LEL'den yüksek bir okuma yapılırsa potansiyel olarak tehlikeli olan bölge daha detaylı olarak incelenmelidir.\n\nNot: Detektöre her girişte temiz hava içinde sıfır referansı alınmalıdır.\n\nReference: Gas Leak Detection Procedure; Wellhead Inspection; Gas Detector Calibration; Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.3975
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.3182
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.3516
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.3629
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3126
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "difficulty": "hard",
+    "language": "mixed",
+    "question": "Gas leak survey yaparken hangi threshold'da evacuate etmem gerekir?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "Özet\n- Okunan değer %LEL'nin 20'sini aşarsa bölgeden boşaltılmalıdır.\n\nGüvenlik Uyarıları \n* Doğal gaz yüksek derecede yanıcıdır ve bir mermi ile ateşlenebilir.\n \n\nAdım Adım Kılavuz:\n1) Detektörünüzün son gün içinde ayarlandığını, kullanım öncesinde patlatma testinden geçtiğini doğrulayın.\n\nReference: Gas Leak Detection Procedure; Hydrogen Sulphide (H2S) Monitoring",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.7909
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6223
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6989
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.4967
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5508
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What should I do if I discover a fire on site?",
+    "expected_source": "Fire Response",
+    "answer": "Summary\nRaise an alarm and isolate nearby process lines before attempting first-response actions.\nPersonal safety takes priority over property in every stage of response, including evacuation from upwind direction towards muster point.\n\nSafety Warnings:\n- Never extinguish gas fires without isolating fuel supply to prevent re-emergence as explosive unburned cloud. \n  - Use dry powder or CO2 on such incidents; never use water.\n  \nStep-by-step Guidance:\n\n1\\. Raise the alarm immediately and activate nearest fire call-point, if safe.\n\n2\\.\\ If trained & it's secure: isolate gas supply feeding to prevent further fueling of flames\n\n3\\) Only attack small fires with correct extinguisher type for involved material.\n\nReference: Fire Response; Liquid Spill Response; Hot Work Permit",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.675
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.7365
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.5657
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.7156
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.6452
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Yangin sondurucu secimi nasil yapilir?",
+    "expected_source": "Fire Response",
+    "answer": "Bilgi yerel bilgi tabanında mevcut değildir.\n\nReference: Emergency Shutdown Procedure; Liquid Spill Response; Hot Work Permit; Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3197
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.3204
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.3173
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.3189
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.3279
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why should you sometimes let a gas fire keep burning instead of extinguishing it immediately?",
+    "expected_source": "Fire Response",
+    "answer": "Summary\nExtinguishing visible flames on an ongoing process can create more danger than letting them burn, as unburned gases may accumulate and re-ignite explosively.\n\nSafety Warnings: Never approach a gas fire without confirming that its fuel supply has been isolated to prevent explosive ignition of accumulated vapors.\n\nReference: Fire Response; Flare System Operation",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.7709
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.6019
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.5896
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.59
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.5651
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What oxygen percentage range is safe before entering an enclosed space?",
+    "expected_source": "Confined Space Entry",
+    "answer": "Summary\nThe acceptable atmospheric test limits are specified in \"Atmospheric Test Limits\" section of Confined Space Entry (Safety) document.\n \nOxygen levels should be between 19.5% and 23.5%. Below this range, it is oxygen-deficient; while a level above the upper limit increases fire risk.\n\n Safety Warnings\nContinuous monitoring for atmospheric changes inside confined spaces must occur throughout entry duration to prevent sudden hazards from arising due to rapid atmosphere shifts caused by purges or other factors.\n \n Step-by-step Guidance\n\nReference: Confined Space Entry; Confined Spaces - Overview (OSHA); Gas Leak Detection Procedure; Hydrogen Sulphide (H2S) Monitoring",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.702
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6766
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5168
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6928
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.4391
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "confined space icin oksijen limitleri nedir?",
+    "expected_source": "Confined Space Entry",
+    "answer": "Özet:\nKapalı bir alanda güvenli atmosfer için oksijen limitleri %19,5 ile%23,5 arasında değişmektedir.\n\nGüvenlik Uyarıları:\n\n* Kaplı alanların içindekiler hızla değişiklik gösterebilir — sürekli izleme zorunludur.\n \nAdım-by-Step Kılavuz: \n\n1-Kişisel alana erişimi engelleyecek ve herhangi bir tehlikeyi ortadan kaldırın.\n\nReference: Confined Spaces - Overview (OSHA); Confined Space Entry",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.7651
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.6666
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.6783
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.6127
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.7076
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "kapali alanda kurtarmaci neden kurbandan daha fazla risk altinda olabilir?",
+    "expected_source": "Confined Space Entry",
+    "answer": "Özet\nKapalı alanda girişler kurtarma ekipleri için önemli risklere neden olabilir ve tehlikeli atmosferleri gibi yaralılara karşı yenilgiye uğrayabilir.\n\nGüvenlik Uyarıları \n- Doğru koruma önlemleri alınmadan kaplı bir alana girilmemelidir. \n\nAdım-by-adim Kılavuz\n\n1) Kapalı alanda bulunan atmosphere hızlı değişebilir Bu nedenle sürekli izleme yapılması gerekir.\n\n\n2 ) Kurtarma ekipleri, kurtarıcıların atmosferini test etmeden girmememeli ve bu durum için eğitimli bir ekip olmalıdır.\n\n3  Eleştirici gaz limitleri: Oksijen %19-23 arasında; Combustible Gaz LEL'de (Lower Explosive Limit)10% ; H2S <5 ppm, CO ise<25ppm.\n\nReference: Confined Space Entry; First Aid for Gas Exposure; Cathodic Protection Survey; Liquid Spill Response",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.5002
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.4952
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.4768
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5926
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.4375
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "At what LEL percentage should an ESD be triggered in an occupied area?",
+    "expected_source": "Emergency Shutdown Procedure",
+    "answer": "Summary\n- An Emergency Shutdown (ESD) must trigger at a gas reading of 60% or higher, which is set below ignition point to provide safety margin.\n\nSafety Warnings \nNone relevant for this question \n\nStep-by-step Guidance:\n1: Follow \"Emergency ShutDown Procedure\" excerpt.\n\nReference: Emergency Shutdown Procedure; Gas Leak Detection Procedure; Confined Space Entry; Hot Work Permit",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.7419
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5333
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.3869
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.411
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4071
+      }
+    ]
+  },
+  {
+    "n": 11,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "hangi durumlarda ESD sistemi devreye alinir?",
+    "expected_source": "Emergency Shutdown Procedure",
+    "answer": "Özet:\nESD (Acil Kapatma Sistemi), aciliyet durumlarında veya önemli kontrollerde hava akımını kaybetme durumunda aktif hale gelir.\n\nGüvenlik Uyarıları:\n\n- Elektrikli güvenlik ekipmanlarının ve kontrol cihazların çalışması için gereken havanın kesilmesi, bir dizi işlemin zincirleme olarak bozulmasına neden olabilir. Bu nedenle bu tip durumlarda ESD sisteminin devreye alınması kritiktirdır.\n\nAdım Adım Kılavuz:\n1) Bir kaza veya acil durum algılandığında.\n2) Elektrikli kontrol ya da alet havası kaybına maruz kalındığı zaman, çünkü birçok güvenlik-kaynaklı valf instrument hava akışını kaybetme durumunda güvenli pozisyonda devre dışı bırakılır ve bu bir dizi işlemin zincirleme olarak bozulmasına neden olabilir.\n3) Bir gaz salınımı algılandığında (LEL 60%'den yüksek).\n4) Yangına maruz kalındığı zaman, çünkü yangının kontrolü için ESD sisteminin devreye alınması kritiktirdır.\n\nReference: Emergency Shutdown Procedure; Fire Response",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.8142
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.6928
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.5859
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.5631
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.5735
+      }
+    ]
+  },
+  {
+    "n": 12,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is the first step if a colleague collapses from gas exposure?",
+    "expected_source": "First Aid for Gas Exposure",
+    "answer": "Summary:\nRaise an alarm immediately to call for emergency response team assistance before attempting any other action.\nSafety Warnings:\n\n* Do not attempt rescue without breathing apparatus or trained personnel, as this can lead to further casualties.\n\nStep-by-step Guidance: \n1. Raise the alarm and call for immediate help from a qualified medical staff using your communication device (as per \"First Aid for Gas Exposure\" - Overview).\n2. Only enter with proper equipment including gas mask.\n3-7 are procedures after reaching casualty safely, as described in same document.\n\nNote that attempting to rescue without correct training or breathing apparatus can lead directly into the very danger you're trying not create more casualties from — so it's crucially important for this first step of raising alarm and calling help.\n\nReference: Hydrogen Sulphide (H2S) Monitoring; First Aid for Gas Exposure; Emergency Shutdown Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.7523
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.7286
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.6031
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.6561
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.4949
+      }
+    ]
+  },
+  {
+    "n": 13,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "bogucu gaza maruz kalan birini kurtarmak neden tehlikeli?",
+    "expected_source": "First Aid for Gas Exposure",
+    "answer": "Özet\nKazanın üstesinden gelen atmosfer aynı zamanda saniyeler içinde eğitimsiz kurtarma ekiplerini de aşacaktır, bu nedenle uygun ekipman ve eğitim olmadan yapılan tüm müdahaleler hem iki taraf için çok tehlikeli olacaktır.\n\nGüvenlik Uyarıları \nÇevresel kontaminasyonun olduğu alanlara resüsitasyonu denemeden girmeyin. Aksine solunma cihazıyla donatılmış bir deneyimli ekiple birlikte bulunmadıkça!\n\nReference: First Aid for Gas Exposure; Fire Response; Confined Space Entry; Liquid Spill Response",
+    "notice": null,
+    "sources": [
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.4066
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.3596
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.3339
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.3378
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.3051
+      }
+    ]
+  },
+  {
+    "n": 14,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "How long must the fire watch continue after hot work is finished?",
+    "expected_source": "Hot Work Permit",
+    "answer": "Summary\nThe dedicated fire watcher should remain for a total of thirty minutes beyond when all active working has ceased.\nSafety Warnings \n- The presence and effectiveness (e.g., fully charged, not past its calibration date) must be verified before each use.\n\nStep-by-step Guidance \n\n1\\. Ensure the designated area is clear from combustible materials.\n\nReference: Hot Work Permit; Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.7292
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.7592
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.6761
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.7204
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4886
+      }
+    ]
+  },
+  {
+    "n": 15,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What LEL threshold must be confirmed before hot work can begin?",
+    "expected_source": "Hot Work Permit",
+    "answer": "Summary\nThe area where a permit for \"hot\" (heat-producing) tasks will not start until it is verified that there are no flammable gases present, below 1% of Lower Explosive Limit.\n\nSafety Warnings \nHot Work Permit system exists to prevent ignition sources from meeting with gas in an environment.\n\nReference: Hot Work Permit; Confined Space Entry; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.7914
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5858
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.441
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5056
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5153
+      }
+    ]
+  },
+  {
+    "n": 16,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "kaynak isinden sonra yangin gozcusu ne kadar sure beklemeli?",
+    "expected_source": "Hot Work Permit",
+    "answer": "Özet\nAteş gözcüsü, \"Sıcak İş İzni\" (Güvenlik) gereği işlerin durması ardından 30 dakika daha devam etmelidir. \n\n Güvenlik Uyarıları \nYanma kaynaklı riskler ve yanıcı malzemelerin yakınlarında sıcak çalışmalar veya flaraj operasyonlarını gerçekleştirmek sırasında.\n\n Adım adım Kılavuz\n\n1. Herhangi bir işte başlarken pilot alev durumunu onayla.\n2. İzni belirtilen aralıklarda periyodik gaz re-testleri yap ve işin süresince koşullarin güvenli olduğu doğrula (5).\n3. Test esnasında %0 LEL'den fazla tespit edilirse derhal durdur, yanıcı gazların bölgede temizlendiği kadar sıcak çalışmalarına devam etmez.\n\nNot: İş boyunca ateş gözcüsünün de hazır olması gerekir\n\nReference: Hot Work Permit; Liquid Spill Response; Flare System Operation",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5254
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5995
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5462
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.5504
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.4947
+      }
+    ]
+  },
+  {
+    "n": 17,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What are the H2S alarm set points?",
+    "expected_source": "Hydrogen Sulphide (H2S) Monitoring",
+    "answer": "Summary\nThe low and high alarms for hydrogen sulphide (H2S) monitoring have specific threshold values to ensure worker safety.\n \nSafety Warnings:\n- When a personal monitor sounds an **high** or IDLH level, leave immediately in upwind direction without investigating first.\n\nStep-by-step Guidance:\n\n1. The alarm set points are as follows: low at 5 ppm and high (requiring immediate evacuation) is not explicitly stated but given that the context mentions \"the full response protocol\" for each threshold it can be inferred to start from **10**.\n2. Confirm fixed detector readings before entering a work area, treating silent or offline detectors with extra caution.\n\nNote: The IDLH level of 100 ppm must never approached without breathing apparatus as exposure at this concentration may cause rapid loss and death\n\nReference: Hydrogen Sulphide (H2S) Monitoring; Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.755
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.7181
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.72
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.6466
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4602
+      }
+    ]
+  },
+  {
+    "n": 18,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "H2S icin dusuk ve yuksek alarm seviyeleri nedir?",
+    "expected_source": "Hydrogen Sulphide (H2S) Monitoring",
+    "answer": "Özet:\nHydrogen Sülfit için Düşük Alarm Seviyesi 5 ppm, YüksekAlarm seviyeleri de aynıdır.\n\nGüvenlik Uyarısı:\n\n- Dikkat: Hydrojen Sülfür'e uzun süre maruz kalmak ölümcüldür. \n\nAdım Adımlık Kılavuzu:\n\n\n1-) İş alanına girmeden önce sabit detektör okuma sonuçlarını kontrol edin.\n2) Düşük alarm seviyesi 5 ppm'dir, bu durumdan sonra iş alana girerken dikkatli olunuz ve Hydrojen Sülfür (Hydrogen Sülfit'e maruz kalmaktan kaçının.\n\nReference: Hydrogen Sulphide (H2S) Monitoring; Personal Protective Equipment Requirements; Wellhead Inspection",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.7426
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.7639
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.683
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.7351
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.4262
+      }
+    ]
+  },
+  {
+    "n": 19,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What forms of stored energy must be released during equipment isolation?",
+    "expected_source": "Lockout / Tagout (LOTO)",
+    "answer": "Summary:\nStored mechanical and pneumatic energies can hold valves or actuators in position until bled uncontrolled.\nOther hazardous sources include electrical, hydraulic pressure (which holds trapped sections), thermal/chemical potential.\n\nSafety Warnings: \n- Be aware of stored energy that may release suddenly if not properly controlled during isolation.\n\nReference: Lockout / Tagout (LOTO); Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA); Pipeline Pressure Testing",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.754
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.6212
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.5884
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.46
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.6002
+      }
+    ]
+  },
+  {
+    "n": 20,
+    "difficulty": "hard",
+    "language": "mixed",
+    "question": "LOTO prosedüründe her worker neden kendi personal lock'unu takmali?",
+    "expected_source": "Lockout / Tagout (LOTO)",
+    "answer": "Özet:\nHer işçi kişisel kilitlerini kendileri uygulamalıdır, çünkü bu sadece o kişinin güvenli olarak çıkarmasını sağlar.\n\nGüvenlik Uyarıları:\n\n* Ekipmanın yeniden enerjilendirilmesini önlemek için fiziksel bir kilidi yalnızca çalışanın kendisi tarafından uygulanabilir.\n \n\nAdım-by-Step Rehber:\n\nReference: Lockout / Tagout (LOTO); Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA); Valve Inspection and Maintenance",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.7686
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.5653
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.6163
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.3732
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.5447
+      }
+    ]
+  },
+  {
+    "n": 21,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What PPE is required in H2S areas?",
+    "expected_source": "Personal Protective Equipment Requirements",
+    "answer": "Summary\nA personal H2S monitor and escape breathing apparatus are mandatory requirements when entering an area where hydrogen sulphide (H2S) concentrations may exceed 10 ppm, providing immediate means of self-rescue.\n\nSafety Warnings \n- When a high alarm sounds in areas with potential for elevated levels of toxic gas like Hydrogen Sulphide:\n    - Hold your breath\n      Leave the affected zone immediately and head away from any possible source.\n        Raise an alert to inform others about this hazard.\n\nReference: Personal Protective Equipment Requirements; Personal Protective Equipment - Overview (OSHA); Hydrogen Sulphide (H2S) Monitoring",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.7805
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.7162
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.7215
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.5845
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5582
+      }
+    ]
+  },
+  {
+    "n": 22,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Yuksekte calisirken hangi KKD gereklidir?",
+    "expected_source": "Personal Protective Equipment Requirements",
+    "answer": "Özet:\nYükseklikte çalışma (yükseltide çalışmak) için, görevin özel olarak belirlenmiş KISV'ye ait olan ve sertifikalı bir kancası bulunan tam vucut koruması gereklidir; her kullanımdan önce de kontrol edilmelidir.\n\nGüvenli Uyarılara İlişkin Bilgi: Bu spesifik iş için ilgili olmayan uyarılılar yoktur.\nAdım Adım Kılavuz:\n\n1. Yükseklikte çalışma sırasında doğru ekipmanı temin et:\n\t* Hidrojen sülfit (H2S) monitörü, tüm asitler bölgede zorunlu olsa da bu özel durumun içinde gerekmez; ancak,\n\tyüksekliğe ait tam vucut koruması ile sertifikalı kancası bulunan ve her kullanımdan önce kontrol edilen ekipman\n2. Ekipmanı Kontrol Et: PPE'yi kullanmadan ya yükseklikte düşme riski olan yerlere tırmandığınızda güvenlik donanımlarına ihtiyacınız olacağı durumlarda:\n\t* Kendinize uygun şekilde takıldığından emin olun.\n3. Yüksekliğe ait işler sırasında belirlenmiş prosedürleri takip edin.\n\nNot: Bu cevap \"yükseltide çalışmak\" ifadesini, fiziksel olarak yüklendiğiniz bir platformda veya kulelerde görev yaparken anlıyorsa; bu sorunun amacının sadece genel ve soyut anlamda yükseklikte çalışma olduğunu varsayar.\n\nReference: Personal Protective Equipment Requirements; Confined Space Entry; Fire Response; Wellhead Inspection",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3177
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.3164
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3005
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.2962
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.2922
+      }
+    ]
+  },
+  {
+    "n": 23,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Boru hattini hangi metal korur?",
+    "expected_source": "Cathodic Protection Survey",
+    "answer": "Özet:\n\nKoruma amaçlı kurşun boruları için daha reaktif bir metal gibi magnezyum veya civa kullanmak suretiyle feda-anodu korozi korumasını sağlayan sistemler kullanılır.\n\nGüvenlik Uyarısılar :\n\n* Bazı test istasyonları yakındaki güç hatlarının gây ettiği AC gerilimi taşıyabilir, bu nedenle onları açarken her zaman izolatör eldiven ve aletleri takın.\n \nAdım-by-Step Rehber:\n\n1. Koruma amaçlı kullanılan sistemin türünü belirleyin (feda-anodu veya etkilendiş-hacim).\n2.Eğer fada anod sistemiyse, koruduğu kurşun borular için hangi metali kullandığını kontrol edin.\n\nNot:\nKoruyucu malzemelerin yaygın olarak ya da özel bir şekilde bahsedilmediği bağlamda sadece Feda-Anodu sisteminin magnezyum ve civa gibi koruyuculardan bahseden sistemler vardır.\n\nReference: Cathodic Protection Survey; eTool: Well Control - Blowout Preventers (OSHA); 29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.6096
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.6167
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.2848
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.5444
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4141
+      }
+    ]
+  },
+  {
+    "n": 24,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What is the difference between the 'on' potential and 'instant-off' potential in a CP survey?",
+    "expected_source": "Cathodic Protection Survey",
+    "answer": "Summary\nThe \"instan-on\" offpotential treading is taken within a fraction of a second after interrupting current, before soil IR drop decays.\n\nSafety Warnings \n- Always use insulated tools when opening test posts to avoid induced AC voltage from nearby power lines or pipelines.\n \n\nStep-by-step Guidance:\n1. Measure the pipe-to-soil potential at each scheduled post along with route (Working Procedure).\n2. Record both \"on\" and instant-off potentials, taking care not interrupt current for too long that soil IR drop decays before reading is taken.\n\nNote: The term 'instant-on' was used in error instead of its correct counterpart - the actual context uses only one type called as  potential off'.\n\nReference: Cathodic Protection Survey; Pipeline Pressure Testing",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.7593
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.7316
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5183
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.3449
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.4183
+      }
+    ]
+  },
+  {
+    "n": 25,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What inspection method measures remaining pipe wall thickness directly?",
+    "expected_source": "Corrosion Inspection",
+    "answer": "Summary\n- The correct answer involves measuring \"remaining\" or actual, not minimum allowable.\n \nSafety Warnings:\nNone applicable for this specific question.\n\nStep-by-step Guidance:\n\n1. According to **Inspection Methods** in one of our excerpts from a document titled \"**Corrosion Inspection (Maintenance)**\", no single method catches every form of corrosion; inspection programmes typically combine several techniques: Visual, Ultrasonic thickness measurement and removal at sample points.\n2. Specifically for the question asked about measuring remaining wall \"thickness\" directly through material:\n   - The excerpt mentions **Ultrasonic Thickness Measurement** as a primary technique to quantify general loss by checking it against minimum allowable values calculated in engineering.\n\nThis inspection method is called out specifically within this context, so we can conclude that Ultrasonics measures the actual thickness.\n\nReference: Corrosion Inspection; Cathodic Protection Survey; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.7331
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.5531
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.4946
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.437
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4802
+      }
+    ]
+  },
+  {
+    "n": 26,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why can rust hide underneath pipe lagging?",
+    "expected_source": "Corrosion Inspection",
+    "answer": "Summary\nRust under insulation is frequently hidden beneath material that must be disturbed during inspection, making it difficult or impossible for visual inspectors to detect until after damage has occurred.\n\nSafety Warnings \nRemoving insulation requires a brief risk assessment due to potential reduction in pipe strength and increased likelihood of unexpected wall loss.\n\nReference: Corrosion Inspection; Wellhead Inspection; Gas Leak Detection Procedure; Cathodic Protection Survey; Cold Weather Operations",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.6541
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.6302
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6045
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5934
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.5821
+      }
+    ]
+  },
+  {
+    "n": 27,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What early warning sign often precedes a compressor bearing failure?",
+    "expected_source": "Gas Compressor Maintenance",
+    "answer": "Summary\nA slow decline in oil pressure is typically observed before it leads to a compressors' bearings failing completely.\nSafety Warnings \n- Be cautious of hot surfaces and rotating parts even after shutdown, as they can remain hazardous for some time.\n\nStep-by-step Guidance:\n1) Check the lubricating system's parameters regularly.\n\nReference: Gas Compressor Maintenance; Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.7381
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.6628
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.6029
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.595
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5399
+      }
+    ]
+  },
+  {
+    "n": 28,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "kompresorde titresim artisi neyi gosterebilir?",
+    "expected_source": "Gas Compressor Maintenance",
+    "answer": "Summary:\nA compressor's health is read primarily through trends, not single readings.\n \nSafety Warnings:\n\n* Isolate and depressurise the compressor before any work begins; a stopped-looking machine can still be under full line pressure.\n\nStep-by-step Guidance: \n\n1- Baseline running parameters should first recorded.\n\nReference: Gas Compressor Maintenance; Valve Inspection and Maintenance",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.3241
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.281
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.3128
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.3032
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.3049
+      }
+    ]
+  },
+  {
+    "n": 29,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "How often should a gas detector be calibrated?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "Summary\nA full calibration of a gas detector must occur at least every six months or more frequently if manufacturer guidance suggests it is necessary due to sensor ageing, poisoning by certain chemicals (e.g., bump test results being borderline), and other factors.\n\nSafety Warnings: None relevant for this answer.\nStep-by-step Guidance:\n1. Check the current calibration date of your gas detector; a valid one should be within six months from now or less if manufacturer guidance suggests it is necessary due to sensor ageing, poisoning by certain chemicals (e.g., bump test results being borderline), and other factors.\n\n2. If more than 6-months have passed since last full calibrations was done then proceed with the next steps.\n3. Perform a Full calibration of your gas detector as per manufacturer's guidelines\n\nReference: Gas Detector Calibration; Personal Protective Equipment Requirements; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6634
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6619
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5364
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.7186
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.7527
+      }
+    ]
+  },
+  {
+    "n": 30,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What is the bump test frequency for a gas detector?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "Summary\n- The recommended practice involves performing regular checks, specifically before each day of use.\n \nSafety Warnings:\nNone applicable to this specific question\n \nStep-by-step Guidance:\n\n1. Before starting work with your portable combustible gas detection equipment for any given working shift (or longer period), perform a quick check called the \"bump test\".\n2. This is not meant as an alternative or replacement calibration, but rather serves its purpose by confirming that it can respond to known concentrations of gases.\n3. It's essential never skip this step even when time seems tight because you might end up with unreliable readings from your equipment if there are any issues present which haven't been identified yet through proper maintenance procedures like bump testing regularly enough!\n\nReference: Gas Detector Calibration; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.7895
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.7196
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.7499
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.628
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6447
+      }
+    ]
+  },
+  {
+    "n": 31,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Gaz dedektoru kac ayda bir kalibre edilmeli?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "Özet \nGaz detektörünün doğruluğunu sağlamak için düzenli olarak ayarlanması gerekir ancak bu alıntıda her yıl ne kadar sıklıkta olması gerektiğini belirtmek yoktur.\n\n Güvenlik Uyarısı\n- Sadece geçerliliği olan ve süresi dolmamış sertifikalı ayarlama gazını kullanın. \n\nAdım adım Kılavuz: Konuşma bağlamında tam ayarlanmalar için aşağıdaki frekanslar belirtilmiştir:\n* En az her 6 aylık periyotlarda \nAncak başka bir belge (Bakıme Standard MS-18) kaynak standart olarak bahsedilmektedir ancak içeriği ve sıklık gereksinimleri bilinmemektedir.\n\nReference: Gas Detector Calibration; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.393
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.3571
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.3589
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.3998
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.3524
+      }
+    ]
+  },
+  {
+    "n": 32,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What is the acceptable pressure drop during a pipeline pressure test?",
+    "expected_source": "Pipeline Pressure Testing",
+    "answer": "Summary\n- The maximum allowable percentage change in system volume (and thus internal pipe) due to leakage or other effects, which would be considered an indication of leak requiring investigation rather than measurement noise.\n\nSafety Warnings: None relevant.\nStep-by-step Guidance:\n1. Check that you are at the \"Test Parameters\" section from one specific excerpt (\"Pipeline Pressure Testing\").\n2. Look for a heading titled \"**Acceptable pressure drop**\".\n3. Read what is stated under this title as your answer to be used in context.\n\nThe acceptable pressure drop during pipeline testing, according to these excerpts of documentation on Pipeline Maintenance procedures and guidelines (specifically the \"Test Parameters\" section), should not exceed 0.5% over a specified hold period after test medium temperature stabilisation has been confirmed; anything beyond this is treated as an indication that there may be leaks requiring investigation rather than measurement noise alone, which would otherwise simply indicate normal system operation or minor fluctuations in pressure readings during the testing process itself due to factors such as changes within surrounding soil conditions.\n\nReference: Pipeline Pressure Testing; Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.7814
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.7254
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.6084
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.685
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.472
+      }
+    ]
+  },
+  {
+    "n": 33,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "Why is pressure raised in stages rather than all at once during a pipeline test?",
+    "expected_source": "Pipeline Pressure Testing",
+    "answer": "Summary\nRaising pressure gradually allows for repeated opportunities to detect leaks or weak points before reaching full pressurisation, reducing potential hazards and making repairs easier when issues are identified early.\n\nSafety Warnings (relevant)\n- Pneumatic testing stores large amounts of energy in compressed gas; keep personnel outside the calculated exclusion radius during test.\n \nStep-by-step Guidance\n1. Raise pressure by 25% increments to inspect for leaks at each step, holding for a minimum period before continuing with further pressurisation.\n\nThis approach is explained under \"Why Staged Pressurization Matters\" and also in section # Pipeline Pressure Testing > Key Safety Precautions (point on pneumatic testing).\n\nReference: Pipeline Pressure Testing; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.759
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.766
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.6891
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.5805
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5524
+      }
+    ]
+  },
+  {
+    "n": 34,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What is the actuator air pressure range for a pneumatic valve?",
+    "expected_source": "Valve Inspection and Maintenance",
+    "answer": "Summary\nThe recommended operating pressures are between 5.5 to 7 bar.\n\nSafety Warnings \n- Check that no one has been injured during this process and ensure all safety equipment, including gloves or other protective gear is in place before proceeding with maintenance work.\n \n\nStep-by-step Guidance:\n1) Locate the pneumatic actuator connected to your valve\n2) Identify where you can check its air supply pressure (this may be a gauge on top of it)\n3) Check that this reading falls within 5.5 and seven bar\n\nReference: Valve Inspection and Maintenance; Lockout / Tagout (LOTO); eTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.7985
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.6999
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.4018
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.4131
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3773
+      }
+    ]
+  },
+  {
+    "n": 35,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "vana pozisyon gostergesi neden onemli?",
+    "expected_source": "Valve Inspection and Maintenance",
+    "answer": "Özet:\nVant tipinin gösterilmesi önemlidir çünkü doğrudan acil durumlar veya bakım işlemleri sırasında işletmelerin güvenlik kararı üzerinde etkisi vardır ve eşleşmeyen bir işaret, valf durumlara ilişkin yanlış varsayımalarda bulunabilir.\n\nGüvenlik Uyarıları: Bu konuya ilgili hiçbir uyarısı yoktur.\nAdım-by-Step Rehber:\n\n1. Operatörler için vana pozisyon göstergesinin doğrulanması kritik önem taşır ve bir karar verme riski taşıyan operatörlere valfın doğru pozisyonda olmadığını varsaymak önemlidir.\n\nNot: \"val\" kelimesinin yerine Türkçede daha yaygın olarak kullanılan \"vanta\", veya tam ismi ile kullanıldığında ise Türkçe'de de aynı şekilde kullanılması önerilir.\n\nReference: Valve Inspection and Maintenance; Wellhead Inspection",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.3485
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2884
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2699
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.2602
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2994
+      }
+    ]
+  },
+  {
+    "n": 36,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "Why does cold-soaked steel behave differently under an impact load?",
+    "expected_source": "Cold Weather Operations",
+    "answer": "Summary:\nCold-sooked steel becomes more brittle and is therefore prone to cracking when subjected to sudden or high-force impacts such as dropped tools, compared with warm conditions where it would be less likely.\n\nSafety Warnings: None relevant.\nStep-by-step Guidance:\n\n1) Confirm that you are aware of the increased risk associated with cold-weather operations on metal surfaces.\n\nReference: Cold Weather Operations; Corrosion Inspection; Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.6595
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.7297
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.5989
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.445
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.4936
+      }
+    ]
+  },
+  {
+    "n": 37,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Boru hatlarinda hidrat olusumu neden engellenir?",
+    "expected_source": "Cold Weather Operations",
+    "answer": "Özet :\nHıdrelatın (hidration) ortaya çıkmasını engelleme amacıyla borularının ısısını denetlemelidir, ancak bu soruda bahsedilmemektedir.\n\nGüvenlik Uyarısı:\n\n- Boru hatlarında su ve doğalgaz birleşerek hidrata oluşabilir; bunun önlenmesi önemlidir.\n \nAdım Adımlık Kılavuz:\nBoru hattında hidratın (hydralation) ortaya çıkmasını engellemek için ısısını denetlemelidir.\n\nReference: Wellhead Inspection; eTool: Well Control - Blowout Preventers (OSHA); Cold Weather Operations",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.297
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3116
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3121
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3084
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.3345
+      }
+    ]
+  },
+  {
+    "n": 38,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What should be done if a flare pilot light goes out?",
+    "expected_source": "Flare System Operation",
+    "answer": "Summary\nRe-lighting of flares must occur immediately in case there is an issue with ignition; this includes re-lit pilots that have gone dark during operation, as well.\nSafety Warnings \n- Never assume any part of a flare system has functioned correctly without verifying its status.\n\nStep-by-step Guidance:\n1. Confirm the pilot flame was indeed out using both thermocouple readings and visual confirmation (flare camera) to ensure accuracy in diagnosis before proceeding with re-lighting actions, as sometimes there can be misleading or false indications.\n2. Immediately attempt ignition of a flare that has lost light by following established procedures for relighting pilots; this includes checking purge gas flow is maintained at all times during the process and ensuring knock-out drum levels are within limits to prevent flashback risks.\n\nNote: The context does not provide specific information on what should be done if re-ignition fails, so further guidance from other sources may still apply.\n\nReference: Flare System Operation; Emergency Shutdown Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Flare System Operation",
+        "score": 0.7366
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.7883
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.6812
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.4448
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.6461
+      }
+    ]
+  },
+  {
+    "n": 39,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "flare sisteminde purge gazi neden surekli akmali?",
+    "expected_source": "Flare System Operation",
+    "answer": "Özet\nAteşleme başlığı'na hava girişinin önlenmesinde, flar sisteminin çalışması için (İşlemler) gereken purge gaz akımı önemlidir.\n\nGüvenlik Uyarıları \nHer zaman en az düzeyde flare edilen gazların arındırılması riski ve yangın tehlikelerini engeller. \n\nAdım-by-Step Rehber\n\n1-Purge gazi akımın her zamandan devam ettiğinden emin olun.\n2-Ateşleme sisteminin çalışması için gerekli olan pilot alevinin kontrolü yapılırken, aynı zamanda ateşleyici başlığının temizliği ve knock-out tamburun sürekli olarak izlenmesi önemlidir.\n\nReference: Flare System Operation; Gas Compressor Maintenance; Emergency Shutdown Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Flare System Operation",
+        "score": 0.6786
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.57
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.3085
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.7142
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3689
+      }
+    ]
+  },
+  {
+    "n": 40,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Bir boru hatti temizleme pigi nasil firlatilir?",
+    "expected_source": "Pipeline Pig Launching",
+    "answer": "Özet:\nPig lançamento işlemi \"pig\" adında bir cihaz kullanarak yapılır ve bu cihaza bağlı olarak sıvı birikintilerini temizlerken aynı zamanda tarama işlemleri için araçları yüklenir.\n\nGüvenlik Uyarısı:\n\n* İşlem öncesinde launcher'ın ana hattan izole edildiğinden emin olunuz.\n* Basınç sifonu açılana kadar bekleyin, çünkü basınçta kalma riski ciddi yaralanmalara neden olabilir.\n\nReference: Pipeline Pig Launching; eTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.4002
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3346
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3364
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.3753
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.3879
+      }
+    ]
+  },
+  {
+    "n": 41,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why is opening the launcher closure the most dangerous part of a pigging operation?",
+    "expected_source": "Pipeline Pig Launching",
+    "answer": "Summary\nThe greatest hazard associated with launching pigs into pipelines lies not within operating procedures, but rather when handling pressure vessels like launchers.\n\nSafety Warnings \nWhen dealing with pressurized equipment such as pipeline launcher systems and their components (e.g., closure doors), always follow proper depressuring protocols to prevent accidental ejection of the door.\n\nReference: Pipeline Pig Launching; Confined Space Entry; eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.8047
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.71
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.6215
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.3691
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.3442
+      }
+    ]
+  },
+  {
+    "n": 42,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What instrument protects a well from an uncontrolled release at the surface?",
+    "expected_source": "Wellhead Inspection",
+    "answer": "Summary\nThe primary automatic protection against an uncontrolled release is confirmed to function correctly on test, specifically referring to \"the Surface Safety Valve (SSV)\".\n\nSafety Warnings \n- Never loosen fittings under pressure.\n \n\nStep-by-step Guidance: Confirm that surface safety valve closes properly during the inspection.\n\nReference: Wellhead Inspection; Lockout / Tagout (LOTO); eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.6014
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.6177
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.5118
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.6669
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.5475
+      }
+    ]
+  },
+  {
+    "n": 43,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "wellhead bodrumunda gaz birikmesi neden kontrol edilir?",
+    "expected_source": "Wellhead Inspection",
+    "answer": "Özet \nKuyunun başındaki hücrede toplanan sıvının ya da havanın nedeni incelenir.\n\nGüvenlik Uyarısı\nBu durumdan dolayı bir tehlike oluşturabilir, bu nedenle dikkatli olunmalıdır.\nBir kuyu head hücresi çok fazla kapalı alan gibi davranır: alt-grade depolama odasıdır ve gaz birikimi yapabilme özelliği vardır. Üstten bakıldığında tehlikeli atmosferin altında bulunmayacağı için görüntülü kontrol yapmak mümkün değildir.\n\nAdım Adım Kılavuz\n1)Kuyu head hücresine giriniz.\n2)Vardığı içeriği dikkatlice denetleyin ve sıvının ya da gazın birikintileri olup olmadığını belirleyelim.\n\nReference: Wellhead Inspection; Gas Leak Detection Procedure; eTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.7406
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5095
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.3571
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.7497
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.3673
+      }
+    ]
+  },
+  {
+    "n": 44,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What are the contents of a spill kit?",
+    "expected_source": "Liquid Spill Response",
+    "answer": "Summary\nA typical ready-to-use spill kit includes various items to help contain and clean up spills quickly, such as absorbent pads and booms.\nSafety Warnings \nNone relevant for this question but be aware that handling contaminated material requires caution.\n\nStep-by-step Guidance:\n1\\. Absorbents (pads or boom) - used directly on the spilled liquid\n2. Non-sparking shovel – to handle materials without creating an ignition source while cleaning up spills safely, and drain covers.\n3\\ . Waste bags for disposing of any waste generated from spill cleanup\n\nReference: Liquid Spill Response; Spill Prevention, Control, and Countermeasure (SPCC) (EPA); Pipeline Pig Launching",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.7634
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.7434
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.4125
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.4631
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.4344
+      }
+    ]
+  },
+  {
+    "n": 45,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Bir sivi dokulmesi durumunda ilk yapilmasi gereken nedir?",
+    "expected_source": "Liquid Spill Response",
+    "answer": "Özet:\nSıvının dökülmesi halinde ilk yapmanız gereken şey kaynağını durdurmak ve birkaç dakika içinde onu sınırlamaktır.\n \nGüvenlik Uyarışları:\n\n* Kirlenmiş alan, gaz testi ile güvenli olduğu onaylanana kadar kaçınmalıdır. someone hareket etmiyorsa da tehlike kalmadığının garantisi değildir.\n\nAdım-by-Step Rehber: \n\n1.Kaynağını durdurun (sivi dökülmesi'nin kaynağından kesintiye geçin).\n2.Sonraki birkaç dakika içinde yayılmasını önleyerek ve potansiyel çevre hasarını engelleyin.\n \nBu prosedürün, gaz maruziyeti veya domuzu başlatma gibi farklı belgelerde ayrı olarak ele alındığı diğer bölümlerle ilgili olduğu daha çok sıvı dökülmesi yanıtına ait olduğunu unutmayın.\n\nAyrıyeten bu bilgi genel bir anlayış için önemlidir ancak kaynak durdurulduktan sonra ne yapılması gerekiyorsa ile doğrudan ilgilendiren konuyu özelce işlenmediği içindir.\n\nReference: eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA); Liquid Spill Response; First Aid for Gas Exposure; Pipeline Pig Launching",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.3353
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.2989
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.2985
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.3039
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.3084
+      }
+    ]
+  },
+  {
+    "n": 46,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why does speed matter more than scale when responding to a spill?",
+    "expected_source": "Liquid Spill Response",
+    "answer": "Summary\nA small spill contained within minutes rarely becomes reportable due to its limited impact, whereas allowing it time can lead to significant environmental harm or hazards such as vapour clouds and ignition risks.\n\nSafety Warnings: None relevant for this answer.\nStep-by-step Guidance:\n1) A smaller volume of a liquid spilled quickly is less likely than the same amount left unattended longer term (upwards from 20 minutes in context examples given here), to cause lasting environmental damage or create significant hazards such as vapour clouds and ignition risks.\n\nReference: Liquid Spill Response; Valve Inspection and Maintenance; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.7596
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.5885
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.3948
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.4602
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.5291
+      }
+    ]
+  },
+  {
+    "n": 47,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "How many gallons of flammable liquid can be stored in a room outside an approved cabinet under OSHA 1926.152?",
+    "expected_source": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "answer": "Summary:\nAccording to \"29 CFR 1926.152 - Flammable Liquids (OSHA)\", no more than **25** gallons of flammable liquids shall be stored in any one storage area outside an approved cabinet.\n\nSafety Warnings: None relevant.\nStep-by-step Guidance:\n\n1. Check if the room is near a building, exit or stairway to ensure it's not used for safe passage according to 1926.152(a)(2).\n2. Ensure only containers and portable tanks are being stored in accordance with section (a) of this standard.\n\nNote: This information does NOT include storage quantities within approved cabinets as that is covered under a different part, specifically sections b(3).\n\nReference: 29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.7544
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.8809
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.8293
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.7158
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.7543
+      }
+    ]
+  },
+  {
+    "n": 48,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "How wide must the clear aisle be in an inside flammable liquid storage room?",
+    "expected_source": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "answer": "Summary\nThe minimum width of a clear aisle required to maintain within every inside store-room is 3 feet as per OSHA regulation (1926 CFR).\n\nSafety Warnings \nNone.\n\nStep-by-step Guidance:\n1) The area where flammable liquids are stored must have one open space at least three wide.\n\nReference: 29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.8169
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.7631
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.6207
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.6093
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.6055
+      }
+    ]
+  },
+  {
+    "n": 49,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What characteristics make a space a 'permit-required confined space' under OSHA?",
+    "expected_source": "Confined Spaces - Overview (OSHA)",
+    "answer": "Summary\nA permit is required if one or more specific conditions are met within an enclosed area, such as potential hazardous atmospheres and unguarded machinery hazards.\nSafety Warnings \n- Never enter without proper testing of gas levels.\n\nStep-by-step Guidance:\n1) Check for a potentially dangerous atmosphere inside the space. This includes checking whether it contains material that could engulf someone or has walls/floors converging inward/downward which may trap an entrant, as well as other hazards such unguarded machinery and exposed live wires.\n2) If any of these conditions are met (or if there's potential for them to be present), a permit is required before entry.\n\nReference: Confined Spaces - Overview (OSHA); Confined Space Entry",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.8424
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6719
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6692
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.4945
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.606
+      }
+    ]
+  },
+  {
+    "n": 50,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "OSHA'ya gore hangi alanlar confined space sayilir?",
+    "expected_source": "Confined Spaces - Overview (OSHA)",
+    "answer": "Özet\nKısıtlanmış alanlar girişe veya çıkışa ilişkin sınırlı ya da kısıtlamalı yollarla karakterize edilir ve sürekli ikamet için tasarlanmamıştır.\n\nBölgeler örnekleri arasında tankları, gemileri, silolar, depolama kapaklarını, hopper'ler ile manhole bulunur. \n\nGüvenlik Uyarılar\nKısıtlanmış alana girişinde uygun havalandırma sağlandığından emme tehlikeleri önlenmelidir .\n\nReference: Confined Spaces - Overview (OSHA); Fire Safety - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.8163
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.7634
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.7616
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6084
+      },
+      {
+        "title": "Fire Safety - Overview (OSHA)",
+        "score": 0.5681
+      }
+    ]
+  },
+  {
+    "n": 51,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What types of injuries can result from failing to control hazardous energy during maintenance?",
+    "expected_source": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+    "answer": "Summary:\nInjuries resulting from failure to control hazardous energy include electrocution, burns, crushing, cutting, lacerating, amputating or fracturing body parts.\n\nSafety Warnings: \nWhen performing any procedure that involves controlling of hazardious energies be aware and take necessary precautions against potential injuries.\n\nReference: Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA); Electrical - Overview (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.824
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.6706
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.6159
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.5973
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.4856
+      }
+    ]
+  },
+  {
+    "n": 52,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Which OSHA standard number covers control of hazardous energy for general industry?",
+    "expected_source": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+    "answer": "Summary:\nThe relevant section is 29 CFR.\n\nSafety Warnings:\n\nStep-by-step Guidance\n1. The Control of Hazardous Energy (Lockout/Tagout) - Overview document mentions that \"OSHA's Lockout/tag out fact sheet describes practices and procedures necessary to disable machinery or equipment.\"\n2. It also states, under the heading 'What can be done',  \"... Proper lock-out / tag-ou t(LOTO )practices... safeguard workers from hazardous energy releases.\"\n\nReference: Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA); Process Safety Management - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.7759
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.736
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.6069
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.4807
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.4847
+      }
+    ]
+  },
+  {
+    "n": 53,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What are the most frequent causes of electrical injuries according to OSHA?",
+    "expected_source": "Electrical - Overview (OSHA)",
+    "answer": "Summary:\nThe following hazards cause electric shock or electrocution in construction workplaces:\n\n* Contact with power lines\n* Lack of ground-fault protection \n* Path to grounding missing, discontinuous \n\nSafety Warnings: Working on electricity can be hazardous and may result in serious injury.\n\nStep-by-step Guidance is not applicable for this question.\n\nReference: Electrical - Overview (OSHA); Fall Protection - Overview (OSHA); Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.8079
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.5763
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.5463
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.5475
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.4861
+      }
+    ]
+  },
+  {
+    "n": 54,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "OSHA'ya gore en sik elektrik yaralanma nedenleri nelerdir?",
+    "expected_source": "Electrical - Overview (OSHA)",
+    "answer": "Özet:\n\nElektriksel işlemlerde tehlikeli durumlar arasında, güç hatlarına temas etmek, topraklamada yetersizlik veya kesinti ve uzatılmış kablolarda yanlış kullanım yer almaktadır.\n\nGüvenli Kullanım Uyarıları:\nUzantılı kabloların güvenli bir şekilde kullanılması önemlidir. Elektriği direkt olarak çalışmak risklidir; işyerinde elektrikli cihazların kontrolü olmadan açma/kapatmayla ilgili tehlikeler de mevcuttur.\nAdim Adim Kılavuz:\n\n1) İş yerinde güç hatlarına temas etmekten kaçının\n2) Topraklama eksikliği veya kesintisi olan bölgelerde dikkatlice çalışın \n3) Uzantı kablolarını doğru şekilde kullanmayı unutmayın\n\nReference: Electrical - Overview (OSHA); Fall Protection - Overview (OSHA); Confined Spaces - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.6491
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.6618
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.6933
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.5143
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6278
+      }
+    ]
+  },
+  {
+    "n": 55,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is considered a workplace emergency under OSHA guidance?",
+    "expected_source": "Emergency Preparedness and Response: Getting Started (OSHA)",
+    "answer": "Summary:\nA situation that threatens workers or customers in an unexpected way.\n\nSafety Warnings:\n\nStep-by-step Guidance\n1. Identify potential hazards such as natural disasters, chemical spills/releases.\n2. Develop and implement proper planning for emergencies before they occur to ensure effective response during emergency situations when immediate action is necessary\n\nReference: Emergency Preparedness and Response: Getting Started (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.7743
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6755
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5621
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.6116
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6914
+      }
+    ]
+  },
+  {
+    "n": 56,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Which OSHA standard covers emergency action plans for general industry?",
+    "expected_source": "Emergency Preparedness and Response: Getting Started (OSHA)",
+    "answer": "Summary:\nThe relevant section is not explicitly stated in this excerpt as being specific to \"general\" industries only, but it does mention that some standards apply across multiple sectors including 29 CFR.\n\nSafety Warnings: None\nStep-by-step Guidance:\n\n1. Review OSHA's list of applicable regulations for emergency planning requirements.\n2. Note the following relevant sections:\n   - General industry (Section not specified in this excerpt)\n3. Consult additional resources such as \"OSHA Publication 3122, Principal Emergency Response and Preparedness Requirements\"\n\nReference: Emergency Preparedness and Response: Getting Started (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.5651
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6422
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6163
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.4859
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5351
+      }
+    ]
+  },
+  {
+    "n": 57,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "At what height must fall protection be provided in general industry workplaces?",
+    "expected_source": "Fall Protection - Overview (OSHA)",
+    "answer": "Summary:\nFall protection is required at elevations of four feet or more, specifically for overhead platforms and elevated work stations that are not guarded by a railing and toe-board.\nSafety Warnings:\n\n* Falls can cause serious injuries and deaths\nStep-by-step Guidance: \n\n1. Identify the type of workplace (general industry)\n2. Determine if workers will be at an elevation above four feet \n3. Provide fall protection measures such as guardrails, safety nets or harnesses\n\nReference: Fall Protection - Overview (OSHA); Personal Protective Equipment Requirements; 29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.8261
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.6483
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.5642
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.4399
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.4672
+      }
+    ]
+  },
+  {
+    "n": 58,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Insaat sektorunde kacinci metreden itibaren dusme korumasi gerekir?",
+    "expected_source": "Fall Protection - Overview (OSHA)",
+    "answer": "Summary:\nIn construction industry, fall protection is required at elevations of six feet (6 ft).\n\nSafety Warnings:\n\nStep-by-step Guidance:\n\n\n(Note: The question was translated to English as \"How many meters from which point does a drop in protective measures become necessary?\" but I answered based on the original context provided.)\n\nReference: Fall Protection - Overview (OSHA); 29 CFR 1926.152 - Flammable Liquids (OSHA); Personal Protective Equipment Requirements; Trenching and Excavation - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.3589
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.3278
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3456
+      },
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.334
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.3465
+      }
+    ]
+  },
+  {
+    "n": 59,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What does OSHA's Fire Safety overview page provide guidance on for workplaces?",
+    "expected_source": "Fire Safety - Overview (OSHA)",
+    "answer": "Summary\n- The provided excerpts from \"Fire Safety - Overview\" do not explicitly mention what specific aspects of fire safety it provides information or guidelines about.\n\nSafety Warnings \nNone applicable in this response \n\nStep-by-step Guidance  \nThis is a general overview page, and without more detailed content within the context documents available to me I am unable provide step by steps.\n\nReference: Fire Safety - Overview (OSHA); Fall Protection - Overview (OSHA); Confined Spaces - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Safety - Overview (OSHA)",
+        "score": 0.7206
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.6292
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.6754
+      },
+      {
+        "title": "Fire Safety - Overview (OSHA)",
+        "score": 0.6648
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.7542
+      }
+    ]
+  },
+  {
+    "n": 60,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What global system is OSHA's Hazard Communication Standard aligned with?",
+    "expected_source": "Hazard Communication - Overview (OSHA)",
+    "answer": "Summary\nThe HazCom standard of USA has been updated to align itself globally.\n\nSafety Warnings \nNone relevant here \n\nStep-by-step Guidance:\n1) The new update in HCS will provide a common and coherent approach for classifying chemicals.\n2) This is aligned with Globally Harmonized System (GHS).\n\nReference: Hazard Communication - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.8143
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.6603
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.6073
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.5211
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.5995
+      }
+    ]
+  },
+  {
+    "n": 61,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "OSHA Hazard Communication Standardi hangi kuresel sistemle uyumludur?",
+    "expected_source": "Hazard Communication - Overview (OSHA)",
+    "answer": "Özet\nYeni standart Globally Harmonized System of Classification and Labeling (GHS)'e uyumludur.\n\nBilgilendirme Uyarıları \nHiçbiri yok.\n\nAdım Adım Kılavuz \n\n1) Güncellenmiş OSHA Riskli İletişim Standartının kendisi GSH'ye uymaktadır.\n2) Bu, kimyasal üreticileri ve ithalatçılarının birer ortak yaklaşımı oluşturacakları anlamına gelmektedir.\n\nReference: Hazard Communication - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.7343
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.7481
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.5378
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.7361
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6979
+      }
+    ]
+  },
+  {
+    "n": 62,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What law required OSHA to issue HAZWOPER regulations?",
+    "expected_source": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "answer": "Summary:\nThe Superfund Amendments Reauthorization Act (SARA) of 1986 is mentioned as requiring OSHA to protect workers engaged in hazardous waste operations.\n\nSafety Warnings:\n\nNone relevant for this question.\n\nStep-by-step Guidance: \n\nThis information can be found directly under \"Hazardous Waste Operations and Emergency Response\" section.\n\nReference: Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.7428
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5945
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.6766
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5682
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5513
+      }
+    ]
+  },
+  {
+    "n": 63,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What are the OSHA exposure limits for hydrogen sulfide?",
+    "expected_source": "Hydrogen Sulfide - Hazards (OSHA)",
+    "answer": "Summary\nThe Occupational Health and Safety Administration (OSHA) has established various permissible exposure levels, ceiling limit values, peak level requirements based on industry type to protect workers from health hazards associated with Hydrogen Sulfid.\n\nSafety Warnings \nHandling hydrogen sulfide requires proper precautions as it is a highly flammable gas that can cause life-threatening situations if not handled properly. Exposure limits must be strictly followed and safety measures taken when handling the substance, including avoiding ignition sources in case of wet clothing to prevent fires or explosions.\n\n\nStep-by-step Guidance\n1) Identify your industry type: General Industry (General), Construction Sites(Construction 8-hour Limit :10 ppm ), Shipyard Workers(Ship yard limit is also set at a lower level than general and construction workers).\n2. Check the OSHA PELs for hydrogen sulfide in workplaces:\n   - Ceiling Level =20ppm \n    Peak Value=50 (up to ten minutes if no other exposure during shift)\n3) Verify your workplace's specific requirements, as some industries have stricter limits.\n\nNote: The information provided is based on excerpts from \"Hydrogen Sulfid Hazards OSHA\" and does not cover all possible scenarios or situations.\n\nReference: Hydrogen Sulfide - Hazards (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.8064
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.7414
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.7044
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.7225
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.7698
+      }
+    ]
+  },
+  {
+    "n": 64,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Hidrojen sulfur icin OSHA maruziyet limitleri nedir?",
+    "expected_source": "Hydrogen Sulfide - Hazards (OSHA)",
+    "answer": "Özet:\nOSHA'nın hidrojensülfür için mizanı limitleri 10 ppm'dir, ancak bu değer işyerinin türü göre değişebilir.\n\nGüvenlik Uyarıları: Hidrojen süflüt gazı yanıcı ve patlayıcı bir madde olarak kabul edilir. Bu nedenle doğru önlemler alınmadan çalışılması tehlikeli olabilir.\n \nAdım adım Kılavuz:\n- İşverenlerin, işçilerin hidrojensülfüre maruziyetini en aza indirmek için gerekli adımları atması gerekir.\n\nHidrojen süflürün patlayıcı aralığı havada %4.3 ila 45'dir ve bu değer PEL'in çok üzerindedir.\n- İşçiler, işyerinde hidrojensülfüre maruziyetin önlenmesi veya azaltılması için eğitim almalıdır.\n\n\nBu bilgiler OSHA tarafından sağlanan kaynaklardan elde edilmiştir.\n\nÇevrimiçi sorgulama yaparken https://www.osha.gov/hydrogen-sulfide/ adresini ziyaret edebilirsiniz.\n\nReference: Hydrogen Sulfide - Hazards (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.72
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.5019
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.4176
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.4079
+      },
+      {
+        "title": "Hydrogen Sulfide - Hazards (OSHA)",
+        "score": 0.5974
+      }
+    ]
+  },
+  {
+    "n": 65,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "According to OSHA, what happens if personal protective equipment does not fit properly?",
+    "expected_source": "Personal Protective Equipment - Overview (OSHA)",
+    "answer": "Summary:\nIf PPE doesn't fit comfortably or is too loose/tight it can make a difference between being safely covered/dangerously exposed.\n\nSafety Warnings:\n\n* Ensure proper fitting of all Personal Protective Equipment to prevent exposure hazards.\n \nStep-by-step Guidance: \n\n1) Check that the equipment fits properly before use.\n\nReference: Personal Protective Equipment - Overview (OSHA); Personal Protective Equipment Requirements; Fall Protection - Overview (OSHA); Respiratory Protection - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.7758
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.6593
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5212
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.4627
+      },
+      {
+        "title": "Respiratory Protection - Overview (OSHA)",
+        "score": 0.6126
+      }
+    ]
+  },
+  {
+    "n": 66,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is the OSHA standard number for Process Safety Management of Highly Hazardous Chemicals?",
+    "expected_source": "Process Safety Management - Overview (OSHA)",
+    "answer": "The specific code, \"29 CFR\", appears in multiple excerpts but only as part of a larger reference or citation.\n\nReference: Process Safety Management - Overview (OSHA); Hazard Communication - Overview (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.8213
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.6988
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.5588
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.5528
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.5591
+      }
+    ]
+  },
+  {
+    "n": 67,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Process Safety Management hangi OSHA standardi ile duzenlenir?",
+    "expected_source": "Process Safety Management - Overview (OSHA)",
+    "answer": "Özet\nİş güvenliği yönetimi \"Yüksek Tehlikeli Kimyasal Maddelerin İş Güvenliği Yönetimi\" (29 CFR 1910.119) tarafından düzenlenmiştir, yüksek tehlike kimyasallarını içeren süreçlerde tehlikeleri yönetmek için gereklilikler içerir.\n\nGüvenli Uyarılar \nHiçbiri \n\nAdım adım Kılavuz  \n1- OSHA'nın İş Güvenliği Yönetimi standardıyla düzenlenen.\n2 - Bu standart, yüksek tehlike kimyasallarını kullanan süreçlerde tehlikeleri yönetmek için gereklilikler içerir.\n\nReference: Process Safety Management - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.7693
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.8158
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.6246
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.7437
+      },
+      {
+        "title": "Process Safety Management - Overview (OSHA)",
+        "score": 0.64
+      }
+    ]
+  },
+  {
+    "n": 68,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What are the two basic ways respirators protect a worker according to OSHA?",
+    "expected_source": "Respiratory Protection - Overview (OSHA)",
+    "answer": "Summary\nRespiratory protection is addressed in specific standards for general industry (not specified which), maritime and construction.\n\nSafety Warnings \nNone relevant provided \n\nStep-by-step Guidance:\nAccording to \"Excerpt from 'Respiratory Protection - Overview'\":\nThe two basic ways respirators protect a worker are by removing contaminants or supplying clean air.\n\nReference: Respiratory Protection - Overview (OSHA); Fall Protection - Overview (OSHA); Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Respiratory Protection - Overview (OSHA)",
+        "score": 0.8601
+      },
+      {
+        "title": "Respiratory Protection - Overview (OSHA)",
+        "score": 0.5274
+      },
+      {
+        "title": "Respiratory Protection - Overview (OSHA)",
+        "score": 0.4078
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.5396
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.4489
+      }
+    ]
+  },
+  {
+    "n": 69,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What noise level triggers a hearing conservation program?",
+    "expected_source": "Occupational Noise Exposure - Overview (OSHA)",
+    "answer": "Summary:\nA Hearing Conservation Program is triggered when employee noise exposures equal or exceed 85 decibels (dBA) as an 8-hour time-weighted average.\n\nSafety Warnings:\n\n* Exposure to loud noises can cause permanent damage and kill hearing receptor cells in our inner ear.\n* Noise-induced hearing loss limits your ability to hear high frequency sounds, understand speech, seriously impairing communication.\n\nReference: Occupational Noise Exposure - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.7454
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.7689
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.6903
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.7764
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.6163
+      }
+    ]
+  },
+  {
+    "n": 70,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Hangi desibel seviyesinde isitme koruma programi zorunlu olur?",
+    "expected_source": "Occupational Noise Exposure - Overview (OSHA)",
+    "answer": "Özet\n- İşyerindeki ses düzeyleri 90 dBA (décibell) veya daha yüksek olduğunda, işçi sağlığı ve güvenliği standardı gereği bir kulak koruyucu programa geçiş zorunluluğu vardır.\n\nGüvenlik Uyarısı \nKulak koruma programları olmadan uzun süreli aşırı gürültüye maruz kalınması insanlarda sürekli isitme kaybına neden olabilir.\n\nReference: Occupational Noise Exposure - Overview (OSHA); Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.3821
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.3731
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.3519
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3372
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.3681
+      }
+    ]
+  },
+  {
+    "n": 71,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What is required before a facility can legally store oil under EPA rules?",
+    "expected_source": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+    "answer": "Summary\nThe Spill Prevention, Control, and Countermeasure rule requires facilities to develop an Oil spill prevention plan (SPCP) in order for them to be allowed by law.\n\nSafety Warnings \nWhen storing flammable liquids it is crucial that you follow proper safety precautions as outlined under OSHA's 29 CFR. This includes not having more than a certain amount of liquid stored outside approved cabinets, and ensuring the storage cabinet meets specific requirements such as being made from fire-resistant materials or painted with flame retardant paint.\n\nStep-by-step Guidance\n1) Determine if your facility is considered an \"acceptable\" one under EPA's SPCC rule. \n2)\nIf it falls into this category you will need to develop a plan for preventing oil spills and controlling them should they occur.\n3)\n\nNote: The context does not provide information on the specific requirements or guidelines that must be met before storing flammable liquids in an approved cabinet, such as what type of materials are acceptable.\n\nReference: Spill Prevention, Control, and Countermeasure (SPCC) (EPA); 29 CFR 1926.152 - Flammable Liquids (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.753
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.627
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.542
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.5203
+      },
+      {
+        "title": "Spill Prevention, Control, and Countermeasure (SPCC) (EPA)",
+        "score": 0.4173
+      }
+    ]
+  },
+  {
+    "n": 72,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is the minimum trench protection method required to prevent a cave-in?",
+    "expected_source": "Trenching and Excavation - Overview (OSHA)",
+    "answer": "Summary:\nTo minimize risk from trenches collapsing (cave-ins), OSHA recommends employing one out three methods for protecting workers.\n\nSafety Warnings:\n\n* Never enter an unexamined and potentially hazardous area.\n \nStep-by-step Guidance: \n\n1) SLOPE or bench trench walls to prevent cave-in.\n\nReference: Trenching and Excavation - Overview (OSHA); Fall Protection - Overview (OSHA); 29 CFR 1926.152 - Flammable Liquids (OSHA); eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.7871
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.4697
+      },
+      {
+        "title": "29 CFR 1926.152 - Flammable Liquids (OSHA)",
+        "score": 0.4205
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.4911
+      },
+      {
+        "title": "Fall Protection - Overview (OSHA)",
+        "score": 0.4878
+      }
+    ]
+  },
+  {
+    "n": 73,
+    "difficulty": "hard",
+    "language": "mixed",
+    "question": "Trench cave-in riskini azaltmak icin OSHA hangi 3 yontemi onerir?",
+    "expected_source": "Trenching and Excavation - Overview (OSHA)",
+    "answer": "Özeti:\nOSHA, tünellerde çökme riskinin azaltılması için SLOPE (Tünel duvarlarını eğimlendirmek), SHORE (Destekler ile trençe duvara destek vermek) ve ŞİLDİTRENÇ KUTUSU İLE GÖZETİMİN YAPILMASINI ÖNERİYOR.\n\nGüvenlik Uyarıları:\n- Tünellerde çökme riskini azaltmak için dikkatli olun.\n \nAdım Adım Rehber:\n\n1.  Tünel duvarlarını eğimlendirmek (SLOPE)\n2.Trenç destekleri ile trençe duvara desteğin sağlanması\n3.ŞİLDİTRENÇ KUTUSU İLE GÖZETİMİN YAPILMASI\n\nReference: Trenching and Excavation - Overview (OSHA); Winter Weather - Cold Stress (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.8139
+      },
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.5484
+      },
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.5559
+      },
+      {
+        "title": "Trenching and Excavation - Overview (OSHA)",
+        "score": 0.3758
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.4239
+      }
+    ]
+  },
+  {
+    "n": 74,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What does OSHA's Oil and Gas Well Drilling and Servicing eTool focus on?",
+    "expected_source": "eTool: Oil and Gas Well Drilling and Servicing (OSHA)",
+    "answer": "Summary\nThe oil and gas industry employs hundreds of thousands of people, making worker safety a vital component.\n\nSafety Warnings \nNone relevant to this question \n\nStep-by-step Guidance:\nThis information is not available in the local knowledge base regarding what OSHA's Oil & Gas eTool specifically focuses on.\n\nReference: eTool: Oil and Gas Well Drilling and Servicing (OSHA); eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing (OSHA)",
+        "score": 0.6852
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing (OSHA)",
+        "score": 0.6627
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.6831
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing (OSHA)",
+        "score": 0.6146
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing (OSHA)",
+        "score": 0.668
+      }
+    ]
+  },
+  {
+    "n": 75,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is a drill stem test used to determine?",
+    "expected_source": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "answer": "Summary\nThe potential of producing formation during well completion process in oil gas drilling and servicing industry, specifically whether it can be produced or not for production purposes.\n\n\nSafety Warnings \nPotential hazards include being pinched by tools while handling them on floor operations which could result into injuries deaths due to unexpected release H2S gases liquids.\n\nReference: eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA); Wellhead Inspection",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.7876
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.6173
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.5838
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.6206
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.4367
+      }
+    ]
+  },
+  {
+    "n": 76,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What precautions should be taken before a drill stem test in an H2S area?",
+    "expected_source": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+    "answer": "Summary\nIf you are conducting any kind of drilling or testing operation, including DSTs (Drill Stem Tests), it is crucial to take certain safety measures.\n\nSafety Warnings: Be aware that hydrogen sulphide gas can be present in sour wells and areas where H2S monitoring equipment should always wear. \n\nStep-by-step Guidance\n1) Post a sign indicating the test for public awareness.\n \nNote from context, if you are working with an area which is known to have high levels of Hydrogen Sulphid (H  S), then it's crucial that all workers on site understand and follow proper safety procedures including wearing breathing apparatus.\n\nReference: eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA); Hydrogen Sulphide (H2S) Monitoring; Confined Space Entry; Wellhead Inspection",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.802
+      },
+      {
+        "title": "eTool: Oil and Gas Well Drilling and Servicing - Well Completion (OSHA)",
+        "score": 0.6857
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5165
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.4745
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.4771
+      }
+    ]
+  },
+  {
+    "n": 77,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What is a blowout preventer used for?",
+    "expected_source": "eTool: Well Control - Blowout Preventers (OSHA)",
+    "answer": "Summary:\nA blow out prevention system, including equipment like BOPs (Blow Out Preventions), are designed to shut off well holes and stop underground fluids from escaping.\n\nSafety Warnings:\n\n* High-pressure safety valves can cause injury or death if not handled properly.\n \nStep-by-step Guidance: \n\n1. The second line of defense for the workers is a group called blowout preventers (BOPs). These high pressure equipment are designed to shut off well holes and stop underground fluids from escaping.\n\n2. BOPS consist various types, including annular type which seals in between pipe & borehole or ram-type that uses rams with great force seal on the hole itself.\n3.Blowout preventers can be used for controlling pressures during a kick by redirecting mud to choke manifold and directing drilling fluid through kill line valve.\n\nReference: eTool: Well Control - Blowout Preventers (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7912
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.6831
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7772
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7431
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7214
+      }
+    ]
+  },
+  {
+    "n": 78,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Blowout preventer bir kick durumunda nasil calisir?",
+    "expected_source": "eTool: Well Control - Blowout Preventers (OSHA)",
+    "answer": "Özet:\nPatlamayı önleyen preventerler (BOP'lar), patlama sırasında yeraltı sıvilerinin kaçmasını ve sondaj deliğinin kapatılmasına yardımcı olur.\n\nGüvenlik Uyarısı:\n\n* Alevlenme devam eden gaz akımı ile, yanmamış gazın ortaya çıkması bir acil durum olarak kabul edilir.\n\n\nAdım Adım Kılavuz: \n\n1. BOP'lar Annüler Patlama Önleyicisi (ABP), Ram-Tip patlamayı önleyici ve Choke Manifold'tan oluşur.\n2.Patlaşıp sırasında choke manifold kullanılarak sondaj çamuru döndürülmesi sağlanır\n3.ABP, kuyu deliği arasındaki boru veya tüpteki boşlukta bir kapak oluşturmaya yardımcı olur \n4. Boruların bulunmaması durumunda ise kendiliğinden patlamayı önleyici olarak çalışır\n\nReference: eTool: Well Control - Blowout Preventers (OSHA); Flare System Operation",
+    "notice": null,
+    "sources": [
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7725
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.7147
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.6803
+      },
+      {
+        "title": "eTool: Well Control - Blowout Preventers (OSHA)",
+        "score": 0.6958
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.4807
+      }
+    ]
+  },
+  {
+    "n": 79,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What administrative controls does OSHA recommend for working in cold stress conditions?",
+    "expected_source": "Winter Weather - Cold Stress (OSHA)",
+    "answer": "Summary:\nOSHA recommends several measures to prevent or mitigate exposure risks when workers are exposed to environmental and workplace hazards that can lead to Cold Stress.\n\nSafety Warnings:\n\n* Avoid touching cold metal with bare skin.\n \nStep-by-step Guidance: \n\n1) Monitor worker's physical condition during tasks, especially new employees who may not be used working in the environment. This is a preventive measure recommended by OSHA for workers exposed environmental and workplace hazards that can lead to Cold Stress.\n\n2) Schedule frequent short breaks (15-20 minutes every hour), allowing body temperature recovery time when possible.\n3)\nSchedule work during warmest part of day, if feasible\n4)\n\nUse the buddy system.\n\nReference: Winter Weather - Cold Stress (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.8211
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.5625
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.5617
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.6869
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.5186
+      }
+    ]
+  },
+  {
+    "n": 80,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Soguk stres kosullarinda calisirken hangi onlemler alinmali?",
+    "expected_source": "Winter Weather - Cold Stress (OSHA)",
+    "answer": "Özet:\nİşverenler işçiler soğuk stresini önlemek için belirli tedbirleri almalıdır; özellikle sıcaklık çok düşük olan bölgelerde veya yüksek rüzgar hızlarında.\n\nGüvenlik Uyarıları: \nDışarıda çalışırken ve kuyruklu ayak (kırmızılık, uyuşukluk vb.) gibi semptomlar gösterdiğinde kış havası altında çalışma sırasında acil bir durum oluşursa 911'i arayınız. Aksi takdirde mümkün olan en kısa sürede tıbbi yardım almayı unutmayınız; çünkü etkilenen ayakları daha fazla yürümeden dokuların hasar görmesinden önce önlem alınmalıdır.\n\nAdım Adım Kılavuz:\n1) İşverenler işçilerin fiziksel durumlarını izlemelidir.\n2) Çalışma sırasında vücut sıcaklığını düzenleme ve iyileşme zamanı için sıcak, kuru alanlarda sıkça kısa aralar planlayınız; özellikle yeni görevler veya bir süre uzaklık sonrası. \n3) Rüzgar soğutması koşullarına göre işleri plânlayın: NOAA Weather Radio gibi kaynaklardan (yerel verilerin sürekli yayınlandığı radyo), yerel hava durumunu kullanın.\n4) Mühendislik kontrolü olarak ısı yayıcılar sağlayınız. \n5) İşçilere soğuk stresin neden olduğu çevresel faktörler ve semptomları tanıtmanızda eğitim vermeli, böylece etkilenen bireylerin acil yardım alması sağlanmalıdır;\n\nReference: Winter Weather - Cold Stress (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.3928
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.3781
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.3713
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.367
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.3384
+      }
+    ]
+  },
+  {
+    "n": 81,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What is the difference between a bump test and a full calibration for a gas detector?",
+    "expected_source": "Gas Detector Calibration",
+    "answer": "**Summary**\n\nA \"bump\" (or quick) check of a gas detector's functionality to confirm its sensor responds, whereas **full calibration**, which should be done at least every 6 months or more frequently as per manufacturer guidance if necessary due to borderline bump test results.\n\nNo specific safety warnings are relevant for this question. \n\n**Step-by-step Guidance**\n\n1. Perform the \"bump\" check by briefly exposing a detector's sensor (not adjusting its reading) in clean air, confirming it responds and alarms activate.\n2. If you suspect drift or need accurate readings after bump testing:\n   - Check manufacturer guidance on calibration frequency\n   - Schedule full **calibration** at least every 6 months\n\nReference: Gas Detector Calibration; Gas Leak Detection Procedure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.8196
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.7658
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6684
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.6888
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5132
+      }
+    ]
+  },
+  {
+    "n": 82,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Gaz kacagi bulundugunda ilk once ne yapilmali, alarmi mi yoksa izolasyonu mu?",
+    "expected_source": "Gas Leak Detection Procedure",
+    "answer": "Özet \nUyarıları önce arttırmalısınız. Ardından güvenli olduğunuzda (gazın kontrolü altında olduğu zaman), gaz tedarikini izole edebilirsiniz.\n\nGüvenlik Uygulamaları\n- Gaz kaçaklarının bulunduğu durumlarda, alarmlarınızı önceden ayarlayın ve daha sonra isolation yapabilirsiniz.\n \nAdım Adım Kılavuzlama:\n1) Alarımı arttırmalısınız.  \n2 ) Güvenli olduğunuzda (gazın kontrolü altında olduğu zaman), gaz tedarikini izole edebilirsiniz .\n\nReference: Fire Response; Valve Inspection and Maintenance; First Aid for Gas Exposure; Gas Detector Calibration",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Fire Response",
+        "score": 0.6056
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.5671
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.4206
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.6209
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5597
+      }
+    ]
+  },
+  {
+    "n": 83,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "Why must a standby attendant never enter a confined space themselves?",
+    "expected_source": "Confined Space Entry",
+    "answer": "Summary\nThe primary reason is that if they were to do so without protection (as would be required), their own life could also become endangered by inhaling hazardous atmospheres, similar risks faced initially.\n\nSafety Warnings \nContinuous monitoring of gas levels and atmosphere conditions inside confined spaces can change rapidly due in part from processes elsewhere on the plant.\n\nReference: Confined Space Entry; Confined Spaces - Overview (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.7743
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.7036
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.625
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.527
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.5272
+      }
+    ]
+  },
+  {
+    "n": 84,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "PPE kontrolu ne siklikla yapilmalidir?",
+    "expected_source": "Personal Protective Equipment Requirements",
+    "answer": "Özet\nKendiliğinden Koruyucu Ekipman (KKD) kontrolleri her zaman yapılmaz ancak ekipmanın doğru şekilde giyildiğini ve düzenli olarak kontrol edildiğinin doğrulanması önemlidir.\n\nGüvenlik Uyarıları \n- İşlemeye başlamadan önce tüm kişisel koruyucuların denetimi yapılmalıdır.\n\nReference: Corrosion Inspection; Personal Protective Equipment Requirements; Liquid Spill Response",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.4709
+      },
+      {
+        "title": "Corrosion Inspection",
+        "score": 0.4485
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.6421
+      },
+      {
+        "title": "Liquid Spill Response",
+        "score": 0.416
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.664
+      }
+    ]
+  },
+  {
+    "n": 85,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why is instant-off potential preferred over the 'on' potential when assessing cathodic protection?",
+    "expected_source": "Cathodic Protection Survey",
+    "answer": "Summary\nThe \"instant off\" reading, taken within seconds of interrupting current flow to a pipeline with Cathodic Protection (CP) system energized and before soil IR drop decays is used for comparison against -0.85 V criterion.\n\nSafety Warnings: When opening test posts near live electrical equipment or in traffic areas always carry out site-specific risk assessment first, use insulated tools & gloves when handling CP stations that may have induced AC voltage from nearby power lines/pipelines and do not disconnect bonding cables on pipelines with current flow without proper authorization to avoid shock hazards.\n\nStep-by-step Guidance: \n1. Record both the \"on\" potential (with system energized) 2.Record instant-off reading within a fraction of second after interrupting CP.\n3.Compare each recorded value against -0.85 V criterion for under-protection, noting that 'instant off' is used as it does not mask voltage drop through soil like on readings do\n\nReference: Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.7278
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.7354
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.6456
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.4797
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5376
+      }
+    ]
+  },
+  {
+    "n": 86,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What should be logged during a pipeline pressure test hold period?",
+    "expected_source": "Pipeline Pressure Testing",
+    "answer": "Summary\nPressure and temperature readings every 15 minutes throughout the timed-hold are necessary to distinguish genuine leaks from those caused by cooling changes in liquid medium, which can produce misleading results if not accounted for.\n\nSafety Warnings \n- None specific mentioned here but refer back to \"Key Safety Precautions\" section of context document.\n\nReference: Pipeline Pressure Testing; Gas Compressor Maintenance; Cathodic Protection Survey",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.7399
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.7613
+      },
+      {
+        "title": "Pipeline Pressure Testing",
+        "score": 0.7527
+      },
+      {
+        "title": "Gas Compressor Maintenance",
+        "score": 0.5308
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.5239
+      }
+    ]
+  },
+  {
+    "n": 87,
+    "difficulty": "hard",
+    "language": "mixed",
+    "question": "Confined space entry permit'i kim isimlendirerek imzalamali, role bazli mi yoksa named individual mi?",
+    "expected_source": "Confined Space Entry",
+    "answer": "İzin belgesi bireysel işe değil de rolüne göre verilmez; bu nedenle izin belgeleri her girişte adı geçen tüm personelin ve bekçi kişinin adıyla imzalanmalıdır.\n\nÖzet:\nKapalı alan giriş izni, role dayanan bir şekilde verilmemelidir. Her girisin için isimlendirilmelilerdir.\nGüvenlik Uyarıları: \nBu işlemler sırasında riskler mevcuttur; bu nedenle uygun kişisel koruyucu donanıma sahip olmanız ve görevlerinizi doğru bir şekilde yerine getirmeniz önemlidir.\n\n(Note : The question is in Turkish, but the answer and summary are provided as per your request to write only English responses)\n\nReference: Confined Space Entry; Confined Spaces - Overview (OSHA); Emergency Preparedness and Response: Getting Started (OSHA)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Confined Space Entry",
+        "score": 0.6745
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.6108
+      },
+      {
+        "title": "Confined Spaces - Overview (OSHA)",
+        "score": 0.5641
+      },
+      {
+        "title": "Confined Space Entry",
+        "score": 0.5466
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.3455
+      }
+    ]
+  },
+  {
+    "n": 88,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is the maximum exclusion zone distance mentioned for hot work combustible materials?",
+    "expected_source": "Hot Work Permit",
+    "answer": "Summary\nThe document does not specify a \"maximum\" but mentions that all combusitble material within **15 metres** must be removed or covered before starting any job involving heat, sparks, open flame.\n\nSafety Warnings: None relevant to this specific question.\nStep-by-step Guidance:\nNone.\n\nReference: Hot Work Permit; Gas Leak Detection Procedure; Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.72
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.6579
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.6017
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5645
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.5556
+      }
+    ]
+  },
+  {
+    "n": 89,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Acil durdurma sonrasi sistem neden hemen resetlenmemeli?",
+    "expected_source": "Emergency Shutdown Procedure",
+    "answer": "Özet\nResetleme nedeni olarak en önemli nokta root cause'un belirlenmiş ve giderilmiş olmasıdır; bu, sistemin yeniden başlatılmasına kadar beklenmesi gerektiği anlamına gelir.\n\nGüvenlik Uyarısı \n- Resetlemenin yalnızca yazılı yetkilendirme ile yapılacağından emin olunmalıdır.\n- Sistemi resetlemeye çalışırken dikkatli olunuz: sistem hala tehlikeli olabilir ve reaktivite riskini artırmaktadır.\n\nReference: Emergency Shutdown Procedure; Hot Work Permit",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.4085
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3533
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3874
+      },
+      {
+        "title": "Emergency Shutdown Procedure",
+        "score": 0.3873
+      },
+      {
+        "title": "Hot Work Permit",
+        "score": 0.3265
+      }
+    ]
+  },
+  {
+    "n": 90,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What is photosynthesis?",
+    "expected_source": null,
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.5634
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.5538
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.5491
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.5451
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.5099
+      }
+    ]
+  },
+  {
+    "n": 91,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Yapay zeka nedir?",
+    "expected_source": null,
+    "answer": "Bu bilgi yerel bilgilendirme kaynağında bulunmamaktadır.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.2731
+      },
+      {
+        "title": "Electrical - Overview (OSHA)",
+        "score": 0.2673
+      },
+      {
+        "title": "Hazardous Waste Operations and Emergency Response (HAZWOPER) - Overview (OSHA)",
+        "score": 0.2644
+      },
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.2643
+      },
+      {
+        "title": "Hazard Communication - Overview (OSHA)",
+        "score": 0.2635
+      }
+    ]
+  },
+  {
+    "n": 92,
+    "difficulty": "easy",
+    "language": "en",
+    "question": "What is the capital of France?",
+    "expected_source": null,
+    "answer": "This information is not available in the local knowledge base.",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Control of Hazardous Energy (Lockout/Tagout) - Overview (OSHA)",
+        "score": 0.4961
+      },
+      {
+        "title": "Occupational Noise Exposure - Overview (OSHA)",
+        "score": 0.4893
+      },
+      {
+        "title": "Personal Protective Equipment - Overview (OSHA)",
+        "score": 0.4768
+      },
+      {
+        "title": "Winter Weather - Cold Stress (OSHA)",
+        "score": 0.4687
+      },
+      {
+        "title": "Emergency Preparedness and Response: Getting Started (OSHA)",
+        "score": 0.4525
+      }
+    ]
+  },
+  {
+    "n": 93,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What should never be used to thaw frozen equipment in cold weather operations?",
+    "expected_source": "Cold Weather Operations",
+    "answer": "Summary\nDirect flame from a naked fire or lighter cannot safely and effectively warm up hydrocarbon systems without risking explosion due to unburned gas release, as stated under \"Working Procedure\" of Cold Weather Operations.\n\nSafety Warnings \nNever apply direct flames near equipment in cold weather operations; use approved heating methods such as hot water jackets.\n\nReference: Cold Weather Operations; Flare System Operation; Fire Response",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.7213
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.641
+      },
+      {
+        "title": "Flare System Operation",
+        "score": 0.4617
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.4992
+      },
+      {
+        "title": "Fire Response",
+        "score": 0.3945
+      }
+    ]
+  },
+  {
+    "n": 94,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "Why is a mechanical interlock important in a pig launcher design?",
+    "expected_source": "Pipeline Pig Launching",
+    "answer": "Summary\nThe purpose of an electrical lockout/tag out (LOTO) procedure, not mentioned here as it pertains to electricity and other forms like process pressure or stored energy.\n\nSafety Warnings: \n- Never remove another worker's tag/lock.\n \n\nStep-by-step Guidance:\nMany pig launcher designs include a mechanical interlock that physically prevents the main line valve from opening while closure is fully locked.\n\nReference: Pipeline Pig Launching; Lockout / Tagout (LOTO)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.78
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.6751
+      },
+      {
+        "title": "Pipeline Pig Launching",
+        "score": 0.5756
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.415
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.3036
+      }
+    ]
+  },
+  {
+    "n": 95,
+    "difficulty": "medium",
+    "language": "tr",
+    "question": "Sicak is izni almadan once gaz testi neden yapilmali?",
+    "expected_source": "Hot Work Permit",
+    "answer": "Özet\nSıcak işlemler için gaz testi 1% LEL'den az bir alana işaret edene kadar başlayamaz. Bu, flammable Gazların ateşlenmesi önlenmesini sağlamak amacıyla sıcak çalışma görevlerinin başlamadan önce yapılması gerekenlerdendir.\n\nGüvenlik Uyarıları \n- Sıkça kullanılan kaynaklar potansiyel olarak tehlikeli ortamlarda güvenilir kaynağa girer.\n \n\nAdım Adım Kılavuz\n\nReference: Hot Work Permit; Gas Leak Detection Procedure; Gas Detector Calibration; Hydrogen Sulphide (H2S) Monitoring; First Aid for Gas Exposure",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Hot Work Permit",
+        "score": 0.5532
+      },
+      {
+        "title": "Gas Leak Detection Procedure",
+        "score": 0.5974
+      },
+      {
+        "title": "Gas Detector Calibration",
+        "score": 0.5645
+      },
+      {
+        "title": "Hydrogen Sulphide (H2S) Monitoring",
+        "score": 0.5616
+      },
+      {
+        "title": "First Aid for Gas Exposure",
+        "score": 0.5295
+      }
+    ]
+  },
+  {
+    "n": 96,
+    "difficulty": "hard",
+    "language": "en",
+    "question": "What can a consistent downward trend in cathodic protection level indicate even while still passing the criterion?",
+    "expected_source": "Cathodic Protection Survey",
+    "answer": "Summary\nA gradual decline over several surveys is often an early sign of potential issues with either sacrificial anodes or coating faults, before any single reading fails outright.\n\nSafety Warnings: None relevant to this specific question.\nStep-by-step Guidance:\n1) Log all readings and trend them against previous cathodic protection (CP) system maintenance records. \n2) A consistent downward pattern can indicate the need for proactive measures even if current levels are still within acceptable limits according to established criteria, such as anode depletion or developing coating faults before outright failure occurs due solely on one reading failing its criterion value (-0·85 V).\n\nReference: Cathodic Protection Survey; Personal Protective Equipment Requirements",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.7318
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.4804
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.4105
+      },
+      {
+        "title": "Personal Protective Equipment Requirements",
+        "score": 0.3573
+      },
+      {
+        "title": "Cathodic Protection Survey",
+        "score": 0.3843
+      }
+    ]
+  },
+  {
+    "n": 97,
+    "difficulty": "medium",
+    "language": "en",
+    "question": "What should be checked on a pressure gauge during wellhead inspection?",
+    "expected_source": "Wellhead Inspection",
+    "answer": "Summary\n- The relevant excerpt is from \"Well Inspection\" (Operations), specifically under # Well Inspections > ## Key Safety Precautions and 6.\n\nSafety Warnings \nWear H2S monitoring equipment in sour wells, since reservoir gas composition — and therefore H2S content can be present even when surface equipment shows no other sign of a problem. \n\nStep-by-step Guidance\n1) Verify the pressure gauges for physical damage.\n   - Confirm they carry valid calibration;\n\nReference: Wellhead Inspection; Cold Weather Operations; Valve Inspection and Maintenance",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.5893
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.815
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.6285
+      },
+      {
+        "title": "Cold Weather Operations",
+        "score": 0.454
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.5653
+      }
+    ]
+  },
+  {
+    "n": 98,
+    "difficulty": "hard",
+    "language": "tr",
+    "question": "Valfin pozisyonu yanlis gosteriyorsa ama valf kendisi calisiyorsa bu neden hala tehlikelidir?",
+    "expected_source": "Valve Inspection and Maintenance",
+    "answer": "Özet\nValfin pozisyoni hatalı göstermesi, ancak vefalin kendisinin işlemesini engelleyen bir durum değildir.\n\nGüvenlik Uyarları \n- Valfin pozisyonunu kontrol etmeden çalışma yapılmaz.\n \n\nAdım-by-adım Kılavuz:\n1) Pozisyon göstergesini kontol edin.\n\nReference: Valve Inspection and Maintenance; Wellhead Inspection; Lockout / Tagout (LOTO)",
+    "notice": null,
+    "sources": [
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.3062
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2977
+      },
+      {
+        "title": "Wellhead Inspection",
+        "score": 0.2587
+      },
+      {
+        "title": "Valve Inspection and Maintenance",
+        "score": 0.2692
+      },
+      {
+        "title": "Lockout / Tagout (LOTO)",
+        "score": 0.2936
+      }
+    ]
+  }
+]

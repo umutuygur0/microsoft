@@ -15,7 +15,7 @@ import re
 from typing import Iterator, List, Optional
 
 import config
-from src.prompts import NO_CONTEXT_REPLY, build_messages, build_translation_messages
+from src.prompts import NO_CONTEXT_REPLY, NO_CONTEXT_REPLY_TR, build_messages, build_translation_messages
 from src.tfidf import TURKISH_STOPWORDS
 
 _REPETITION_NOTICE = "Response stopped early — the model started repeating itself."
@@ -83,6 +83,54 @@ def _strip_thinking_block(text: str) -> str:
     return _UNCLOSED_THINK_RE.sub("", without_closed).strip()
 
 
+_REFUSAL_HEADING_RE = re.compile(r"^\**\s*(summary|özet|ozet)\**\s*:?\s*\n*", re.IGNORECASE)
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s")
+
+
+def _opens_with_refusal(text: str) -> bool:
+    """Detect a refusal sentence at the *start* of a response, in either
+    the canonical English wording or an observed Turkish paraphrase.
+
+    Live testing (TEST_REPORT.md §15/§16) found the model does not always
+    reproduce ``NO_CONTEXT_REPLY`` verbatim -- e.g. it sometimes opens with a
+    Turkish paraphrase like "Bu bilgi yerel bilgilendirme veritabaninda
+    bulunmuyor." -- and then, in one observed case, kept generating anyway
+    and fabricated an unrelated answer from irrelevant background chunks
+    despite having just said no information was available. Matching is done
+    on keyword *bundles* (ASCII-folded, so "veritabanında"/"veritabaninda"
+    are the same word) rather than an exact-string list, since an exhaustive
+    literal list of every paraphrase the model might produce is not a
+    tractable fix.
+    """
+    head = _REFUSAL_HEADING_RE.sub("", text.strip())
+    first = head[:220].translate(_ASCII_FOLD).lower()
+    en_hit = "not available" in first and any(
+        c in first for c in ("knowledge base", "local", "provided context", "context", "documents")
+    )
+    tr_hit = "bulun" in first and "bilgi" in first and any(
+        c in first for c in ("yerel", "kayna", "veritaban", "belge")
+    )
+    return en_hit or tr_hit
+
+
+def _truncate_after_refusal(text: str) -> str:
+    """If ``text`` opens with a refusal (see ``_opens_with_refusal``), drop
+    everything after that first sentence.
+
+    The system prompt already instructs the model that a refusal is a
+    "whole-response decision, never a per-section filler" -- so once a
+    response opens by refusing, anything generated afterwards is, by the
+    model's own stated design, not supposed to exist. This is the
+    deterministic enforcement of that rule: rather than trusting the model to
+    stop on its own (observed to fail live), the response is cut at the end
+    of the refusal sentence.
+    """
+    if not text or not _opens_with_refusal(text):
+        return text
+    body = _REFUSAL_HEADING_RE.sub("", text.strip())
+    return _SENTENCE_SPLIT_RE.split(body, maxsplit=1)[0].strip()
+
+
 def _build_reference_footer(sources: List[dict]) -> str:
     """Deterministically build a "Reference: ..." footer from the actual
     retrieved chunk metadata -- never from anything the model writes.
@@ -106,9 +154,13 @@ def _build_reference_footer(sources: List[dict]) -> str:
 
 def _with_reference_footer(text: str, sources: List[dict]) -> str:
     """Append the deterministic reference footer to ``text``, unless ``text``
-    is exactly the refusal sentence -- a clean "not found" answer should not
-    claim a source was used."""
-    if not text.strip() or text.strip() == NO_CONTEXT_REPLY:
+    is a refusal -- a clean "not found" answer should not claim a source was
+    used. Checks both the exact canonical refusal string and a paraphrased
+    one (see ``_opens_with_refusal``) -- the earlier exact-match-only check
+    left non-exact refusals (translated or paraphrased) with a footer
+    attached, a known cosmetic gap noted in TEST_REPORT.md."""
+    stripped = text.strip()
+    if not stripped or stripped == NO_CONTEXT_REPLY or _opens_with_refusal(stripped):
         return text
     return text + _build_reference_footer(sources)
 
@@ -133,11 +185,12 @@ def _strip_echoed_instruction(text: str, target_language: str) -> str:
 
 
 class ChatEngine:
-    def __init__(self, store, model, embedder=None, reranker=None):
+    def __init__(self, store, model, embedder=None, reranker=None, translator=None):
         self.store = store
         self.model = model
         self.embedder = embedder
         self.reranker = reranker
+        self.translator = translator
 
     def ask(
         self,
@@ -164,6 +217,20 @@ class ChatEngine:
         candidate_k = config.RERANK_CANDIDATE_K if reranking else config.TOP_K
         sources = self.store.search(q, candidate_k, query_embedding=query_embedding)
         if reranking:
+            if query_embedding is not None:
+                # Merge in a pure-semantic "backstop" pool alongside the
+                # hybrid (BM25+embedding) one before reranking -- see
+                # VectorStore.search_semantic_only's docstring for exactly
+                # which failure this recovers from (a stray cross-lingual
+                # BM25 token collision burying the correct, semantically
+                # well-ranked chunk before the reranker ever sees it).
+                backstop = self.store.search_semantic_only(query_embedding, config.RERANK_CANDIDATE_K)
+                seen = {(s["doc_id"], s["chunk_index"]) for s in sources}
+                for s in backstop:
+                    key = (s["doc_id"], s["chunk_index"])
+                    if key not in seen:
+                        sources.append(s)
+                        seen.add(key)
             sources = self.reranker.rerank(q, sources, config.TOP_K)
         yield {"type": "sources", "sources": [self._view(s) for s in sources]}
 
@@ -197,6 +264,10 @@ class ChatEngine:
         target_language = forced_language
         if target_language is None and _looks_turkish(q):
             target_language = "Turkish"
+        if target_language and target_language.strip().lower() == "english":
+            # The grounding pass is already English (see build_messages) --
+            # a forced "English" response has nothing left to translate.
+            target_language = None
 
         # Pass 1: ground the answer in the retrieved context. Deliberately
         # never asks for a specific language here — grounding and translating
@@ -212,6 +283,7 @@ class ChatEngine:
             return
         draft_truncated = getattr(self.model, "last_response_truncated", False)
         drafted = _strip_thinking_block(drafted)
+        drafted = _truncate_after_refusal(drafted)
         drafted_clean = drafted.strip()
         draft_unusable = draft_truncated and len(drafted_clean) < _MIN_USABLE_DRAFT_CHARS
 
@@ -225,7 +297,24 @@ class ChatEngine:
             yield {"type": "done"}
             return
 
-        # Pass 2: translate the already-correct, already-grounded answer
+        # A dedicated local translation model (src/translator.py) is tried
+        # before ever falling back to a second LLM call -- see that module's
+        # docstring for why this is now the primary path, not the LLM pass
+        # below. A refusal is special-cased to a hand-verified translation
+        # rather than run through the MT model, since it's a single fixed
+        # sentence worth getting exactly right every time.
+        if target_language.lower() == "turkish" and self.translator is not None and self.translator.ready:
+            if _opens_with_refusal(drafted_clean):
+                local_translated = NO_CONTEXT_REPLY_TR
+            else:
+                local_translated = self.translator.translate_to_turkish(drafted_clean)
+            if local_translated and local_translated.strip():
+                yield {"type": "token", "text": _with_reference_footer(local_translated, sources)}
+                yield {"type": "done"}
+                return
+
+        # Pass 2 (fallback): no local translator available/ready, or it
+        # failed -- translate the already-correct, already-grounded answer
         # (trailing noise stripped, if the draft was truncated but usable).
         # Collected fully (not streamed live) so a failed translation can be
         # discarded in favour of the original — live testing showed this
@@ -255,6 +344,7 @@ class ChatEngine:
         translation_truncated = getattr(self.model, "last_response_truncated", False)
         translated = _strip_thinking_block(translated)
         translated = _strip_echoed_instruction(translated, target_language)
+        translated = _truncate_after_refusal(translated)
         translation_clean = translated.strip()
         translation_unusable = (
             not translation_clean

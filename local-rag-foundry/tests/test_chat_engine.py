@@ -418,3 +418,164 @@ def test_ask_emits_a_separate_notice_event_when_response_is_truncated():
     tokens = "".join(e["text"] for e in events if e["type"] == "token")
     assert "repeating itself" not in tokens
     assert "stopped early" not in tokens
+
+
+def test_opens_with_refusal_matches_canonical_english_reply():
+    from src.chat_engine import _opens_with_refusal
+    from src.prompts import NO_CONTEXT_REPLY
+
+    assert _opens_with_refusal(NO_CONTEXT_REPLY)
+
+
+def test_opens_with_refusal_matches_a_turkish_paraphrase():
+    # Regression test: a real live failure. The model does not always
+    # reproduce NO_CONTEXT_REPLY verbatim -- it sometimes opens with a
+    # Turkish paraphrase instead, ASCII-folded or not.
+    from src.chat_engine import _opens_with_refusal
+
+    assert _opens_with_refusal("Bu bilgi yerel bilgilendirme veritabaninda bulunmuyor.")
+    assert _opens_with_refusal("Bu bilgi yerel bilgilendirme veritabanında bulunmuyor.\n\nAncak...")
+
+
+def test_opens_with_refusal_ignores_a_normal_grounded_answer():
+    from src.chat_engine import _opens_with_refusal
+
+    assert not _opens_with_refusal("Summary\nUse a calibrated gas detector near flanges and joints.")
+
+
+def test_truncate_after_refusal_drops_hallucinated_continuation():
+    # Regression test: a real live failure (TEST_REPORT.md §15/§16) — the
+    # model refused, then kept generating anyway and fabricated an unrelated
+    # answer from irrelevant background chunks.
+    from src.chat_engine import _truncate_after_refusal
+
+    text = (
+        "Bu bilgi yerel bilgilendirme veritabaninda bulunmuyor.\n\n"
+        "Ancak girdiginiz bazi belgeler ile ilgili olarak kulak anatomisi "
+        "hakkinda bilgi verebilirim: kulakta uc bolum vardir..."
+    )
+    result = _truncate_after_refusal(text)
+    assert result == "Bu bilgi yerel bilgilendirme veritabaninda bulunmuyor."
+    assert "kulak" not in result
+
+
+def test_truncate_after_refusal_leaves_normal_answers_unchanged():
+    from src.chat_engine import _truncate_after_refusal
+
+    text = "Summary\nUse a calibrated gas detector near flanges and joints."
+    assert _truncate_after_refusal(text) == text
+
+
+def test_ask_truncates_hallucinated_content_after_a_paraphrased_refusal():
+    class _RefusesThenHallucinatesModel:
+        ready = True
+        message = "ready"
+        last_response_truncated = False
+
+        def stream_chat(self, messages):
+            yield "Bu bilgi yerel bilgilendirme veritabaninda bulunmuyor.\n\n"
+            yield "Ancak alakasiz bir konu hakkinda uydurma bilgi veriyorum."
+
+    # Sources must be non-empty here (unlike test_ask_no_matching_context_
+    # returns_fallback_message) -- the live failure this reproduces was the
+    # model refusing *despite* retrieval returning (weak/irrelevant) sources,
+    # not the separate no-sources-at-all short-circuit further up in ask().
+    engine = ChatEngine(make_store(), _RefusesThenHallucinatesModel())
+    events = list(engine.ask("How do I detect a gas leak?"))
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == "Bu bilgi yerel bilgilendirme veritabaninda bulunmuyor."
+    assert "uydurma" not in tokens
+    assert "Reference:" not in tokens  # a refusal must not claim a source was used
+
+
+# --- Local (non-LLM) translation path ---
+
+class _FakeReadyTranslator:
+    ready = True
+
+    def __init__(self, translation="Kalibreli bir dedektörle tespit edin."):
+        self.calls: list[str] = []
+        self._translation = translation
+
+    def translate_to_turkish(self, text):
+        self.calls.append(text)
+        return self._translation
+
+
+class _FakeNotReadyTranslator:
+    ready = False
+
+    def translate_to_turkish(self, text):  # pragma: no cover - must never be called
+        raise AssertionError("translate_to_turkish should not be called when not ready")
+
+
+def test_ask_uses_local_translator_instead_of_a_second_llm_call():
+    model = _RecordingModel(replies=["Detect a gas leak with a calibrated detector."])
+    translator = _FakeReadyTranslator()
+    engine = ChatEngine(make_store(), model, translator=translator)
+
+    events = list(engine.ask("How do I detect a gas leak?", response_language="Turkish"))
+
+    assert len(model.calls) == 1  # no second (translation) LLM call was made
+    assert translator.calls == ["Detect a gas leak with a calibrated detector."]
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == "Kalibreli bir dedektörle tespit edin.\n\nReference: Gas Leak Detection"
+
+
+def test_ask_falls_back_to_llm_translation_when_local_translator_not_ready():
+    model = _RecordingModel(replies=["Detect a gas leak with a calibrated detector.", "Kalibreli bir dedektörle..."])
+    engine = ChatEngine(make_store(), model, translator=_FakeNotReadyTranslator())
+
+    events = list(engine.ask("How do I detect a gas leak?", response_language="Turkish"))
+
+    assert len(model.calls) == 2  # fell back to the LLM-based translation pass
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == "Kalibreli bir dedektörle...\n\nReference: Gas Leak Detection"
+
+
+def test_ask_falls_back_to_llm_translation_when_local_translator_returns_none():
+    class _FailingTranslator:
+        ready = True
+
+        def translate_to_turkish(self, text):
+            return None  # e.g. an internal model error
+
+    model = _RecordingModel(replies=["Detect a gas leak with a calibrated detector.", "Kalibreli bir dedektörle..."])
+    engine = ChatEngine(make_store(), model, translator=_FailingTranslator())
+
+    events = list(engine.ask("How do I detect a gas leak?", response_language="Turkish"))
+
+    assert len(model.calls) == 2
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == "Kalibreli bir dedektörle...\n\nReference: Gas Leak Detection"
+
+
+def test_ask_uses_hand_verified_turkish_refusal_without_calling_the_translator():
+    from src.prompts import NO_CONTEXT_REPLY, NO_CONTEXT_REPLY_TR
+
+    class _RefusingModel:
+        ready = True
+        message = "ready"
+        last_response_truncated = False
+
+        def stream_chat(self, messages):
+            yield NO_CONTEXT_REPLY
+
+    translator = _FakeReadyTranslator()
+    engine = ChatEngine(make_store(), _RefusingModel(), translator=translator)
+
+    events = list(engine.ask("How do I detect a gas leak?", response_language="Turkish"))
+
+    assert translator.calls == []  # the MT model is never asked to translate a refusal
+    tokens = "".join(e["text"] for e in events if e["type"] == "token")
+    assert tokens == NO_CONTEXT_REPLY_TR
+    assert "Reference:" not in tokens
+
+
+def test_ask_skips_translation_entirely_when_forced_language_is_english():
+    # The grounding pass is already English -- forcing "English" must not
+    # trigger a second (translation) pass at all, local or LLM-based.
+    model = _RecordingModel()
+    engine = ChatEngine(make_store(), model, translator=_FakeReadyTranslator())
+    list(engine.ask("How do I detect a gas leak?", response_language="English"))
+    assert len(model.calls) == 1

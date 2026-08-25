@@ -78,6 +78,13 @@ class OllamaClient:
             # Ollama has one combined repeat_penalty rather than separate
             # frequency/presence penalties; anchored at 1.0 (no penalty).
             "repeat_penalty": 1.0 + config.FREQUENCY_PENALTY,
+            # Without this, Ollama silently falls back to a 2048-token
+            # window regardless of the model's real architectural support --
+            # a live-reproduced failure: our context block already runs
+            # ~1900-1960 tokens, leaving too little of that 2048 budget for
+            # num_predict, so generation was observed cutting off mid-word
+            # before reaching the actual answer (see TEST_REPORT.md §19).
+            "num_ctx": config.OLLAMA_NUM_CTX,
         }
 
         buffer = ""

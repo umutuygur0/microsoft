@@ -26,6 +26,13 @@ provided context documents.
 
 Behaviour rules:
 - Do not invent facts, procedures, measurements, or details that are not in the context.
+- A specific code, standard, or section number (e.g. "29 CFR 1910.147") must
+  only be stated if that exact number appears verbatim somewhere in the
+  context. If the context discusses the topic but never states the specific
+  number being asked for, say the number is not given in the available
+  excerpts instead of guessing one — live testing found this model will
+  otherwise fabricate a plausible-looking but wrong number rather than admit
+  it is not present.
 - Before concluding a fact is missing, check the *entire* context below — the
   specific detail asked about is often present under a heading that does not
   literally match the question's wording (e.g. a question about "which metal"
@@ -41,7 +48,11 @@ Behaviour rules:
 - The exact refusal sentence, used only as described above:
   "This information is not available in the local knowledge base."
 - If a procedure involves risk, explicitly call out the safety warning.
-- Be concise and practical.
+- Be thorough and complete: cover every relevant point, step, and number
+  found in the context for this question, in full sentences — do not
+  artificially shorten the answer or stop after the first relevant detail
+  when the context has more. Being complete is more important than being
+  brief.
 - The context documents and the user's question may be in different languages.
   Retrieval is language-independent, so use the context regardless of what
   language it is written in. Always write your answer in English here,
@@ -62,6 +73,12 @@ Response format (use these headings when applicable):
 - Step-by-step Guidance"""
 
 NO_CONTEXT_REPLY = "This information is not available in the local knowledge base."
+# Hand-written, not machine-translated: this exact fixed sentence is worth
+# getting right once rather than trusting either the chat LLM or the local
+# MarianMT model (src/translator.py) to phrase it consistently every time.
+# Wording deliberately keeps "bulunmuyor"/"bilgi"/"yerel" together so it's
+# still recognised by ChatEngine._opens_with_refusal's Turkish heuristic.
+NO_CONTEXT_REPLY_TR = "Bu bilgi yerel bilgi tabanında bulunmuyor."
 
 TRANSLATION_SYSTEM_PROMPT = (
     "You are a precise technical translator. Translate the user's text "

@@ -244,6 +244,43 @@ class VectorStore:
             r.pop("embedding", None)
         return scored[:top_k]
 
+    def search_semantic_only(self, query_embedding: List[float], top_k: int) -> List[dict]:
+        """Rank chunks by embedding similarity alone, ignoring BM25 entirely.
+
+        Exists as a "backstop" for the reranking candidate pool (see
+        ``ChatEngine.ask``): a 98-question live audit (TEST_REPORT.md §15/§16)
+        found that BM25's per-query max-normalization can be corrupted by a
+        single coincidental cross-lingual token collision (a Turkish word
+        typed without diacritics landing on an unrelated but real English
+        word, e.g. Turkish "süre" -> ASCII-folded "sure" -> the common English
+        word "sure") -- that one stray match becomes the normalization's
+        denominator, inflating unrelated chunks' hybrid score enough to push
+        the actually-correct, correctly-semantically-ranked chunk out of the
+        candidate pool entirely before the reranker ever sees it. Pure
+        semantic ranking is immune to this because it never touches BM25's
+        term-overlap statistics, so merging its top results back into the
+        candidate pool (done by the caller) recovers exactly this case.
+        """
+        with self._lock:
+            cache = self._ensure_cache_locked()
+            scored = []
+            for record in cache["records"]:
+                if record["embedding"] is None:
+                    continue
+                sem = max(0.0, dense_cosine_similarity(query_embedding, record["embedding"]))
+                scored.append({
+                    "doc_id": record["doc_id"],
+                    "title": record["title"],
+                    "category": record["category"],
+                    "chunk_index": record["chunk_index"],
+                    "content": record["content"],
+                    "score": sem,
+                    "bm25_score": 0.0,
+                    "semantic_score": round(sem, 4),
+                })
+        scored.sort(key=lambda r: r["score"], reverse=True)
+        return scored[:top_k]
+
     def close(self) -> None:
         with self._lock:
             self.conn.close()

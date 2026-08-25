@@ -67,5 +67,17 @@ class CrossEncoderReranker:
         for candidate, score in zip(candidates, scores):
             candidate["rerank_score"] = float(score)
 
+        # A 98-question live audit (TEST_REPORT.md §15/§16) found this model
+        # sometimes has no real signal for a query at all -- every candidate
+        # scores deep negative (observed as low as -4) with no clear winner
+        # -- and its relative ordering among "all bad options" is then just
+        # noise. In one measured case this noise demoted the hybrid search's
+        # correctly-ranked #1 candidate out of the top results entirely. When
+        # even the *best* candidate doesn't clear config.RERANK_MIN_CONFIDENCE,
+        # trust the pre-rerank hybrid order (each candidate's own "score")
+        # instead of the cross-encoder's unreliable ranking for this query.
+        if max(c["rerank_score"] for c in candidates) < config.RERANK_MIN_CONFIDENCE:
+            return sorted(candidates, key=lambda c: c["score"], reverse=True)[:top_k]
+
         ranked = sorted(candidates, key=lambda c: c["rerank_score"], reverse=True)
         return ranked[:top_k]

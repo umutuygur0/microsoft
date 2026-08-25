@@ -101,6 +101,34 @@ def test_hybrid_search_blends_scores_when_both_signals_present():
     store.close()
 
 
+def test_search_semantic_only_ignores_bm25_entirely():
+    # Regression test (TEST_REPORT.md §15/§16): a stray cross-lingual BM25
+    # token collision can inflate an unrelated chunk's hybrid score enough to
+    # bury the chunk that is actually best by embedding similarity alone.
+    # search_semantic_only is the backstop that recovers it -- it must never
+    # be affected by keyword overlap, only by embedding similarity.
+    store = VectorStore(":memory:")
+    chunks = [
+        Chunk("a", "Doc A", "General", 0, "the word sure appears here coincidentally"),
+        Chunk("b", "Doc B", "General", 0, "the real semantic match with no keyword overlap"),
+    ]
+    # "b" is embedded close to the query embedding, "a" is orthogonal --
+    # despite "a" being the only one with any lexical overlap with a query.
+    store.add_chunks(chunks, embeddings=[[0.0, 1.0], [1.0, 0.0]])
+
+    results = store.search_semantic_only([0.9, 0.1], top_k=2)
+    assert results[0]["doc_id"] == "b"
+    assert results[0]["bm25_score"] == 0.0
+    store.close()
+
+
+def test_search_semantic_only_skips_chunks_without_an_embedding():
+    store = VectorStore(":memory:")
+    store.add_chunks(sample_chunks())  # none of these have embeddings
+    assert store.search_semantic_only([1.0, 0.0], top_k=5) == []
+    store.close()
+
+
 def test_hybrid_search_discounts_a_candidate_missing_its_own_embedding():
     # Regression test: a chunk added while the embedder was unavailable (so
     # it has no stored embedding) must not be scored on bm25_score alone at

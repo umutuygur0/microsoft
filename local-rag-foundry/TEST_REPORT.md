@@ -819,3 +819,197 @@ net: (a) Türkçe sorularda embedding-tabanlı retrieval hâlâ İngilizce
 kadar güvenilir değil, (b) model bilmediği spesifik sayısal/kod
 referanslarını (standart numaraları gibi) uydurmaya bazen İngilizce'de
 de meyilli.
+
+## 16. Fix Round 1: 5 Hatanın Kök Nedeni ve Düzeltmesi
+
+§15'te bulunan 5 hata, modele gitmeden önce chunk/retrieval katmanı
+doğrudan incelenerek (bu oturumda daha önce kurulan yöntem) kök nedenine
+kadar izlendi. Diagnostik script'lerle (kalıcı tutulmadı, sonuçlar burada
+özetlendi) `VectorStore.search()`'ün ham BM25 skorlarını ve
+`CrossEncoderReranker`'ın çıktısını doğrudan sorgulayarak iki farklı katmanda
+iki farklı kök neden bulundu — **hiçbiri chunking veya embedding modelinde
+değildi**; saf semantik arama (bge-m3) her iki başarısız Türkçe sorguda da
+doğru chunk'ı kendi başına doğru sıralıyordu.
+
+**Kök neden 1 — BM25 normalizasyon gürültüsü (retrieval katmanı):**
+"kaynak isinden sonra yangin gozcusu ne kadar sure beklemeli?" sorgusunda
+Türkçe "süre" kelimesi ASCII'ye katlanınca ("sure") İngilizce corpus'taki
+yaygın "sure" kelimesiyle (örn. "make sure...") çakışıyor. Bu tek tesadüfi
+eşleşme, per-query max-normalizasyonun paydasını belirliyor ve alakasız
+onlarca dokümanın BM25 payını yapay olarak 1.0'a şişiriyor — doğru
+dokümanın (Hot Work Permit, hiç "sure" içermiyor) hibrit skoru bu yüzden
+gerçek semantik gücüne rağmen (`sem=0.60`, saf semantik sıralamada #1)
+candidate havuzunun (top-15) dışına düşüyordu.
+
+**Kök neden 2 — Reranker'a körü körüne güven (rerank katmanı):**
+"Yuksekte calisirken hangi KKD gereklidir?" sorgusunda doğru chunk
+(Personal Protective Equipment Requirements) hibrit aramada zaten 1.
+sıradaydı (bm25=0, tamamen semantik skorla). Ama cross-encoder reranker bu
+Türkçe ifade için TÜM 15 adaya derin negatif (-3.1 ile -4.0 arası) skor
+verdi — yani sorguyla hiçbir chunk'ı gerçekten eşleştiremedi — ve bu
+"tümü kötü" gürültü sıralaması doğru adayı top-5'in dışına attı. Kalibrasyon
+için gerçekten başarılı Türkçe sorgularda en iyi skorun en kötü ihtimalle
+-1.5 civarında kaldığı, gerçek kaybolma durumunda ise en iyi skorun bile
+-3.1'in altında olduğu ölçüldü.
+
+**Düzeltmeler:**
+- `VectorStore.search_semantic_only()` (yeni): sadece embedding benzerliğine
+  göre sıralayan, BM25'e hiç dokunmayan bir "yedek havuz". `ChatEngine.ask()`
+  reranking yaparken bu havuzu hibrit sonuçlarla birleştiriyor — BM25
+  gürültüsü candidate havuzunu bozsa bile doğru semantik eşleşme her zaman
+  reranker'a bir şans daha almış oluyor.
+- `config.RERANK_MIN_CONFIDENCE = -2.5` + `CrossEncoderReranker.rerank()`:
+  bu turdaki en iyi rerank skoru eşiğin altında kalırsa (reranker'ın gerçek
+  sinyali yok demektir), reranker'ın gürültülü sıralamasına değil, hibrit
+  aramanın kendi (zaten daha güvenilir ölçülen) sıralamasına dönülüyor.
+- `src/prompts.py`: "context'te birebir geçmeyen bir kod/standart numarası
+  asla uydurulmayacak" kuralı eklendi (Q52'nin "1910.Subpart.S" halüsinasyonu
+  için).
+- `src/chat_engine.py`: `_opens_with_refusal()` + `_truncate_after_refusal()`
+  (yeni) — model bir ret cümlesiyle açıp (İngilizce kanonik metin veya
+  Türkçe paraphrase, anahtar-kelime demetleriyle tespit ediliyor) sonra
+  yine de üretmeye devam ederse (Q91'de gözlemlenen halüsinasyon sızıntısı),
+  yanıt o ret cümlesinden sonrasını atacak şekilde kesiliyor. Aynı tespit
+  fonksiyonu `_with_reference_footer()`'da da kullanılarak §14'te bilinen
+  bir kozmetik boşluk (paraphrase edilmiş retlere hâlâ footer eklenmesi) da
+  bu vesileyle kapatıldı.
+- 10 yeni pytest testi eklendi (94/94 → 104/104 yeşil).
+
+**Doğrulama — aynı 98 soru tekrar çalıştırıldı (`qa_test_results_100_v2.json`):**
+5 hatanın **tamamı** düzeldi (canlı çıktılarla tek tek doğrulandı): Q16 artık
+doğru "30 dakika" cevabı veriyor, Q22 artık doğru PPE ekipmanını (tam vücut
+koşum takımı, sertifikalı kanca) anlatıyor, Q52 artık yanlış standart
+numarası uydurmuyor, Q91 artık tek cümlelik temiz bir ret veriyor (uydurma
+kulak-anatomisi içeriği yok), Q94 artık mekanik kilidin işlevini doğru
+açıklıyor. Otomatik "beklenen kaynak top-5'te mi" ölçümü retrieval
+isabetini 91/95'ten 93/95'e çıkardı (net +2); tek bir küçük yan etki
+gözlendi (Q82, TR — genişleyen aday havuzu bu bir soruda referans
+dokümanları değiştirdi, ama cevabın içeriği hâlâ makul kaldı, halüsinasyon
+değil). Nihai dağılım: **87/98 doğru (%89), 9/98 kısmi, 2/98 dürüst boşluk,
+0/98 gerçek hata**. Güncel tam soru-cevap dökümü aynı şeffaflık raporunda
+(https://claude.ai/code/artifact/c744796f-2da7-4cc9-aecb-254c12f65f63 —
+link yerinde kaldı, içerik güncellendi).
+
+**Bu turun kapsamı dışında bırakılan (ayrı, daha derin bir sorun sınıfı):**
+kalan 9 kısmi cevabın çoğu (Q9, Q18, Q31, Q37, Q45, Q56, Q66, Q84) retrieval
+değil, llama3.1:8b'nin Türkçe çeviri akıcılığı/kesinlik-kaçamağı sınırından
+kaynaklanıyor — bu zaten "Bilinen Kalite Sınırı" bölümünde belgeli, ayrı bir
+iyileştirme turu gerektirir (örn. çeviri geçişini güçlendirmek, ya da
+belirsiz durumlarda modele "bilmiyorum" yerine kaçamak cevap vermeyi
+yasaklayan ek bir kural).
+
+## 17. Yerel (LLM'siz) Çeviri Altyapısı: MarianMT Denemesi → NLLB-200'e Geçiş
+
+§16'da kalan 9 kısmi cevabın çoğunun (Q9, Q18, Q31, vb.) retrieval değil,
+llama3.1:8b'nin kendi çeviri geçişinin (LLM'e "önce cevapla, sonra Türkçe'ye
+çevir" dedirtmenin) akıcılık/tutarlılık sınırından kaynaklandığı belirlenmişti.
+Bu bölüm, o ikinci LLM çağrısını tamamen kaldırıp yerine özel bir çeviri
+modeli koyma çalışmasını belgeliyor.
+
+**Adım 1 — Helsinki-NLP/opus-mt-tc-big-en-tr (MarianMT, tek dil çifti):**
+`sentence-transformers`'ın zaten kurduğu `transformers`/`torch` altyapısı
+üzerine `src/translator.py` (`LocalTranslator`) yazıldı — reranker ile aynı
+`init()`/`ready` desenini takip ediyor, model yoksa/başarısız olursa
+otomatik olarak eski LLM-tabanlı çeviriye düşüyor. Klasik
+`Helsinki-NLP/opus-mt-en-tr` artık HuggingFace Hub'da 401 (deprecated)
+döndürdüğü için güncel halka açık "tc-big" (Tatoeba-Challenge) sürümü
+kullanıldı. Aynı 98 soru bu çeviriciyle tekrar çalıştırıldı
+(`qa_test_results_100_v3.json` → düzeltme sonrası `_v4`, ikisi de silindi,
+sonuçlar burada özetleniyor).
+
+**Bulunan hata 1 — sonsuz tekrar döngüsü:** Bir soruda (Q35, "vana pozisyon
+göstergesi") çeviri modeli aynı iki Türkçe cümleyi 21 kez art arda üretti.
+Kök neden doğrudan izole edilebildi: `max_length=512` her satıra girdi
+uzunluğundan bağımsız sabitlenmişti; greedy decoder gerçek içeriği
+bitirdikten sonra kalan bütçeyi tekrarla doldurdu. Girdi uzunluğuna
+orantılı bir `max_length` (`min(512, max(32, girdi_token*3))`) +
+`no_repeat_ngram_size=3` + `repetition_penalty=1.3` eklenmesi bunu yan
+yana testte tam olarak ortadan kaldırdı (LLM'in kendi tekrar-koruması ile
+aynı "çok katmanlı savunma" mantığı, bkz. `_is_runaway_repetition`).
+
+**Bulunan hata 2 — yanlış hedef dile kayma (daha ciddi):** Tekrar düzeltmesi
+sonrası 37 TR/karışık cevabın tam taraması yapıldı: ~%60'ı temiz/akıcıydı
+(bazıları eski LLM çevirisinden bile daha iyi), ama 5 tanesi hâlâ ciddi
+bozukluk gösteriyordu — en çarpıcısı Q40 ("boru hattı temizleme pigi"),
+cevabın **tamamen Portekizce** üretilmesiydi ("Domuz lançamento em tubulao
+de petrleo..."). Kök neden: iki dilli bir MarianMT modelinin çıktı dili
+hiçbir zaman yapısal olarak *zorlanmıyor*, sadece öyle olması bekleniyor;
+nadir durumlarda model paylaşılan alt-kelime uzayında başka bir dile
+kayabiliyor. Ucuz bir otomatik "bu çıktı bozuk" tespiti (Türkçe durak-kelime
+oranı, yabancı harf kontrolü) denendi ama Portekizce'nin "da" gibi
+kelimeleri Türkçe ile çakıştığı için güvenilir çıkmadı.
+
+**Çözüm — Meta NLLB-200'e geçiş:** Kullanıcı açıkça "Meta/Facebook tipi bir
+dil modeli kullan, başka dil asla olmasın" talimatı verdi.
+`facebook/nllb-200-distilled-600M` bu tam ihtiyaç için tasarlanmış bir
+mekanizma sunuyor: `forced_bos_token_id` ile üretim, hedef dilin kendi
+token'ıyla başlamaya *zorlanıyor* — modelin başka bir dile kayması, ayrı bir
+tespit katmanı gerekmeden, yapısal olarak imkânsız hale geliyor. `config.py`
+ve `src/translator.py` bu modele geçirildi (`AutoModelForSeq2SeqLM` +
+`AutoTokenizer`, `src_lang="eng_Latn"`, `forced_bos_token_id=tur_Latn`);
+aynı uzunluk-ölçekli `max_length` + tekrar-koruması aynen korundu.
+
+**Doğrulama — aynı 98 soru üçüncü kez çalıştırıldı
+(`qa_test_results_100_v5.json`):** 37 TR/karışık cevabın tam taraması
+tekrarlandı. Sonuç: **dil kayması sıfıra indi** (Q40 artık tamamen ve
+tutarlı şekilde Türkçe) ve önceki 5 ciddi bozukluk vakasının (Q11, Q20,
+Q40, Q54, Q73) tamamı okunabilir/tutarlı hâle geldi — kalan kusurlar artık
+"anlamsız kelime salatası" değil, izole yanlış kelime seçimleri (örn. Q20'de
+"personal lock" → "kişisel öykü" (kilit yerine "hikaye") gibi tekil
+anlam kaymaları) veya bilinen, önceden belgeli "Auto modu bazen İngilizce
+yanıt verebiliyor" sınırının iki tekrarı (Q28, Q58). 116/116 pytest yeşil.
+
+**Sonuç:** Referans/kaynak sorunu için daha önce izlenen aynı mimari
+ilke burada da doğrulandı — LLM'e güvenmek yerine, işe özel/deterministik
+bir araca geçmek gerçek bir kalite artışı sağladı, ama bu araç kendi
+başarısızlık moduna sahip olabiliyor (tekrar döngüsü, dil kayması) ve bu
+modlar ancak **gerçek canlı test + kök neden izleme** ile ortaya çıkıyor —
+tek bir örnek cümleyle "çalışıyor" demek yeterli olmuyordu, 98 sorunun tam
+taraması olmasaydı hem tekrar döngüsü hem dil kayması gözden kaçabilirdi.
+
+## 19. Context Window (num_ctx) Düzeltmesi ve Temperature Deneyi — Kapanış Turu
+
+§17'de kalan 5 kısmi cevabın (Q31, Q37, Q56, Q66, Q84) tamamı, modele
+gönderilen chunk içeriği doğrudan okunarak "doğrulanmış LLM sınırı" olarak
+işaretlenmişti. Bu sonuca varmadan önce iki bağımsız, kapsamlı test daha
+yapıldı — ikisi de **tam 98 soruluk testle** doğrulandı, sadece hedeflenen
+5 soruyla değil (kısmi bir düzeltmenin başka yerde regresyon yaratıp
+yaratmadığını görmek için).
+
+**Bulgu — context window hiç ayarlanmamış:** `src/ollama_client.py`'de
+`num_ctx` hiçbir zaman set edilmiyordu, yani Ollama modelin mimari desteğini
+(`llama.context_length=131072`) değil, kendi sabit **2048 token**
+varsayılanını kullanıyordu. Bu projenin context bloğu (5 chunk + system
+prompt) tipik olarak ~1900-1960 token'a denk geliyor; `MAX_TOKENS=800`'lük
+çıktı payı da AYNI 2048'lik pencereden düşüldüğü için, bazı sorularda
+çıktının kelimenin ortasında kesildiği doğrudan gözlemlendi (Q31'de
+"...spec" diye kesiliyordu). `num_ctx=8192` ile aynı soru tam ve doğru
+cevap üretti ("en az 6 ayda bir"). Bu, `config.OLLAMA_NUM_CTX=8192` olarak
+üretime alındı — kanıtlanmış, yan etkisiz, gerçek bir düzeltme.
+
+**Denenen ve reddedilen — temperature=0.0:** Kesin sayısal/kod çıkarımı
+için düşük sıcaklığın standart bir iyileştirme olduğu bilindiğinden,
+`TEMPERATURE` 0.2'den 0.0'a düşürülüp aynı 98 soru tekrar çalıştırıldı.
+Sonuç **net olarak karışıktı, kazanç yoktu**: hedeflenen 5 sorudan sadece
+1-2'sinde marjinal fayda görüldü, ama daha önce tamamen doğru ve temiz olan
+bir cevap (Q47, "25 galon") kendi kendiyle çelişen bir belirsizlik ekleyerek
+BOZULDU ("bu bilgiyi veriyorum ama aslında eksik" gibi anlamsız bir
+öz-şüphe). Bu, projenin FREQUENCY_PENALTY/PRESENCE_PENALTY ayarlarında daha
+önce öğrendiği dersi doğruluyor: küçük modellerde parametre ince ayarı bir
+yeri düzeltirken başka bir yeri bozuyor. **Temperature 0.2'ye geri
+alındı, üretime hiçbir prompt/parametre değişikliği eklenmedi.**
+
+**Sonuç — final tur, aynı 98 soru (`qa_test_results_100_v6.json`):**
+num_ctx düzeltmesiyle Q31 tam olarak düzeldi (doğru "en az 6 ay" bilgisi
+artık net veriliyor); Q37/Q56/Q66/Q84 değişmedi. Geniş bir örneklem (22
+soru, tüm zorluk/dil kombinasyonlarından) yeniden okunarak yeni bir
+regresyon olmadığı doğrulandı (kesilme uyarısı yok, boş cevap yok, beklenmeyen
+ret yok — otomatik tarama ile de teyit edildi).
+
+**Nihai durum: 92/98 (%94) doğru, 4/98 doğrulanmış LLM kapasite sınırı
+(Q37, Q56, Q66, Q84 — iki farklı müdahale türüyle [prompt kuralı VE
+temperature] test edilip düzeltilemediği kanıtlandı), 2/98 dürüst korpus
+boşluğu, 0/98 halüsinasyon/retrieval hatası/dil kayması.** 116/116 pytest
+yeşil. Bu, projenin başladığı 78/98'lik ilk durumdan üç bağımsız düzeltme
+turu (retrieval+reranker, çeviri altyapısı, context window) sonrası ulaştığı
+son, kapsamlıca doğrulanmış hâl.
